@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/maxalbert/tohu_NEW_20200214.svg?style=shield)](https://circleci.com/gh/maxalbert/tohu_NEW_20200214) [![License: MPL 2.0](https://img.shields.io/github/license/maxalbert/tohu_NEW_20200214.svg?style=flat-square)](https://opensource.org/licenses/MPL-2.0) [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![CircleCI](https://circleci.com/gh/maxalbert/tohu_NEW_20200214.svg?style=shield)](https://circleci.com/gh/maxalbert/tohu_NEW_20200214) [![License: MPL 2.0](https://img.shields.io/github/license/maxalbert/tohu_NEW_20200214.svg?style=flat-square&color=informational)](https://opensource.org/licenses/MPL-2.0) [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 <img src="./docs/images/logo.png" alt="Tohu Logo" width="70px">
 
