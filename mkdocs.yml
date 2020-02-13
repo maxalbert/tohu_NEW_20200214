@@ -17,6 +17,8 @@ theme:
      accent: "#2977B8"
    logo:
      icon: "flare"
+extra_css:
+  - css/extra.css
 
 plugins:
   - search
@@ -29,6 +31,7 @@ plugins:
   #         source_repo: "https://github.com/maxalbert/tohu/tree/master/"
   - mknotebooks:
       execute: false
+      # write_markdown: false
       # preamble: "notebook_preamble.py"
       # timeout: 600
 
