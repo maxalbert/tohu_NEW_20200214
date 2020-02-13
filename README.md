@@ -24,7 +24,7 @@ The full documentation can be found [here](https://maxalbert.github.io/tohu_NEW_
 
 ## License
 
-See [LICENSE](./LICENSE)
+See [LICENSE](./LICENSE).
 
 
 ## Attributions
