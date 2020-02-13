@@ -16,7 +16,6 @@ theme:
      primary: "#095798"
      accent: "#2977B8"
    logo:
-     # This is the default "academic hat" logo
      icon: "flare"
 
 plugins:
