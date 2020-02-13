@@ -1,12 +1,13 @@
 PYMODULE_NAME ?= tohu
 PYTHON ?= poetry run python
 PYTEST ?= poetry run pytest
-PATH_TO_NOTEBOOK_TESTS ?= notebooks/
 PATH_TO_UNIT_TESTS ?= tests/
+PATH_TO_NOTEBOOK_TESTS ?= notebooks/
+PATH_TO_DOCS_NOTEBOOKS ?= docs/
 
 all: test
 
-test: regular-tests notebook-tests
+test: regular-tests notebook-tests validate-docs-notebooks
 
 # Run regular tests with pytest
 regular-tests:
@@ -19,6 +20,9 @@ regular-tests:
 notebook-tests:
 #	$(PYTEST) --nbval --sanitize-with=nbval_sanitize_file.cfg --cov=$(PYMODULE_NAME) $(PATH_TO_NOTEBOOK_TESTS)
 	$(PYTEST) --nbval --sanitize-with=nbval_sanitize_file.cfg $(PATH_TO_NOTEBOOK_TESTS)
+
+validate-docs-notebooks:
+	$(PYTEST) --nbval --sanitize-with=nbval_sanitize_file.cfg $(PATH_TO_DOCS_NOTEBOOKS)
 
 # Build documentation
 build-docs:
@@ -33,4 +37,4 @@ dist:
 	mkdir -p dist/
 	$(PYTHON) setup.py sdist bdist_wheel
 
-.PHONY: all test regular-tests notebook-tests build-docs serve-docs dist
+.PHONY: all test regular-tests notebook-tests validate-docs-notebooks build-docs serve-docs dist
