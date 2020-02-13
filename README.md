@@ -6,14 +6,14 @@
 
 Your friendly synthetic data generator
 
-## Installation
+## Installation
 
-- As a user, you can install it simply by running:
+As a user, you can install it simply by running:
 ```
 $ pip install tohu
 ```
 
-- To set up a development environment, it is recommended to use [poetry](https://python-poetry.org/):
+To set up a development environment, it is recommended to use [poetry](https://python-poetry.org/):
 ```
 $ poetry install --extras "develop testing docs"
 ```
