@@ -3,5 +3,6 @@ __pycache__
 .ipynb_checkpoints
 .tox
 dist/
+playground/
 site/
 ssh_deploy_keys
