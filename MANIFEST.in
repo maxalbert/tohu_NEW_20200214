@@ -1,0 +1,2 @@
+include versioneer.py
+include tohu/_version.py
