@@ -1,0 +1,44 @@
+[tool.black]
+line-length = 120
+
+[tool.poetry]
+name = "tohu"
+version = "0.1.0"
+description = ""
+license = "MPL-2.0"
+authors = ["Maximilian Albert <maximilian.albert@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+
+black = { version = "^19.10b0", optional = true }
+pre-commit = { version = "*", optional = true }
+ipython = { version = "*", optional = true }
+jupyterlab = { version = "*", optional = true }
+
+markdown = { version = "*", optional = true }
+mkdocs = { version = "*", optional = true }
+mkdocs-awesome-pages-plugin = { version = "*", optional = true }
+mkdocs-material = { version = "*", optional = true }
+mknotebooks = { version = "*", optional = true }
+mktheapidocs = { version = "*", extras = ["plugin"], optional = true}
+pymdown-extensions = { version = "*", optional = true }
+
+nbval = { version = "*", optional = true }
+pytest = { version = "*", optional = true }
+pytest-cov = { version = "*", optional = true }
+
+twine = { version = "*", optional = true }
+wheel = { version = "*", optional = true }
+
+[tool.poetry.dev-dependencies]
+
+[tool.poetry.extras]
+develop = ["black", "pre-commit", "ipython", "jupyterlab"]
+testing = ["pytest", "pytest-cov", "nbval"]
+docs = ["markdown", "mkdocs", "mkdocs-awesome-pages-plugin", "mkdocs-material", "mknotebooks", "mktheapidocs", "pymdown-extensions"]
+deploy = ["twine", "wheel"]
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"

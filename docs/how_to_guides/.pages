@@ -1,0 +1,5 @@
+arrange:
+  - README.md
+  - installation.md
+  - setting_up_dev_environment.md
+  - running_the_tests.md

@@ -1,0 +1,9 @@
+arrange:
+  - index.md
+  - tutorials
+  - how_to_guides
+  - discussions
+  - reference_guides
+  # - api-docs-tohu
+  - ADRs
+  - CHANGELOG.md
