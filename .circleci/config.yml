@@ -18,7 +18,7 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints:
-            - "__PLACEHOLDER_SSH_KEY_FINGERPRINT__"
+            - "a9:c1:3b:8a:e6:25:6b:7d:c4:b3:41:80:43:d4:1b:47"
       - run:
           name: Install Python dependencies
           command: poetry install --extras "docs"
