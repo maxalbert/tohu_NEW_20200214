@@ -1,0 +1,2 @@
+--ignore-dir=site
+--ignore-dir=__pycache__
