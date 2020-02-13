@@ -36,7 +36,7 @@
     
     
       
-        <title>Some Reference Guide - Tohu</title>
+        <title>Primitive generators - Tohu</title>
       
     
     
@@ -83,7 +83,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#some-reference-guide" tabindex="0" class="md-skip">
+      <a href="#primitive-generators" tabindex="0" class="md-skip">
         Skip to content
       </a>
     
@@ -94,7 +94,7 @@
       <div class="md-flex__cell md-flex__cell--shrink">
         <a href="../.." title="Tohu" aria-label="Tohu" class="md-header-nav__button md-logo">
           
-            <i class="md-icon"></i>
+            <i class="md-icon">flare</i>
           
         </a>
       </div>
@@ -109,7 +109,7 @@
             </span>
             <span class="md-header-nav__topic">
               
-                Some Reference Guide
+                Primitive generators
               
             </span>
           
@@ -164,7 +164,7 @@
   <label class="md-nav__title md-nav__title--site" for="__drawer">
     <a href="../.." title="Tohu" class="md-nav__button md-logo">
       
-        <i class="md-icon"></i>
+        <i class="md-icon">flare</i>
       
     </a>
     Tohu
@@ -399,9 +399,45 @@
       
     
     
-    <a href="./" title="Some Reference Guide" class="md-nav__link md-nav__link--active">
-      Some Reference Guide
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Primitive generators
+      </label>
+    
+    <a href="./" title="Primitive generators" class="md-nav__link md-nav__link--active">
+      Primitive generators
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#constant" class="md-nav__link">
+    Constant
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#integer" class="md-nav__link">
+    Integer
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
     
   </li>
 
@@ -476,6 +512,29 @@
     
   
   
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#constant" class="md-nav__link">
+    Constant
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#integer" class="md-nav__link">
+    Integer
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -487,8 +546,32 @@
               
                 
                 
-                <h1 id="some-reference-guide">Some Reference Guide<a class="headerlink" href="#some-reference-guide" title="Permanent link">&para;</a></h1>
-<p><em>TODO: Write me!</em></p>
+                <h1 id="primitive-generators">Primitive generators<a class="headerlink" href="#primitive-generators" title="Permanent link">&para;</a></h1>
+<p>This section demonstrates the primitive generators supported in <code>tohu</code>.</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">tohu.primitive_generators</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">tohu.utils</span> <span class="kn">import</span> <span class="n">print_generated_sequence</span>
+</code></pre></div>
+
+<h2 id="constant">Constant<a class="headerlink" href="#constant" title="Permanent link">&para;</a></h2>
+<div class="codehilite"><pre><span></span><code><span class="n">g</span> <span class="o">=</span> <span class="n">Constant</span><span class="p">(</span><span class="s2">&quot;quux&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code><span class="n">print_generated_sequence</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">99999</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code>Generated sequence: quux, quux, quux, quux, quux, quux, quux, quux, quux, quux
+</code></pre></div>
+
+
+<h2 id="integer">Integer<a class="headerlink" href="#integer" title="Permanent link">&para;</a></h2>
+<div class="codehilite"><pre><span></span><code><span class="n">g</span> <span class="o">=</span> <span class="n">Integer</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code><span class="n">print_generated_sequence</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">99999</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code>Generated sequence: 115, 139, 164, 183, 194, 130, 145, 152, 125, 132
+</code></pre></div>
                 
                   
                 
