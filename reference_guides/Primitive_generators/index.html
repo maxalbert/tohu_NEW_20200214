@@ -427,6 +427,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#boolean" class="md-nav__link">
+    Boolean
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#integer" class="md-nav__link">
     Integer
   </a>
@@ -539,6 +546,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#boolean" class="md-nav__link">
+    Boolean
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#integer" class="md-nav__link">
     Integer
   </a>
@@ -591,6 +605,18 @@
 </code></pre></div>
 
 <div class="codehilite"><pre><span></span><code>Generated sequence: quux, quux, quux, quux, quux, quux, quux, quux, quux, quux
+</code></pre></div>
+
+
+<h2 id="boolean">Boolean<a class="headerlink" href="#boolean" title="Permanent link">&para;</a></h2>
+<p>The <code>Boolean</code> generator produces a sequence of <code>True</code>/<code>False</code> values, where <code>True</code> is returned with probability <code>p</code>.</p>
+<div class="codehilite"><pre><span></span><code><span class="n">g</span> <span class="o">=</span> <span class="n">Boolean</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code><span class="n">print_generated_sequence</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">99999</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code>Generated sequence: True, False, False, False, False, True, False, False, False, False
 </code></pre></div>
 
 
