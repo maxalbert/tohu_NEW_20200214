@@ -433,6 +433,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#hashdigest" class="md-nav__link">
+    HashDigest
+  </a>
+  
+</li>
+      
       
       
       
@@ -531,6 +538,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#hashdigest" class="md-nav__link">
+    HashDigest
+  </a>
+  
+</li>
+      
       
       
       
@@ -573,6 +587,41 @@
 </code></pre></div>
 
 <div class="codehilite"><pre><span></span><code>Generated sequence: 115, 139, 164, 183, 194, 130, 145, 152, 125, 132
+</code></pre></div>
+
+
+<h2 id="hashdigest">HashDigest<a class="headerlink" href="#hashdigest" title="Permanent link">&para;</a></h2>
+<p>The <code>HashDigest</code> generator produces a sequence of hex strings representing hash digest values.</p>
+<p>By default, the generator produces hex strings of the specified length (which in this case must be even).</p>
+<div class="codehilite"><pre><span></span><code><span class="n">g</span> <span class="o">=</span> <span class="n">HashDigest</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+<span class="n">print_generated_sequence</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">99999</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code>Generated sequence: 4B4D02, 9097BC, EC6DF8, B3E6CA, EE19B1, 9FC0B7, 6F07A1, AC5918, 91FA77, F863C5
+</code></pre></div>
+
+
+<p>Instead of hex strings, the generator can produce the equivalent byte strings by setting <code>as_bytes=True</code>.</p>
+<div class="codehilite"><pre><span></span><code><span class="n">g</span> <span class="o">=</span> <span class="n">HashDigest</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">as_bytes</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">print_generated_sequence</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">99999</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code>Generated sequence:
+
+b&#39;KM\x02&#39;
+b&#39;\x90\x97\xbc&#39;
+b&#39;\xecm\xf8&#39;
+b&#39;\xb3\xe6\xca&#39;
+b&#39;\xee\x19\xb1&#39;
+</code></pre></div>
+
+
+<p>The <code>lowercase</code> keyword can be used to produce hex strings with lowercase characters (note this has no effect when <code>as_bytes=True</code>).</p>
+<div class="codehilite"><pre><span></span><code><span class="n">g</span> <span class="o">=</span> <span class="n">HashDigest</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">lowercase</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">print_generated_sequence</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">99999</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code>Generated sequence: 4b4d0235, 9097bc5e, ec6df8fc, b3e6caf3, ee19b1d3, 9fc0b7fd, 6f07a116, ac591849, 91fa77c5, f863c55d
 </code></pre></div>
                 
                   
