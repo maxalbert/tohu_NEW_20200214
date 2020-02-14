@@ -32,7 +32,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.2">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.3">
     
     
       
@@ -571,46 +571,73 @@
 <p>However, it is useful to get a feel for how they work under the hood, so let's look at a couple of examples.</p>
 <h2 id="creating-a-primitive-generator">Creating a primitive generator<a class="headerlink" href="#creating-a-primitive-generator" title="Permanent link">&para;</a></h2>
 <p>For our first example, let's use the <code>Integer</code> generator, which produces random integers in a given range.</p>
+<div class='jupyterInputCell'>
+
 <div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">tohu.primitive_generators</span> <span class="kn">import</span> <span class="n">Integer</span>
 </code></pre></div>
 
+</div>
+
 <p>Let's create an <code>Integer</code> generator that will produce values between 100 and 200.</p>
+<div class='jupyterInputCell'>
+
 <div class="codehilite"><pre><span></span><code><span class="n">g</span> <span class="o">=</span> <span class="n">Integer</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
 </code></pre></div>
 
+</div>
+
 <p>Before we actually make it produce any values, we first reset the generator. The purpose of this is to initialize the internal (pseudo-)random number generator so that the output is reproducible. The <code>seed</code> argument which we pass to the <code>reset</code> method can have any value. As long as you pass the same seed the generator will produce the same sequence of output values, which ensures reproducibility.</p>
+<div class='jupyterInputCell'>
+
 <div class="codehilite"><pre><span></span><code><span class="n">g</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">12345</span><span class="p">)</span>
 </code></pre></div>
 
+</div>
+
+<div class='jupyterOutputCell'>
 <div class="codehilite"><pre><span></span><code>&lt;Integer: low=100, high=200&gt;
 </code></pre></div>
-
+</div>
 
 <h2 id="producing-random-values-using-the-generator">Producing random values using the generator<a class="headerlink" href="#producing-random-values-using-the-generator" title="Permanent link">&para;</a></h2>
 <p>Now that we have a primitive generator in a well-defined state, how can we produce values using this generator? One way of doing this is to call <code>next()</code> on it, which will ask <code>g</code> to produce a single new value for us.</p>
+<div class='jupyterInputCell'>
+
 <div class="codehilite"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">))</span>
 </code></pre></div>
 
+</div>
+
+<div class='jupyterOutputCell'>
 <div class="codehilite"><pre><span></span><code>153
 </code></pre></div>
-
+</div>
 
 <p>We can do this as many times as we want, and each time <code>g</code> will produce a new random integer in the range <code>[100, 200]</code>. Let's get five more.</p>
+<div class='jupyterInputCell'>
+
 <div class="codehilite"><pre><span></span><code><span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">))</span>
 </code></pre></div>
 
+</div>
+
+<div class='jupyterOutputCell'>
 <div class="codehilite"><pre><span></span><code>193
 101
 138
 147
 124
 </code></pre></div>
-
+</div>
 
 <p>While this works ok, it quickly becomes cumbersome if we need a lot of values. A more convenient way is to call the <code>generate</code> method. We can pass the number of elements we want, as well as (optionally) a seed. If the seed is given, this internally calls <code>reset</code>, which ensures that the returned sequence is reproducible (see above).</p>
+<div class='jupyterInputCell'>
+
 <div class="codehilite"><pre><span></span><code><span class="c1">#g.generate(num=20, seed=99999)</span>
 </code></pre></div>
+
+</div>
 
 <p><strong>TODO:</strong> Implement the <code>.generate()</code> method and explain that the return value is a Python generator (not a list).</p>
                 
