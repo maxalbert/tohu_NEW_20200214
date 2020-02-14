@@ -22,7 +22,7 @@ markdown = { version = "*", optional = true }
 mkdocs = { version = "*", optional = true }
 mkdocs-awesome-pages-plugin = { version = "*", optional = true }
 mkdocs-material = { version = "*", optional = true }
-mknotebooks = { version = "*", optional = true }
+mknotebooks = { git = "https://github.com/greenape/mknotebooks.git", optional = true }
 mktheapidocs = { version = "*", extras = ["plugin"], optional = true}
 pymdown-extensions = { version = "*", optional = true }
 

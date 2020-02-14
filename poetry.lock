@@ -254,14 +254,6 @@ version = "3.0.12"
 
 [[package]]
 category = "main"
-description = "An HTML Minifier"
-name = "htmlmin"
-optional = true
-python-versions = "*"
-version = "0.1.12"
-
-[[package]]
-category = "main"
 description = "File identification library for Python"
 name = "identify"
 optional = true
@@ -401,14 +393,6 @@ MarkupSafe = ">=0.23"
 
 [package.extras]
 i18n = ["Babel (>=0.8)"]
-
-[[package]]
-category = "main"
-description = "JavaScript minifier."
-name = "jsmin"
-optional = true
-python-versions = "*"
-version = "2.2.2"
 
 [[package]]
 category = "main"
@@ -602,27 +586,13 @@ description = "A Material Design theme for MkDocs"
 name = "mkdocs-material"
 optional = true
 python-versions = "*"
-version = "4.6.2"
+version = "4.6.3"
 
 [package.dependencies]
-Pygments = ">=2.2"
+Pygments = ">=2.4"
 markdown = ">=3.2"
 mkdocs = ">=1.0"
-mkdocs-minify-plugin = ">=0.2"
 pymdown-extensions = ">=6.3"
-
-[[package]]
-category = "main"
-description = "An MkDocs plugin to minify HTML and/or JS files prior to being written to disk"
-name = "mkdocs-minify-plugin"
-optional = true
-python-versions = ">=2.7"
-version = "0.2.3"
-
-[package.dependencies]
-htmlmin = ">=0.1.4"
-jsmin = ">=2.2.2"
-mkdocs = ">=1.0.4"
 
 [[package]]
 category = "main"
@@ -630,14 +600,18 @@ description = "Plugin for mkdocs to generate markdown documents from jupyter not
 name = "mknotebooks"
 optional = true
 python-versions = "*"
-version = "0.1.7"
+version = "0.1.7+10.g2c80032"
 
 [package.dependencies]
-jupyter-client = "*"
+jupyter_client = "*"
 mkdocs = "*"
 nbconvert = "*"
 nbconvert-utils = "*"
 
+[package.source]
+reference = "2c80032b5d17660ba1eefdad854b5fd602011e6b"
+type = "git"
+url = "https://github.com/greenape/mknotebooks.git"
 [[package]]
 category = "main"
 description = "Generate markdown API documentation from Numpydoc docstrings."
@@ -1399,13 +1373,13 @@ description = "Virtual Python Environment builder"
 name = "virtualenv"
 optional = true
 python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,>=2.7"
-version = "20.0.3"
+version = "20.0.4"
 
 [package.dependencies]
 appdirs = ">=1.4.3,<2"
 distlib = ">=0.3.0,<1"
 filelock = ">=3.0.0,<4"
-six = ">=1.12.0,<2"
+six = ">=1.9.0,<2"
 
 [package.dependencies.importlib-metadata]
 python = "<3.8"
@@ -1462,7 +1436,7 @@ docs = ["markdown", "mkdocs", "mkdocs-awesome-pages-plugin", "mkdocs-material", 
 testing = ["pytest", "pytest-cov", "nbval"]
 
 [metadata]
-content-hash = "6f72ead4fa264feeb2cc152594ba3ba3e7c000b983c56186c73351651894e7d3"
+content-hash = "5967f21c600a6ea43da7f2d5c8349cf7e8121ab632b36f3dae8a8e16eff651d7"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -1639,9 +1613,6 @@ filelock = [
     {file = "filelock-3.0.12-py3-none-any.whl", hash = "sha256:929b7d63ec5b7d6b71b0fa5ac14e030b3f70b75747cef1b10da9b879fef15836"},
     {file = "filelock-3.0.12.tar.gz", hash = "sha256:18d82244ee114f543149c66a6e0c14e9c4f8a1044b5cdaadd0f82159d6a6ff59"},
 ]
-htmlmin = [
-    {file = "htmlmin-0.1.12.tar.gz", hash = "sha256:50c1ef4630374a5d723900096a961cff426dff46b48f34d194a81bbe14eca178"},
-]
 identify = [
     {file = "identify-1.4.11-py2.py3-none-any.whl", hash = "sha256:1222b648251bdcb8deb240b294f450fbf704c7984e08baa92507e4ea10b436d5"},
     {file = "identify-1.4.11.tar.gz", hash = "sha256:d824ebe21f38325c771c41b08a95a761db1982f1fc0eee37c6c97df3f1636b96"},
@@ -1681,9 +1652,6 @@ jeepney = [
 jinja2 = [
     {file = "Jinja2-2.11.1-py2.py3-none-any.whl", hash = "sha256:b0eaf100007721b5c16c1fc1eecb87409464edc10469ddc9a22a27a99123be49"},
     {file = "Jinja2-2.11.1.tar.gz", hash = "sha256:93187ffbc7808079673ef52771baa950426fd664d3aad1d0fa3e95644360e250"},
-]
-jsmin = [
-    {file = "jsmin-2.2.2.tar.gz", hash = "sha256:b6df99b2cd1c75d9d342e4335b535789b8da9107ec748212706ef7bbe5c2553b"},
 ]
 json5 = [
     {file = "json5-0.9.1-py2.py3-none-any.whl", hash = "sha256:36ae138e79ae2f10b93bfde61bef7441a796edfd1d1cb4feeb8ed55836fd087e"},
@@ -1769,16 +1737,10 @@ mkdocs-awesome-pages-plugin = [
     {file = "mkdocs_awesome_pages_plugin-2.2.0-py3-none-any.whl", hash = "sha256:f64e2c3b2f628f40388aee0275f7d2f2547131748812dd4a88c89b05cef17b87"},
 ]
 mkdocs-material = [
-    {file = "mkdocs-material-4.6.2.tar.gz", hash = "sha256:4f32bfc8f8da74abc0bc65116d7f9e3d6b2e3e2dc43b61cfaab72e151c9c0431"},
-    {file = "mkdocs_material-4.6.2-py2.py3-none-any.whl", hash = "sha256:294275c4d3f3e5711b27645b013a0afe8b22a8ace8db81099cb1403ad47b4af5"},
+    {file = "mkdocs-material-4.6.3.tar.gz", hash = "sha256:1d486635b03f5a2ec87325842f7b10c7ae7daa0eef76b185572eece6a6ea212c"},
+    {file = "mkdocs_material-4.6.3-py2.py3-none-any.whl", hash = "sha256:7f3afa0a09c07d0b89a6a9755fdb00513aee8f0cec3538bb903325c80f66f444"},
 ]
-mkdocs-minify-plugin = [
-    {file = "mkdocs-minify-plugin-0.2.3.tar.gz", hash = "sha256:12fc10173f1e13470e8ac66564dd43a33326b911c9d5c4bf92be62fe06ff19f4"},
-    {file = "mkdocs_minify_plugin-0.2.3-py2-none-any.whl", hash = "sha256:14cdee6dd71b149a47e8d8dc3630e8c1c3bc8ada3ba159bea9990bf382651e2c"},
-]
-mknotebooks = [
-    {file = "mknotebooks-0.1.7-py3-none-any.whl", hash = "sha256:4481d90657c184395bb53607dfb56a6b0720017807b56b8e5e775eb6c9639b8a"},
-]
+mknotebooks = []
 mktheapidocs = [
     {file = "mktheapidocs-0.1.10-py3-none-any.whl", hash = "sha256:d710b4fb086e0192ba1e2a36ce3659c4db633b08309674d0d7648f40bdc01562"},
 ]
@@ -2136,8 +2098,8 @@ urllib3 = [
     {file = "urllib3-1.25.8.tar.gz", hash = "sha256:87716c2d2a7121198ebcb7ce7cccf6ce5e9ba539041cfbaeecfb641dc0bf6acc"},
 ]
 virtualenv = [
-    {file = "virtualenv-20.0.3-py2.py3-none-any.whl", hash = "sha256:ec376274f5abb6da25e0ef81d082d2884cda8fd924e1ff73b4c2bb5416d48c87"},
-    {file = "virtualenv-20.0.3.tar.gz", hash = "sha256:526484e29a9a12f0680d251331e7841b36f1e2b918935377f173f764b1b8be89"},
+    {file = "virtualenv-20.0.4-py2.py3-none-any.whl", hash = "sha256:de2cbdd5926c48d7b84e0300dea9e8f276f61d186e8e49223d71d91250fbaebd"},
+    {file = "virtualenv-20.0.4.tar.gz", hash = "sha256:08f3623597ce73b85d6854fb26608a6f39ee9d055c81178dc6583803797f8994"},
 ]
 wcwidth = [
     {file = "wcwidth-0.1.8-py2.py3-none-any.whl", hash = "sha256:8fd29383f539be45b20bd4df0dc29c20ba48654a41e661925e612311e9f3c603"},
