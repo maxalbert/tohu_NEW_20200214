@@ -4,7 +4,7 @@ from faker import Faker
 from random import Random
 from .utils import identity
 
-__all__ = ["Constant", "Integer", "HashDigest", "FakerGenerator"]
+__all__ = ["Constant", "Boolean", "Integer", "HashDigest", "FakerGenerator"]
 
 
 class Constant:
@@ -28,6 +28,32 @@ class Constant:
 
     def __next__(self):
         return self.value
+
+
+class Boolean:
+    """
+    Generator which produces random boolean values (True or False) with a given probability.
+    """
+
+    def __init__(self, p=0.5):
+        """
+        Parameters
+        ----------
+        p: float
+            The probability that True is returned. Must be between 0.0 and 1.0.
+        """
+        # super().__init__()
+        self.p = p
+        self.randgen = Random()
+        self.dtype = bool
+
+    def reset(self, seed):
+        # super().reset(seed)
+        self.randgen.seed(seed)
+        return self
+
+    def __next__(self):
+        return self.randgen.random() < self.p
 
 
 class Integer:
