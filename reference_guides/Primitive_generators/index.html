@@ -591,13 +591,18 @@
 
 
 <h2 id="hashdigest">HashDigest<a class="headerlink" href="#hashdigest" title="Permanent link">&para;</a></h2>
-<p>The <code>HashDigest</code> generator produces a sequence of hex strings representing hash digest values.</p>
-<p>By default, the generator produces hex strings of the specified length (which in this case must be even).</p>
+<p>The <code>HashDigest</code> generator produces a sequence of hex strings representing hash digest values. By default, it produces hex strings of the specified length.</p>
 <div class="codehilite"><pre><span></span><code><span class="n">g</span> <span class="o">=</span> <span class="n">HashDigest</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
-<span class="n">print_generated_sequence</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">99999</span><span class="p">)</span>
+<span class="n">print_generated_sequence</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">99999</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 
-<div class="codehilite"><pre><span></span><code>Generated sequence: 4B4D02, 9097BC, EC6DF8, B3E6CA, EE19B1, 9FC0B7, 6F07A1, AC5918, 91FA77, F863C5
+<div class="codehilite"><pre><span></span><code>Generated sequence:
+
+4B4D02
+9097BC
+EC6DF8
+B3E6CA
+EE19B1
 </code></pre></div>
 
 
