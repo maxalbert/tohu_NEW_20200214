@@ -440,6 +440,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#fakergenerator" class="md-nav__link">
+    FakerGenerator
+  </a>
+  
+</li>
+      
       
       
       
@@ -545,6 +552,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#fakergenerator" class="md-nav__link">
+    FakerGenerator
+  </a>
+  
+</li>
+      
       
       
       
@@ -569,6 +583,7 @@
 </code></pre></div>
 
 <h2 id="constant">Constant<a class="headerlink" href="#constant" title="Permanent link">&para;</a></h2>
+<p>The <code>Constant</code> generator produces a sequence whose items all have the same fixed value.</p>
 <div class="codehilite"><pre><span></span><code><span class="n">g</span> <span class="o">=</span> <span class="n">Constant</span><span class="p">(</span><span class="s2">&quot;quux&quot;</span><span class="p">)</span>
 </code></pre></div>
 
@@ -580,6 +595,7 @@
 
 
 <h2 id="integer">Integer<a class="headerlink" href="#integer" title="Permanent link">&para;</a></h2>
+<p>The <code>Integer</code> generator produces random integers in the range between <code>low</code> and <code>high</code> (both inclusive).</p>
 <div class="codehilite"><pre><span></span><code><span class="n">g</span> <span class="o">=</span> <span class="n">Integer</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
 </code></pre></div>
 
@@ -627,6 +643,41 @@ b&#39;\xee\x19\xb1&#39;
 </code></pre></div>
 
 <div class="codehilite"><pre><span></span><code>Generated sequence: 4b4d0235, 9097bc5e, ec6df8fc, b3e6caf3, ee19b1d3, 9fc0b7fd, 6f07a116, ac591849, 91fa77c5, f863c55d
+</code></pre></div>
+
+
+<h2 id="fakergenerator">FakerGenerator<a class="headerlink" href="#fakergenerator" title="Permanent link">&para;</a></h2>
+<p><code>FakerGenerator</code> allows to produce elements using any of the providers provided by the <a href="https://faker.readthedocs.io/en/master/">Faker</a> package. The provider is specified using the <code>method</code> argument. Examples:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">g</span> <span class="o">=</span> <span class="n">FakerGenerator</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;name&quot;</span><span class="p">)</span>
+<span class="n">print_generated_sequence</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">99999</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code>Generated sequence:
+
+Eric Benton
+Heather Harris
+Thomas Obrien
+Amy Cook
+Kenneth Robles
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code><span class="n">g</span> <span class="o">=</span> <span class="n">FakerGenerator</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;address&quot;</span><span class="p">)</span>
+<span class="n">print_generated_sequence</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">99999</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code>Generated sequence:
+
+356 Richard Valleys
+Madelineton, ME 76205
+25835 Deborah Creek
+Rhondaport, WI 54356
+9826 Sullivan Brook Apt. 610
+Duncanfort, PA 04949
+6408 Gabrielle Stream
+East Margaret, KY 58692
+51904 Garcia Walks
+Port Philip, RI 10457
 </code></pre></div>
                 
                   
