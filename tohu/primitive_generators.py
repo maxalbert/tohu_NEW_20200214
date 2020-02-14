@@ -1,9 +1,10 @@
 import numpy as np
 import warnings
+from faker import Faker
 from random import Random
 from .utils import identity
 
-__all__ = ["Constant", "Integer", "HashDigest"]
+__all__ = ["Constant", "Integer", "HashDigest", "FakerGenerator"]
 
 
 class Constant:
@@ -103,3 +104,43 @@ class HashDigest:
     def __next__(self):
         val = self.randgen.bytes(self._internal_length)
         return self._maybe_convert_to_uppercase(self._maybe_convert_to_hex(val))
+
+
+class FakerGenerator:
+    """
+    Generator which produces random elements using one of the methods supported by faker. [1]
+
+    [1] https://faker.readthedocs.io/
+    """
+
+    def __init__(self, method, *, locale=None, **faker_args):
+        """
+        Parameters
+        ----------
+        method: string
+            Name of the faker provider to use (see [1] for details)
+        locale: string
+             Locale to use when generating data, e.g. 'en_US' (see [1] for details)
+        faker_args:
+            Remaining arguments passed to the faker provider (see [1] for details)
+
+        References
+        ----------
+        [1] https://faker.readthedocs.io/
+        """
+        # super().__init__()
+        self.method = method
+        self.locale = locale
+        self.faker_args = faker_args
+
+        self.fake = Faker(locale=locale)
+        self.randgen = getattr(self.fake, method)
+        self.fake.seed_instance(None)  # seed instance to ensure we are decoupled from the global random state
+
+    def reset(self, seed):
+        # super().reset(seed)
+        self.fake.seed_instance(seed)
+        return self
+
+    def __next__(self):
+        return self.randgen(**self.faker_args)
