@@ -13,8 +13,8 @@ theme:
      text: Roboto
      code: Roboto Mono
    palette:
-     primary: "#095798"
-     accent: "#2977B8"
+     primary: "Teal"
+     accent: "Teal"
    logo:
      icon: "flare"
 extra_css:
