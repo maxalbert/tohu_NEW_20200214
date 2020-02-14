@@ -36,7 +36,7 @@
     
     
       
-        <title>First steps - Tohu</title>
+        <title>The Basic Building Blocks: Primitive Generators - Tohu</title>
       
     
     
@@ -85,7 +85,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#first-steps" tabindex="0" class="md-skip">
+      <a href="#the-basic-building-blocks-primitive-generators" tabindex="0" class="md-skip">
         Skip to content
       </a>
     
@@ -111,7 +111,7 @@
             </span>
             <span class="md-header-nav__topic">
               
-                First steps
+                The Basic Building Blocks: Primitive Generators
               
             </span>
           
@@ -233,9 +233,52 @@
       
     
     
-    <a href="./" title="First steps" class="md-nav__link md-nav__link--active">
-      First steps
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        The Basic Building Blocks: Primitive Generators
+      </label>
+    
+    <a href="./" title="The Basic Building Blocks: Primitive Generators" class="md-nav__link md-nav__link--active">
+      The Basic Building Blocks: Primitive Generators
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-a-primitive-generator" class="md-nav__link">
+    Creating a primitive generator
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#producing-random-values-using-the-generator" class="md-nav__link">
+    Producing random values using the generator
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
     
   </li>
 
@@ -478,6 +521,36 @@
     
   
   
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-a-primitive-generator" class="md-nav__link">
+    Creating a primitive generator
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#producing-random-values-using-the-generator" class="md-nav__link">
+    Producing random values using the generator
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -489,23 +562,57 @@
               
                 
                 
-                <h1 id="first-steps">First steps<a class="headerlink" href="#first-steps" title="Permanent link">&para;</a></h1>
-<p>This is an example Jupyter notebook which will be included as a tutorial in the documentation.</p>
-<p>The function <code>dummy_function</code> simply computes the square of any input argument it receives. Let's see how this works:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">tohu</span> <span class="kn">import</span> <span class="n">dummy_function</span>
+                <h1 id="the-basic-building-blocks-primitive-generators">The Basic Building Blocks: Primitive Generators<a class="headerlink" href="#the-basic-building-blocks-primitive-generators" title="Permanent link">&para;</a></h1>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
+<p>The most fundamental building blocks of <code>tohu</code> are the so-called "primitive" generators. A primitive generator is a random generator which produces values of a specific "type" (in a somewhat loose sense of the word). For example, there are primitive generators which produce random integers, random boolean values, random names, etc.</p>
+<p>The reason they are called "primitive" is because they do not depend on any other generators in <code>tohu</code>, and they can be combined into more complex generators (see subsequent sections).</p>
+<p>A full list of all primitive generators can be found <a href="../../reference_guides/Primitive_generators/">here</a>.</p>
+<p>This section illustrates how to create and use primitive generators directly. However, in practical use you typically won't create them manually as we do here. Instead, they will be created as part of a <code>CustomGenerator</code> (see section [TODO]). </p>
+<p>However, it is useful to get a feel for how they work under the hood, so let's look at a couple of examples.</p>
+<h2 id="creating-a-primitive-generator">Creating a primitive generator<a class="headerlink" href="#creating-a-primitive-generator" title="Permanent link">&para;</a></h2>
+<p>For our first example, let's use the <code>Integer</code> generator, which produces random integers in a given range.</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">tohu.primitive_generators</span> <span class="kn">import</span> <span class="n">Integer</span>
 </code></pre></div>
 
-<div class="codehilite"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">dummy_function</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">dummy_function</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">dummy_function</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">dummy_function</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+<p>Let's create an <code>Integer</code> generator that will produce values between 100 and 200.</p>
+<div class="codehilite"><pre><span></span><code><span class="n">g</span> <span class="o">=</span> <span class="n">Integer</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
 </code></pre></div>
 
-<div class="codehilite"><pre><span></span><code>4
-9
-16
-25
+<p>Before we actually make it produce any values, we first reset the generator. The purpose of this is to initialize the internal (pseudo-)random number generator so that the output is reproducible. The <code>seed</code> argument which we pass to the <code>reset</code> method can have any value. As long as you pass the same seed the generator will produce the same sequence of output values, which ensures reproducibility.</p>
+<div class="codehilite"><pre><span></span><code><span class="n">g</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">12345</span><span class="p">)</span>
 </code></pre></div>
+
+<div class="codehilite"><pre><span></span><code>&lt;Integer: low=100, high=200&gt;
+</code></pre></div>
+
+
+<h2 id="producing-random-values-using-the-generator">Producing random values using the generator<a class="headerlink" href="#producing-random-values-using-the-generator" title="Permanent link">&para;</a></h2>
+<p>Now that we have a primitive generator in a well-defined state, how can we produce values using this generator? One way of doing this is to call <code>next()</code> on it, which will ask <code>g</code> to produce a single new value for us.</p>
+<div class="codehilite"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">))</span>
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code>153
+</code></pre></div>
+
+
+<p>We can do this as many times as we want, and each time <code>g</code> will produce a new random integer in the range <code>[100, 200]</code>. Let's get five more.</p>
+<div class="codehilite"><pre><span></span><code><span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">))</span>
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code>193
+101
+138
+147
+124
+</code></pre></div>
+
+
+<p>While this works ok, it quickly becomes cumbersome if we need a lot of values. A more convenient way is to call the <code>generate</code> method. We can pass the number of elements we want, as well as (optionally) a seed. If the seed is given, this internally calls <code>reset</code>, which ensures that the returned sequence is reproducible (see above).</p>
+<div class="codehilite"><pre><span></span><code><span class="c1">#g.generate(num=20, seed=99999)</span>
+</code></pre></div>
+
+<p><strong>TODO:</strong> Implement the <code>.generate()</code> method and explain that the return value is a Python generator (not a list).</p>
                 
                   
                 
