@@ -36,7 +36,7 @@
     
     
       
-        <title>The Basic Building Blocks: Primitive Generators - Tohu</title>
+        <title>The Basic Building Blocks: Primitive Generators - Tohu - Your Friendly Synthetic Data Generator</title>
       
     
     
@@ -94,7 +94,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="../.." title="Tohu" aria-label="Tohu" class="md-header-nav__button md-logo">
+        <a href="../.." title="Tohu - Your Friendly Synthetic Data Generator" aria-label="Tohu - Your Friendly Synthetic Data Generator" class="md-header-nav__button md-logo">
           
             <img alt="logo" src="../../images/logo_white.svg" width="24" height="24">
           
@@ -107,7 +107,7 @@
         <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
           
             <span class="md-header-nav__topic">
-              Tohu
+              Tohu - Your Friendly Synthetic Data Generator
             </span>
             <span class="md-header-nav__topic">
               
@@ -164,12 +164,12 @@
                   <div class="md-sidebar__inner">
                     <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="../.." title="Tohu" class="md-nav__button md-logo">
+    <a href="../.." title="Tohu - Your Friendly Synthetic Data Generator" class="md-nav__button md-logo">
       
         <img alt="logo" src="../../images/logo_white.svg" width="48" height="48">
       
     </a>
-    Tohu
+    Tohu - Your Friendly Synthetic Data Generator
   </label>
   
   <ul class="md-nav__list" data-md-scrollfix>
@@ -180,8 +180,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../.." title="Tohu" class="md-nav__link">
-      Tohu
+    <a href="../.." title="Contents" class="md-nav__link">
+      Contents
     </a>
   </li>
 
@@ -259,8 +259,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#example-using-integer-to-produce-random-integers" class="md-nav__link">
-    Example: using Integer to produce random integers
+  <a href="#first-example-using-integer-to-produce-random-integers" class="md-nav__link">
+    First example: using Integer to produce random integers
   </a>
   
 </li>
@@ -303,6 +303,20 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#second-example-producing-random-hashdigest-values" class="md-nav__link">
+    Second example: producing random HashDigest values
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary-and-next-steps" class="md-nav__link">
+    Summary And Next Steps
+  </a>
   
 </li>
       
@@ -578,8 +592,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#example-using-integer-to-produce-random-integers" class="md-nav__link">
-    Example: using Integer to produce random integers
+  <a href="#first-example-using-integer-to-produce-random-integers" class="md-nav__link">
+    First example: using Integer to produce random integers
   </a>
   
 </li>
@@ -625,6 +639,20 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#second-example-producing-random-hashdigest-values" class="md-nav__link">
+    Second example: producing random HashDigest values
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary-and-next-steps" class="md-nav__link">
+    Summary And Next Steps
+  </a>
+  
+</li>
+      
       
       
       
@@ -647,7 +675,7 @@
 <p>The most fundamental building blocks of <code>tohu</code> are the so-called "primitive" generators. A primitive generator is simply a random generator which knows how to produce values of a specific "type" (in a slightly loose sense of the word). For example, there are primitive generators which produce random integers, random boolean values, random names, etc. (see <a href="../../reference_guides/primitive_generators/">here</a> for a full list).</p>
 <p>The reason they are called "primitive" is because they do not depend on any other generators in <code>tohu</code>, and they can be combined into more complex generators (see subsequent sections).</p>
 <p>This section illustrates how to create and use primitive generators directly. Note that in practical use you will rarely need or want to create them manually as we do here - typically, they will be created as part of a <code>CustomGenerator</code> (TODO: see section [...]). However, it is useful to get a feel for how they work under the hood, so let's look at an example.</p>
-<h2 id="example-using-integer-to-produce-random-integers">Example: using <code>Integer</code> to produce random integers<a class="headerlink" href="#example-using-integer-to-produce-random-integers" title="Permanent link">&para;</a></h2>
+<h2 id="first-example-using-integer-to-produce-random-integers">First example: using <code>Integer</code> to produce random integers<a class="headerlink" href="#first-example-using-integer-to-produce-random-integers" title="Permanent link">&para;</a></h2>
 <p>For our first example, let's use the <code>Integer</code> generator, which produces random integers in a given range.</p>
 <p>Here is the full code snippet and its output (we will look at this line by line in the next section).</p>
 <div class='jupyterInputCell'>
@@ -745,6 +773,47 @@
 </div>
 
 <p><strong>TODO:</strong> Implement the <code>.generate()</code> method and explain that the return value is a Python generator (not a list).</p>
+<h2 id="second-example-producing-random-hashdigest-values">Second example: producing random <code>HashDigest</code> values<a class="headerlink" href="#second-example-producing-random-hashdigest-values" title="Permanent link">&para;</a></h2>
+<p>Let's look at another example using a different primitive generator. We choose <code>HashDigest</code>. This produces random strings that look like hash values.</p>
+<p>The example follows the same pattern as above:</p>
+<ol>
+<li>Create an instance of the <code>HashDigest</code> generator.</li>
+<li>Reset it to ensure the output is reproducible.</li>
+<li>Produce a sequence of elements by calling the <code>generate</code> method.</li>
+</ol>
+<div class='jupyterInputCell'>
+
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">tohu.primitive_generators</span> <span class="kn">import</span> <span class="n">HashDigest</span>
+</code></pre></div>
+
+</div>
+
+<div class='jupyterInputCell'>
+
+<div class="codehilite"><pre><span></span><code><span class="n">g</span> <span class="o">=</span> <span class="n">HashDigest</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">lowercase</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">99999</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">))</span>
+</code></pre></div>
+
+</div>
+
+<div class='jupyterOutputCell'>
+<div class="codehilite"><pre><span></span><code>4b4d0235
+9097bc5e
+ec6df8fc
+b3e6caf3
+ee19b1d3
+9fc0b7fd
+6f07a116
+ac591849
+91fa77c5
+f863c55d
+</code></pre></div>
+</div>
+
+<h2 id="summary-and-next-steps">Summary And Next Steps<a class="headerlink" href="#summary-and-next-steps" title="Permanent link">&para;</a></h2>
+<p><em>TODO</em></p>
                 
                   
                 
