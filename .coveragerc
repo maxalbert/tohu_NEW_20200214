@@ -10,7 +10,7 @@ omit =
     *__init__*
 
 exclude_lines =
-    # Need to explicitly re-enable the standard pragma
+    # Need to explicitly re-enable the standard pragma to be able to use it.
     pragma: no cover
 
     if __name__ == '__main__':
