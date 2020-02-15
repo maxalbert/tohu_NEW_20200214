@@ -62,6 +62,4 @@ class TohuBaseGenerator:
         yield from items
 
     def generate_as_list(self, num, *, seed=None, progressbar=False):
-        return list(self.generate(num, seed=seed, progressbar=progressbar))
-
-    generate = generate_as_stream  # convenience alias
+        return list(self.generate_as_stream(num, seed=seed, progressbar=progressbar))
