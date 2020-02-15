@@ -727,7 +727,7 @@
 </div>
 
 <div class='jupyterOutputCell'>
-<div class="codehilite"><pre><span></span><code>&lt;Integer: low=100, high=200&gt;
+<div class="codehilite"><pre><span></span><code>&lt;Integer (id=1273e4)&gt;
 </code></pre></div>
 </div>
 
@@ -764,15 +764,66 @@
 </div>
 
 <h3 id="producing-a-sequence-of-random-values">Producing a sequence of random values<a class="headerlink" href="#producing-a-sequence-of-random-values" title="Permanent link">&para;</a></h3>
-<p>While this works ok, it quickly becomes cumbersome if we need a lot of values. A more convenient way is to call the <code>generate</code> method. We can pass the number of elements we want, as well as (optionally) a seed. If the seed is given, this internally calls <code>reset</code>, which ensures that the returned sequence is reproducible (see above).</p>
+<p>While this works ok, it quickly becomes cumbersome if we need a lot of values. A more convenient way is to call the <code>generate_as_list</code> method. We can pass the number of elements we want, as well as (optionally) a seed. If the seed is given, this internally calls <code>reset</code>, which ensures that the returned sequence is reproducible (see above).</p>
 <div class='jupyterInputCell'>
 
-<div class="codehilite"><pre><span></span><code><span class="c1">#g.generate(num=20, seed=99999)</span>
+<div class="codehilite"><pre><span></span><code><span class="n">g</span><span class="o">.</span><span class="n">generate_as_list</span><span class="p">(</span><span class="n">num</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">99999</span><span class="p">)</span>
 </code></pre></div>
 
 </div>
 
-<p><strong>TODO:</strong> Implement the <code>.generate()</code> method and explain that the return value is a Python generator (not a list).</p>
+<div class='jupyterOutputCell'>
+<div class="codehilite"><pre><span></span><code>[115, 139, 164, 183, 194, 130, 145, 152, 125, 132, 151, 192, 177, 177, 166]
+</code></pre></div>
+</div>
+
+<p>This is much more convenient, and often the right choice. However, if <code>num</code> is very big then it may be expensive (both in terms of time and memory) to generate all elements at once and store them in a huge list.</p>
+<p>An alternative would be to call <code>generate_as_stream</code> instead. The result is a Python generator object, and we can iterate over this to obtain the elements sequentially (but this happens in a "lazy" fashion, so it is much more time and memory efficient.</p>
+<div class='jupyterInputCell'>
+
+<div class="codehilite"><pre><span></span><code><span class="n">result</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">generate_as_stream</span><span class="p">(</span><span class="n">num</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">99999</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+
+<div class='jupyterInputCell'>
+
+<div class="codehilite"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+
+<div class='jupyterOutputCell'>
+<div class="codehilite"><pre><span></span><code>&lt;generator object TohuBaseGenerator.generate_as_stream at 0x10f2eab30&gt;
+</code></pre></div>
+</div>
+
+<div class='jupyterInputCell'>
+
+<div class="codehilite"><pre><span></span><code><span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">result</span><span class="p">]</span>
+</code></pre></div>
+
+</div>
+
+<div class='jupyterOutputCell'>
+<div class="codehilite"><pre><span></span><code>[115, 139, 164, 183, 194, 130, 145, 152, 125, 132, 151, 192, 177, 177, 166]
+</code></pre></div>
+</div>
+
+<p>Beware that as usual with Python generator objects, once you have iterated over the result it will be exhausted so you can't iterate over it a second time, or else you won't get any elements:</p>
+<div class='jupyterInputCell'>
+
+<div class="codehilite"><pre><span></span><code><span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">result</span><span class="p">]</span>
+</code></pre></div>
+
+</div>
+
+<div class='jupyterOutputCell'>
+<div class="codehilite"><pre><span></span><code>[]
+</code></pre></div>
+</div>
+
+<p>You should therefore carefully choose which method of generating items is best for your use case. For interactive exploration it is often more convenient to generate lists because they don't need as careful treatment, but if you need to be careful with performance or memory efficiency you can use the stream method instead.</p>
 <h2 id="second-example-producing-random-hashdigest-values">Second example: producing random <code>HashDigest</code> values<a class="headerlink" href="#second-example-producing-random-hashdigest-values" title="Permanent link">&para;</a></h2>
 <p>Let's look at another example using a different primitive generator. We choose <code>HashDigest</code>. This produces random strings that look like hash values.</p>
 <p>The example follows the same pattern as above:</p>
@@ -792,7 +843,7 @@
 
 <div class="codehilite"><pre><span></span><code><span class="n">g</span> <span class="o">=</span> <span class="n">HashDigest</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">lowercase</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">g</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">99999</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">))</span>
 </code></pre></div>
 
@@ -804,11 +855,18 @@
 ec6df8fc
 b3e6caf3
 ee19b1d3
-9fc0b7fd
-6f07a116
-ac591849
-91fa77c5
-f863c55d
+</code></pre></div>
+</div>
+
+<div class='jupyterInputCell'>
+
+<div class="codehilite"><pre><span></span><code><span class="n">g</span><span class="o">.</span><span class="n">generate_as_list</span><span class="p">(</span><span class="n">num</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">99999</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+
+<div class='jupyterOutputCell'>
+<div class="codehilite"><pre><span></span><code>[&#39;4b4d0235&#39;, &#39;9097bc5e&#39;, &#39;ec6df8fc&#39;, &#39;b3e6caf3&#39;, &#39;ee19b1d3&#39;]
 </code></pre></div>
 </div>
 
