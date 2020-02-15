@@ -23,11 +23,11 @@ plugins:
   - search
   - awesome-pages:
       collapse_single_pages: false
-  # - mktheapidocs:
-  #     modules:
-  #       tohu:
-  #         section: tohu
-  #         source_repo: "https://github.com/maxalbert/tohu/tree/master/"
+#  - mktheapidocs:
+#      modules:
+#        tohu:
+#          section: ""
+#          source_repo: "https://github.com/maxalbert/tohu_NEW_20200214/tree/master"
   - mknotebooks:
       execute: false
       # write_markdown: false
