@@ -1,11 +1,11 @@
-# Tohu
+# Contents
 
 _TODO: Add a brief overview of the project here._
 
 
 Documentation:
 
-- [Tutorials](tutorials)
+- [Tutorials](tutorials) (Start Here)
 - [How-To Guides](how_to_guides)
 - [Discussions](discussions)
 - [Reference Guides](reference_guides)

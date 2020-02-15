@@ -1,4 +1,4 @@
-site_name: Tohu
+site_name: Tohu - Your Friendly Synthetic Data Generator
 theme:
    name: "material"
    include_search_page: false
