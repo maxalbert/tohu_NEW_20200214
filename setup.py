@@ -31,7 +31,7 @@ setup(
         "Programming Language :: Python :: 3.8",
     ],
     packages=["tohu"],
-    install_requires=["numpy", "faker"],
+    install_requires=["faker", "numpy", "tqdm"],
     extras_require={"dev": ["ipython", "jupyter"], "test": ["pytest"]},
     cmdclass=versioneer.get_cmdclass(),
 )

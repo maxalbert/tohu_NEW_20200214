@@ -612,6 +612,7 @@ nbconvert-utils = "*"
 reference = "2c80032b5d17660ba1eefdad854b5fd602011e6b"
 type = "git"
 url = "https://github.com/greenape/mknotebooks.git"
+
 [[package]]
 category = "main"
 description = "Generate markdown API documentation from Numpydoc docstrings."
@@ -1302,7 +1303,7 @@ version = "6.0.3"
 category = "main"
 description = "Fast, Extensible Progress Meter"
 name = "tqdm"
-optional = true
+optional = false
 python-versions = ">=2.6, !=3.0.*, !=3.1.*"
 version = "4.42.1"
 
@@ -1436,7 +1437,7 @@ docs = ["markdown", "mkdocs", "mkdocs-awesome-pages-plugin", "mkdocs-material", 
 testing = ["pytest", "pytest-cov", "nbval"]
 
 [metadata]
-content-hash = "5967f21c600a6ea43da7f2d5c8349cf7e8121ab632b36f3dae8a8e16eff651d7"
+content-hash = "8c529d5add95a0e4d1387b2117feb153295b3215a53db9b4568d7a2fdbbae18f"
 python-versions = "^3.7"
 
 [metadata.files]
