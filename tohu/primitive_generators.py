@@ -1,3 +1,4 @@
+import hashlib
 import numpy as np
 import warnings
 from faker import Faker
@@ -7,12 +8,52 @@ from .utils import identity
 __all__ = ["Constant", "Boolean", "Integer", "HashDigest", "FakerGenerator"]
 
 
-class Constant:
+class TohuBaseGenerator:
+    """
+    Base class for all of tohu's generators.
+    """
+
+    def __init__(self):
+        self.tohu_name = None
+
+    def __repr__(self):
+        clsname = self.__class__.__name__
+        name = "" if self.tohu_name is None else f"{self.tohu_name}: "
+        return f"<{name}{clsname} (id={self.tohu_id})>"
+
+    def set_tohu_name(self, tohu_name):
+        """
+        Set this generator's `tohu_name` attribute.
+
+        This is mainly useful for debugging where one can temporarily
+        use this at the end of generator definitions to set a name
+        that will be displayed in debugging messages. For example:
+
+            g1 = SomeGeneratorClass().set_tohu_name('g1')
+            g2 = SomeGeneratorClass().set_tohu_name('g2')
+        """
+        self.tohu_name = tohu_name
+        return self
+
+    @property
+    def tohu_id(self):
+        """
+        Return (truncated) md5 hash representing this generator.
+        We truncate the hash simply for readability, as this is
+        purely intended for debugging purposes and the risk of
+        any collisions will be negligible.
+        """
+        myhash = hashlib.md5(str(id(self)).encode()).hexdigest()
+        return myhash[:6]
+
+
+class Constant(TohuBaseGenerator):
     """
     Generator which produces a constant sequence (repeating the same value indefinitely).
     """
 
     def __init__(self, value):
+        super().__init__()
         self.value = value
 
     def __repr__(self):
@@ -33,7 +74,7 @@ class Constant:
         return self.value
 
 
-class Boolean:
+class Boolean(TohuBaseGenerator):
     """
     Generator which produces random boolean values (True or False) with a given probability.
     """
@@ -45,7 +86,7 @@ class Boolean:
         p: float
             The probability that True is returned. Must be between 0.0 and 1.0.
         """
-        # super().__init__()
+        super().__init__()
         self.p = p
         self.randgen = Random()
         self.dtype = bool
@@ -62,7 +103,7 @@ class Boolean:
         return self.randgen.random() < self.p
 
 
-class Integer:
+class Integer(TohuBaseGenerator):
     """
     Generator which produces random integers k in the range low <= k <= high.
     """
@@ -76,6 +117,7 @@ class Integer:
         high: integer or TohuBaseGenerator
             Upper bound (inclusive).
         """
+        super().__init__()
         self.low = low
         self.high = high
         self.randgen = Random()
@@ -91,7 +133,7 @@ class Integer:
         return self.randgen.randint(self.low, self.high)
 
 
-class HashDigest:
+class HashDigest(TohuBaseGenerator):
     """
     Generator which produces a sequence of hex strings representing hash digest values.
     """
@@ -111,6 +153,7 @@ class HashDigest:
             If True, return the hex string using lowercase letters. The default
             uses uppercase letters. This only has an effect if `as_bytes=False`.
         """
+        super().__init__()
         if not as_bytes and (length % 2) != 0:
             raise ValueError(
                 f"Length must be an even number if as_bytes=False because it "
@@ -144,7 +187,7 @@ class HashDigest:
         return self._maybe_convert_to_uppercase(self._maybe_convert_to_hex(val))
 
 
-class FakerGenerator:
+class FakerGenerator(TohuBaseGenerator):
     """
     Generator which produces random elements using one of the methods supported by faker. [1]
 
@@ -166,7 +209,7 @@ class FakerGenerator:
         ----------
         [1] https://faker.readthedocs.io/
         """
-        # super().__init__()
+        super().__init__()
         self.method = method
         self.locale = locale
         self.faker_args = faker_args
