@@ -56,9 +56,6 @@ class Constant(TohuBaseGenerator):
         super().__init__()
         self.value = value
 
-    def __repr__(self):
-        return f"<Constant: {self.value!r}>"
-
     def reset(self, seed):
         """
         Note that the value of the `seed` argument is ignored because
@@ -91,9 +88,6 @@ class Boolean(TohuBaseGenerator):
         self.randgen = Random()
         self.dtype = bool
 
-    def __repr__(self):
-        return f"<Boolean: p={self.p!r}>"
-
     def reset(self, seed):
         # super().reset(seed)
         self.randgen.seed(seed)
@@ -121,9 +115,6 @@ class Integer(TohuBaseGenerator):
         self.low = low
         self.high = high
         self.randgen = Random()
-
-    def __repr__(self):
-        return f"<Integer: low={self.low!r}, high={self.high!r}>"
 
     def reset(self, seed):
         self.randgen.seed(seed)
@@ -175,9 +166,6 @@ class HashDigest(TohuBaseGenerator):
         self._maybe_convert_to_uppercase = identity if (self.as_bytes or lowercase) else str.upper
         self.dtype = str
 
-    def __repr__(self):
-        return f"<HashDigest: length={self.length!r}, as_bytes={self.as_bytes!r}, lowercase={self.lowercase!r}>"
-
     def reset(self, seed):
         self.randgen.seed(seed)
         return self
@@ -217,9 +205,6 @@ class FakerGenerator(TohuBaseGenerator):
         self.fake = Faker(locale=locale)
         self.randgen = getattr(self.fake, method)
         self.fake.seed_instance(None)  # seed instance to ensure we are decoupled from the global random state
-
-    def __repr__(self):
-        return f"<FakerGenerator: method={self.method!r}, locale={self.locale!r}, faker_args={self.faker_args!r}>"
 
     def reset(self, seed):
         # super().reset(seed)
