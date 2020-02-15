@@ -3,6 +3,7 @@ Your friendly synthetic data generator
 """
 
 from .dummy import dummy_function
+from .primitive_generators import *
 
 from ._version import get_versions
 
