@@ -96,7 +96,7 @@
       <div class="md-flex__cell md-flex__cell--shrink">
         <a href="../.." title="Tohu" aria-label="Tohu" class="md-header-nav__button md-logo">
           
-            <i class="md-icon">flare</i>
+            <img alt="logo" src="../../images/logo_white.svg" width="24" height="24">
           
         </a>
       </div>
@@ -166,7 +166,7 @@
   <label class="md-nav__title md-nav__title--site" for="__drawer">
     <a href="../.." title="Tohu" class="md-nav__button md-logo">
       
-        <i class="md-icon">flare</i>
+        <img alt="logo" src="../../images/logo_white.svg" width="48" height="48">
       
     </a>
     Tohu
@@ -259,16 +259,50 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#creating-a-primitive-generator" class="md-nav__link">
-    Creating a primitive generator
+  <a href="#example-using-integer-to-produce-random-integers" class="md-nav__link">
+    Example: using Integer to produce random integers
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#producing-random-values-using-the-generator" class="md-nav__link">
-    Producing random values using the generator
+  <a href="#analysing-the-example" class="md-nav__link">
+    Analysing the example
   </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creating-the-integer-generator" class="md-nav__link">
+    Creating the Integer generator
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resetting-the-generator" class="md-nav__link">
+    Resetting the generator
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#producing-individual-random-values" class="md-nav__link">
+    Producing individual random values
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#producing-a-sequence-of-random-values" class="md-nav__link">
+    Producing a sequence of random values
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -504,6 +538,18 @@
   </li>
 
     
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../attributions/" title="Attributions" class="md-nav__link">
+      Attributions
+    </a>
+  </li>
+
+    
   </ul>
 </nav>
                   </div>
@@ -532,16 +578,50 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#creating-a-primitive-generator" class="md-nav__link">
-    Creating a primitive generator
+  <a href="#example-using-integer-to-produce-random-integers" class="md-nav__link">
+    Example: using Integer to produce random integers
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#producing-random-values-using-the-generator" class="md-nav__link">
-    Producing random values using the generator
+  <a href="#analysing-the-example" class="md-nav__link">
+    Analysing the example
   </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creating-the-integer-generator" class="md-nav__link">
+    Creating the Integer generator
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resetting-the-generator" class="md-nav__link">
+    Resetting the generator
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#producing-individual-random-values" class="md-nav__link">
+    Producing individual random values
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#producing-a-sequence-of-random-values" class="md-nav__link">
+    Producing a sequence of random values
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -564,21 +644,44 @@
                 
                 <h1 id="the-basic-building-blocks-primitive-generators">The Basic Building Blocks: Primitive Generators<a class="headerlink" href="#the-basic-building-blocks-primitive-generators" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>The most fundamental building blocks of <code>tohu</code> are the so-called "primitive" generators. A primitive generator is a random generator which produces values of a specific "type" (in a somewhat loose sense of the word). For example, there are primitive generators which produce random integers, random boolean values, random names, etc.</p>
+<p>The most fundamental building blocks of <code>tohu</code> are the so-called "primitive" generators. A primitive generator is simply a random generator which knows how to produce values of a specific "type" (in a slightly loose sense of the word). For example, there are primitive generators which produce random integers, random boolean values, random names, etc. (see <a href="../../reference_guides/primitive_generators/">here</a> for a full list).</p>
 <p>The reason they are called "primitive" is because they do not depend on any other generators in <code>tohu</code>, and they can be combined into more complex generators (see subsequent sections).</p>
-<p>A full list of all primitive generators can be found <a href="../../reference_guides/primitive_generators/">here</a>.</p>
-<p>This section illustrates how to create and use primitive generators directly. However, in practical use you typically won't create them manually as we do here. Instead, they will be created as part of a <code>CustomGenerator</code> (see section [TODO]). </p>
-<p>However, it is useful to get a feel for how they work under the hood, so let's look at a couple of examples.</p>
-<h2 id="creating-a-primitive-generator">Creating a primitive generator<a class="headerlink" href="#creating-a-primitive-generator" title="Permanent link">&para;</a></h2>
+<p>This section illustrates how to create and use primitive generators directly. Note that in practical use you will rarely need or want to create them manually as we do here - typically, they will be created as part of a <code>CustomGenerator</code> (TODO: see section [...]). However, it is useful to get a feel for how they work under the hood, so let's look at an example.</p>
+<h2 id="example-using-integer-to-produce-random-integers">Example: using <code>Integer</code> to produce random integers<a class="headerlink" href="#example-using-integer-to-produce-random-integers" title="Permanent link">&para;</a></h2>
 <p>For our first example, let's use the <code>Integer</code> generator, which produces random integers in a given range.</p>
+<p>Here is the full code snippet and its output (we will look at this line by line in the next section).</p>
 <div class='jupyterInputCell'>
 
 <div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">tohu.primitive_generators</span> <span class="kn">import</span> <span class="n">Integer</span>
+
+<span class="c1"># Create an instance of an Integer generator</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">Integer</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">12345</span><span class="p">)</span>
+
+<span class="c1"># Produce a single value</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">))</span>
+
+<span class="c1"># Produce a few more values manually</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">))</span>
+
+<span class="c1"># Produce a sequence of values</span>
+<span class="c1">#g.generate(num=10, seed=12345)</span>
 </code></pre></div>
 
 </div>
 
-<p>Let's create an <code>Integer</code> generator that will produce values between 100 and 200.</p>
+<div class='jupyterOutputCell'>
+<div class="codehilite"><pre><span></span><code>153
+193
+101
+138
+</code></pre></div>
+</div>
+
+<h2 id="analysing-the-example">Analysing the example<a class="headerlink" href="#analysing-the-example" title="Permanent link">&para;</a></h2>
+<h3 id="creating-the-integer-generator">Creating the <code>Integer</code> generator<a class="headerlink" href="#creating-the-integer-generator" title="Permanent link">&para;</a></h3>
+<p>First we create an <code>Integer</code> generator that will produce values between 100 and 200.</p>
 <div class='jupyterInputCell'>
 
 <div class="codehilite"><pre><span></span><code><span class="n">g</span> <span class="o">=</span> <span class="n">Integer</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
@@ -586,6 +689,7 @@
 
 </div>
 
+<h3 id="resetting-the-generator">Resetting the generator<a class="headerlink" href="#resetting-the-generator" title="Permanent link">&para;</a></h3>
 <p>Before we actually make it produce any values, we first reset the generator. The purpose of this is to initialize the internal (pseudo-)random number generator so that the output is reproducible. The <code>seed</code> argument which we pass to the <code>reset</code> method can have any value. As long as you pass the same seed the generator will produce the same sequence of output values, which ensures reproducibility.</p>
 <div class='jupyterInputCell'>
 
@@ -599,7 +703,7 @@
 </code></pre></div>
 </div>
 
-<h2 id="producing-random-values-using-the-generator">Producing random values using the generator<a class="headerlink" href="#producing-random-values-using-the-generator" title="Permanent link">&para;</a></h2>
+<h3 id="producing-individual-random-values">Producing individual random values<a class="headerlink" href="#producing-individual-random-values" title="Permanent link">&para;</a></h3>
 <p>Now that we have a primitive generator in a well-defined state, how can we produce values using this generator? One way of doing this is to call <code>next()</code> on it, which will ask <code>g</code> to produce a single new value for us.</p>
 <div class='jupyterInputCell'>
 
@@ -631,6 +735,7 @@
 </code></pre></div>
 </div>
 
+<h3 id="producing-a-sequence-of-random-values">Producing a sequence of random values<a class="headerlink" href="#producing-a-sequence-of-random-values" title="Permanent link">&para;</a></h3>
 <p>While this works ok, it quickly becomes cumbersome if we need a lot of values. A more convenient way is to call the <code>generate</code> method. We can pass the number of elements we want, as well as (optionally) a seed. If the seed is given, this internally calls <code>reset</code>, which ensures that the returned sequence is reproducible (see above).</p>
 <div class='jupyterInputCell'>
 
