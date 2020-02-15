@@ -7,3 +7,4 @@ arrange:
   # - api-docs-tohu
   - ADRs
   - CHANGELOG.md
+  - attributions.md

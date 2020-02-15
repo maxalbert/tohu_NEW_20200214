@@ -15,8 +15,7 @@ theme:
    palette:
      primary: "Teal"
      accent: "Teal"
-   logo:
-     icon: "flare"
+   logo: "images/logo_white.svg"
 extra_css:
   - css/extra.css
 
