@@ -1,3 +1,4 @@
 arrange:
   - README.md
   - the_basic_building_blocks_primitive_generators.ipynb
+  - custom_generators.ipynb
