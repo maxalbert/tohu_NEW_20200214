@@ -1,6 +1,6 @@
 import warnings
 
-from .base import TohuBaseGenerator
+from .base import TohuBaseGenerator, SeedGenerator
 
 
 def find_tohu_generators(x):
@@ -20,6 +20,7 @@ class CustomGenerator(TohuBaseGenerator):
 
     def __init__(self):
         super().__init__()
+        self.seed_generator = SeedGenerator()
         self._tohu_generators = find_tohu_generators(self)
 
     def __next__(self):
@@ -27,5 +28,12 @@ class CustomGenerator(TohuBaseGenerator):
         return {name: next(g) for (name, g) in self._tohu_generators.items()}
 
     def reset(self, seed=None):
-        warnings.warn("FIXME: implement reset() properly!")
+        # First reset the internal seed generator
+        self.seed_generator.reset(seed)
+
+        # Then reset each constituent generator using
+        # a fresh seed produced by the seed generator.
+        for _, g in self._tohu_generators.items():
+            g.reset(next(self.seed_generator))
+
         return self
