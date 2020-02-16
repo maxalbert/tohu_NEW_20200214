@@ -1,0 +1,4 @@
+arrange:
+  - seed_generator.ipynb
+  - tohu_items_class.ipynb
+  - debugging_support.ipynb
