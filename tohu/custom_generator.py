@@ -1,6 +1,5 @@
-import warnings
-
 from .base import TohuBaseGenerator, SeedGenerator
+from .item_list import ItemList
 from .tohu_items_class import make_tohu_items_class, derive_tohu_items_class_name
 
 
@@ -25,12 +24,13 @@ class CustomGenerator(TohuBaseGenerator):
         self._tohu_generators = find_tohu_generators(self)
 
         tohu_items_class_name = derive_tohu_items_class_name(self.__class__.__name__)
-        self._tohu_items_class = make_tohu_items_class(tohu_items_class_name, self._tohu_generators.keys())
+        field_names = self._tohu_generators.keys()
+        self._tohu_items_class = make_tohu_items_class(tohu_items_class_name, field_names)
 
     def __next__(self):
         return self._tohu_items_class(*(next(g) for g in self._tohu_generators.values()))
 
-    def reset(self, seed=None):
+    def reset(self, seed):
         # First reset the internal seed generator
         self.seed_generator.reset(seed)
 
@@ -40,3 +40,6 @@ class CustomGenerator(TohuBaseGenerator):
             g.reset(next(self.seed_generator))
 
         return self
+
+    def generate(self, num, *, seed):
+        return ItemList(self.generate_as_list(num, seed=seed), self._tohu_items_class)
