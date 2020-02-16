@@ -34,6 +34,7 @@ pytest-cov = { version = "*", optional = true }
 twine = { version = "*", optional = true }
 wheel = { version = "*", optional = true }
 attrs = "^19.3.0"
+pandas = "^1.0.1"
 
 [tool.poetry.dev-dependencies]
 
