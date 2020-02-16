@@ -33,6 +33,7 @@ pytest-cov = { version = "*", optional = true }
 
 twine = { version = "*", optional = true }
 wheel = { version = "*", optional = true }
+attrs = "^19.3.0"
 
 [tool.poetry.dev-dependencies]
 
