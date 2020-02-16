@@ -1,16 +1,19 @@
 import attr
+import re
 
-__all__ = ["make_tohu_items_class"]
+from typing import List
+
+__all__ = ["make_tohu_items_class", "derive_tohu_items_class_name"]
 
 
-def make_tohu_items_class(clsname, field_names):
+def make_tohu_items_class(clsname: str, field_names: List[str]):
     """
     Parameters
     ----------
-    clsname: string
+    clsname: str
         Name of the class to be created.
 
-    field_names: list of strings
+    field_names: list of str
         Names of the field attributes of the class to be created.
     """
     item_cls = attr.make_class(clsname, {name: attr.ib() for name in field_names}, repr=True, cmp=True, frozen=True)
@@ -44,3 +47,26 @@ def make_tohu_items_class(clsname, field_names):
     item_cls.as_tuple = lambda self: attr.astuple(self)
     item_cls.is_unset = False
     return item_cls
+
+
+def derive_tohu_items_class_name(custom_gen_cls_name: str):
+    """
+    Given the name of a custom generator class, return the name of the associated tohu items class.
+    This is derived simply by removing the `...Generator` suffix from the custom generator class name.
+    If this class doesn't end with `Generator`, an error is raised.
+
+    Parameters
+    ----------
+    custom_gen_cls_name : str
+        Name of the custom generator class.
+
+    Returns
+    -------
+    name : str
+        Name of the tohu items class associated with the custom generator.
+    """
+    m = re.match("^(.*)Generator$", custom_gen_cls_name)
+    if m:
+        return m.group(1)
+    else:
+        raise ValueError(f"Custom generator class name must end with 'Generator'. Got: {custom_gen_cls_name}")
