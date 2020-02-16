@@ -1,6 +1,7 @@
 import warnings
 
 from .base import TohuBaseGenerator, SeedGenerator
+from .tohu_items_class import make_tohu_items_class, derive_tohu_items_class_name
 
 
 def find_tohu_generators(x):
@@ -23,9 +24,11 @@ class CustomGenerator(TohuBaseGenerator):
         self.seed_generator = SeedGenerator()
         self._tohu_generators = find_tohu_generators(self)
 
+        tohu_items_class_name = derive_tohu_items_class_name(self.__class__.__name__)
+        self._tohu_items_class = make_tohu_items_class(tohu_items_class_name, self._tohu_generators.keys())
+
     def __next__(self):
-        warnings.warn("TODO: return items as TohuItemS rather than dicts!")
-        return {name: next(g) for (name, g) in self._tohu_generators.items()}
+        return self._tohu_items_class(*(next(g) for g in self._tohu_generators.values()))
 
     def reset(self, seed=None):
         # First reset the internal seed generator
