@@ -1,2 +1,5 @@
 arrange:
   - README.md
+  - primitive_generators.ipynb
+  - item_list.ipynb
+  - internals
