@@ -30,7 +30,7 @@ plugins:
 #          source_repo: "https://github.com/maxalbert/tohu_NEW_20200214/tree/master"
   - mknotebooks:
       execute: false
-      # write_markdown: false
+      # write_markdown: true
       # preamble: "notebook_preamble.py"
       # timeout: 600
 
