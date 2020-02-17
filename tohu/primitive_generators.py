@@ -6,7 +6,7 @@ from random import Random
 from .base import TohuBaseGenerator
 from .utils import identity
 
-__all__ = ["Constant", "Boolean", "Integer", "HashDigest", "FakerGenerator"]
+__all__ = ["Constant", "Boolean", "Integer", "HashDigest", "FakerGenerator", "SelectOne"]
 
 
 class Constant(TohuBaseGenerator):
@@ -175,3 +175,21 @@ class FakerGenerator(TohuBaseGenerator):
 
     def __next__(self):
         return self.randgen(**self.faker_args)
+
+
+class SelectOne(TohuBaseGenerator):
+    """
+    Generator which produces random elements chosen from a fixed sequence of items.
+    """
+
+    def __init__(self, items):
+        super().__init__()
+        self.items = list(items)  #  TOOD: for efficiency, only do this if items is a generator?
+        self.randgen = Random()
+
+    def reset(self, seed):
+        # super().reset(seed)
+        self.randgen.seed(seed)
+
+    def __next__(self):
+        return self.randgen.choice(self.items)
