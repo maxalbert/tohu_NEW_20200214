@@ -1,4 +1,5 @@
 import pandas as pd
+from typing import Union, List, Sequence, Dict, Type
 from .field_selector import FieldSelector
 
 
@@ -11,7 +12,7 @@ class ItemList:
     interactively.
     """
 
-    def __init__(self, items, tohu_items_cls):
+    def __init__(self, items: List, tohu_items_cls: Type):
         assert isinstance(items, list)
         self.items = items
         self.num_items = len(self.items)
@@ -26,7 +27,25 @@ class ItemList:
     def __iter__(self):
         return iter(self.items)
 
-    def to_df(self, fields=None):
+    def to_df(self, fields: Union[Sequence[str], Dict[str, str]] = None):
+        """
+        Convert list of items to a pandas dataframe.
+
+        Each item is exported as a separate row, with the columns representing the fields.
+
+        Parameters
+        ----------
+        fields : list or dict, default None
+            If given, this allows to specify a subset of fields to export,
+            and to rearrange the order. If `fields` is a dictionary, its
+            items should be of the form {<new_colname>: <field_name>},
+            and this allows to specify different names for the columns of
+            the resulting dataframes than the existing field names.
+
+        Returns
+        -------
+        result : pandas.DataFrame
+        """
         fs = FieldSelector(self.tohu_items_cls, fields=fields)
         df = pd.DataFrame(fs(self.items), columns=fs.fields)
         return df
