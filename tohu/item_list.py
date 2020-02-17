@@ -49,3 +49,14 @@ class ItemList:
         fs = FieldSelector(self.tohu_items_cls, fields=fields)
         df = pd.DataFrame(fs(self.items), columns=fs.fields)
         return df
+
+    def head(self, n: int = 5):
+        """
+        Return the first `n` rows after exporting items to a pandas dataframe.
+
+        Parameters
+        ----------
+        n : int, default 5
+            Number of rows to return.
+        """
+        return self.to_df().head(n)
