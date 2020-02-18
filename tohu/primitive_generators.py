@@ -91,7 +91,7 @@ class Float(TohuBaseGenerator):
     Generator which produces random floating point numbers x in the range low <= x <= high.
     """
 
-    def __init__(self, low, high):
+    def __init__(self, low: float, high: float, ndigits: int = None):
         """
         Parameters
         ----------
@@ -99,11 +99,16 @@ class Float(TohuBaseGenerator):
             Lower bound (inclusive).
         high: integer
             Upper bound (inclusive).
+        ndigits: integer, default None
+            Number of digits to which generated numbers should
+            be truncated. Default: None (= no truncation).
         """
         super().__init__()
         self.low = low
         self.high = high
         self.randgen = Random()
+        self.decimals = ndigits
+        self._maybe_truncate = identity if ndigits is None else lambda x: round(x, ndigits)
 
     def reset(self, seed):
         # super().reset(seed)
@@ -111,7 +116,7 @@ class Float(TohuBaseGenerator):
         return self
 
     def __next__(self):
-        return self.randgen.uniform(self.low, self.high)
+        return self._maybe_truncate(self.randgen.uniform(self.low, self.high))
 
 
 class HashDigest(TohuBaseGenerator):
