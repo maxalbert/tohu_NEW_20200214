@@ -19,11 +19,11 @@ class FieldSelector:
         else:  # pragma: no cover
             raise TypeError(f"Invalid 'fields' argument: {fields}")
 
-        if not set(self.fields.values()).issubset(self.tohu_items_cls.field_names):
-            raise ValueError("Field names must be a subset of the fields defined on `tohu_items_cls`.")
-            # logger.warning("Field names are not a subset of the fields defined on `tohu_items_cls`.")
-            # logger.warning("TODO: Ensure we can deal with nested fields!")
-
+        # if not set(self.fields.values()).issubset(self.tohu_items_cls.field_names):
+        #     raise ValueError("Field names must be a subset of the fields defined on `tohu_items_cls`.")
+        #     # logger.warning("Field names are not a subset of the fields defined on `tohu_items_cls`.")
+        #     # logger.warning("TODO: Ensure we can deal with nested fields!")
+        #
         self.field_selectors = {new_name: attrgetter(orig_name) for new_name, orig_name in self.fields.items()}
 
     def __call__(self, items: typing.Iterable) -> typing.Iterable:
