@@ -32,6 +32,10 @@ class Constant(TohuBaseGenerator):
     def __next__(self):
         return self.value
 
+    def spawn(self):
+        new_gen = Constant(self.value)
+        return new_gen
+
 
 class Boolean(TohuBaseGenerator):
     """
@@ -57,6 +61,14 @@ class Boolean(TohuBaseGenerator):
 
     def __next__(self):
         return self.randgen.random() < self.p
+
+    def spawn(self):
+        new_gen = Boolean(p=self.p)
+        new_gen._set_state_from(self)
+        return new_gen
+
+    def _set_state_from(self, other):
+        self.randgen.setstate(other.randgen.getstate())
 
 
 class Integer(TohuBaseGenerator):
@@ -85,6 +97,14 @@ class Integer(TohuBaseGenerator):
     def __next__(self):
         return self.randgen.randint(self.low, self.high)
 
+    def spawn(self):
+        new_gen = Integer(self.low, self.high)
+        new_gen._set_state_from(self)
+        return new_gen
+
+    def _set_state_from(self, other):
+        self.randgen.setstate(other.randgen.getstate())
+
 
 class Float(TohuBaseGenerator):
     """
@@ -107,7 +127,7 @@ class Float(TohuBaseGenerator):
         self.low = low
         self.high = high
         self.randgen = Random()
-        self.decimals = ndigits
+        self.ndigits = ndigits
         self._maybe_truncate = identity if ndigits is None else lambda x: round(x, ndigits)
 
     def reset(self, seed):
@@ -117,6 +137,14 @@ class Float(TohuBaseGenerator):
 
     def __next__(self):
         return self._maybe_truncate(self.randgen.uniform(self.low, self.high))
+
+    def spawn(self):
+        new_gen = Float(low=self.low, high=self.high, ndigits=self.ndigits)
+        new_gen._set_state_from(self)
+        return new_gen
+
+    def _set_state_from(self, other):
+        self.randgen.setstate(other.randgen.getstate())
 
 
 class HashDigest(TohuBaseGenerator):
@@ -169,6 +197,14 @@ class HashDigest(TohuBaseGenerator):
         val = self.randgen.bytes(self._internal_length)
         return self._maybe_convert_to_uppercase(self._maybe_convert_to_hex(val))
 
+    def spawn(self):
+        new_gen = HashDigest(length=self.length, as_bytes=self.as_bytes, lowercase=self.lowercase)
+        new_gen._set_state_from(self)
+        return new_gen
+
+    def _set_state_from(self, other):
+        self.randgen.set_state(other.randgen.get_state())
+
 
 class FakerGenerator(TohuBaseGenerator):
     """
@@ -209,6 +245,14 @@ class FakerGenerator(TohuBaseGenerator):
     def __next__(self):
         return self.randgen(**self.faker_args)
 
+    def spawn(self):
+        new_gen = FakerGenerator(method=self.method, locale=self.locale, **self.faker_args)
+        new_gen._set_state_from(self)
+        return new_gen
+
+    def _set_state_from(self, other):
+        self.fake.random.setstate(other.fake.random.getstate())
+
 
 class SelectOne(TohuBaseGenerator):
     """
@@ -226,3 +270,11 @@ class SelectOne(TohuBaseGenerator):
 
     def __next__(self):
         return self.randgen.choice(self.items)
+
+    def spawn(self):
+        new_gen = SelectOne(self.items)
+        new_gen._set_state_from(self)
+        return new_gen
+
+    def _set_state_from(self, other):
+        self.randgen.setstate(other.randgen.getstate())
