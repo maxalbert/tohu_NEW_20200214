@@ -31,8 +31,15 @@ class CustomGenerator(TohuBaseGenerator):
         return self._tohu_items_class(*(next(g) for g in self._tohu_generators.values()))
 
     def reset(self, seed):
-        # First reset the internal seed generator
-        self.seed_generator.reset(seed)
+        # First reset the internal seed generator. We prepend the provided seed
+        # with the class hierarchy of this generator to avoid a situation where
+        # two different custom generator classes contain constituent generators
+        # of the same type at the same positions in their definition. Otherwise
+        # this would lead to them producing the same elements, which may be
+        # undesired and may lead to accidental.
+        str_class_hierarchy = ",".join([str(cls.__name__) for cls in self.__class__.__mro__])
+        internal_seed = f"{str_class_hierarchy}{seed}"
+        self.seed_generator.reset(internal_seed)
 
         # Then reset each constituent generator using
         # a fresh seed produced by the seed generator.
