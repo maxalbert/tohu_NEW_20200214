@@ -27,6 +27,7 @@ class Constant(TohuBaseGenerator):
         The only reason it accepts this argument is for consistency
         with other tohu generators.
         """
+        super().reset(seed)
         return self
 
     def __next__(self):
@@ -55,7 +56,7 @@ class Boolean(TohuBaseGenerator):
         self.dtype = bool
 
     def reset(self, seed):
-        # super().reset(seed)
+        super().reset(seed)
         self.randgen.seed(seed)
         return self
 
@@ -91,6 +92,7 @@ class Integer(TohuBaseGenerator):
         self.randgen = Random()
 
     def reset(self, seed):
+        super().reset(seed)
         self.randgen.seed(seed)
         return self
 
@@ -131,7 +133,7 @@ class Float(TohuBaseGenerator):
         self._maybe_truncate = identity if ndigits is None else lambda x: round(x, ndigits)
 
     def reset(self, seed):
-        # super().reset(seed)
+        super().reset(seed)
         self.randgen.seed(seed)
         return self
 
@@ -190,6 +192,7 @@ class HashDigest(TohuBaseGenerator):
         self.dtype = str
 
     def reset(self, seed):
+        super().reset(seed)
         self.randgen.seed(seed)
         return self
 
@@ -238,7 +241,7 @@ class FakerGenerator(TohuBaseGenerator):
         self.fake.seed_instance(None)  # seed instance to ensure we are decoupled from the global random state
 
     def reset(self, seed):
-        # super().reset(seed)
+        super().reset(seed)
         self.fake.seed_instance(seed)
         return self
 
@@ -265,7 +268,7 @@ class SelectOne(TohuBaseGenerator):
         self.randgen = Random()
 
     def reset(self, seed):
-        # super().reset(seed)
+        super().reset(seed)
         self.randgen.seed(seed)
 
     def __next__(self):

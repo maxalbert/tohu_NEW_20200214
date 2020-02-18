@@ -1,5 +1,6 @@
 import hashlib
 
+from abc import abstractmethod
 from itertools import islice
 from random import Random
 from tqdm import tqdm
@@ -38,6 +39,7 @@ class TohuBaseGenerator:
 
     def __init__(self):
         self.tohu_name = None
+        self.clones = []
 
     def __repr__(self):
         clsname = self.__class__.__name__
@@ -71,6 +73,20 @@ class TohuBaseGenerator:
         """
         myhash = hashlib.md5(str(id(self)).encode()).hexdigest()
         return myhash[:6]
+
+    @abstractmethod
+    def spawn(self):  # pragma: no cover
+        raise NotImplementedError(f"Class {self.__class__.__name__} does not implement method 'spawn'.")
+
+    def clone(self):
+        new_gen = self.spawn()
+        self.clones.append(new_gen)
+        return new_gen
+
+    def reset(self, seed):
+        for c in self.clones:
+            c.reset(seed)
+        return self
 
     def generate_as_stream(self, num, *, seed, progressbar=False):
         """
