@@ -6,7 +6,7 @@ from random import Random
 from .base import TohuBaseGenerator
 from .utils import identity
 
-__all__ = ["Constant", "Boolean", "Integer", "HashDigest", "FakerGenerator", "SelectOne"]
+__all__ = ["Constant", "Boolean", "Integer", "Float", "HashDigest", "FakerGenerator", "SelectOne"]
 
 
 class Constant(TohuBaseGenerator):
@@ -84,6 +84,34 @@ class Integer(TohuBaseGenerator):
 
     def __next__(self):
         return self.randgen.randint(self.low, self.high)
+
+
+class Float(TohuBaseGenerator):
+    """
+    Generator which produces random floating point numbers x in the range low <= x <= high.
+    """
+
+    def __init__(self, low, high):
+        """
+        Parameters
+        ----------
+        low: integer
+            Lower bound (inclusive).
+        high: integer
+            Upper bound (inclusive).
+        """
+        super().__init__()
+        self.low = low
+        self.high = high
+        self.randgen = Random()
+
+    def reset(self, seed):
+        # super().reset(seed)
+        self.randgen.seed(seed)
+        return self
+
+    def __next__(self):
+        return self.randgen.uniform(self.low, self.high)
 
 
 class HashDigest(TohuBaseGenerator):
