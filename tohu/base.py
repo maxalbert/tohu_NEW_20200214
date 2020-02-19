@@ -88,14 +88,15 @@ class TohuBaseGenerator:
             c.reset(seed)
         return self
 
-    def generate_as_stream(self, num, *, seed, progressbar=False):
+    def generate_as_stream(self, num, *, seed=None, progressbar=False):
         """
         Return sequence of `num` elements.
 
         If `seed` is not None, the generator is reset
         using this seed before generating the elements.
         """
-        self.reset(seed)
+        if seed is not None:
+            self.reset(seed)
 
         items = islice(self, num)
         if progressbar:  # pragma: no cover
@@ -103,5 +104,5 @@ class TohuBaseGenerator:
 
         yield from items
 
-    def generate_as_list(self, num, *, seed, progressbar=False):
+    def generate_as_list(self, num, *, seed=None, progressbar=False):
         return list(self.generate_as_stream(num, seed=seed, progressbar=progressbar))
