@@ -281,3 +281,15 @@ class SelectOne(TohuBaseGenerator):
 
     def _set_state_from(self, other):
         self.randgen.setstate(other.randgen.getstate())
+
+
+# PRIMITIVE_GENERATORS = [Constant, Boolean, Integer, Float, HashDigest, FakerGenerator, SelectOne]
+EXEMPLAR_PRIMITIVE_GENERATORS = [
+    Constant("quux"),
+    Boolean(p=0.3),
+    Integer(low=100, high=200),
+    Float(low=2.0, high=5.0, ndigits=3),
+    HashDigest(length=6),
+    FakerGenerator(method="name"),
+    SelectOne(["aa", "bb", "cc", "dd"]),
+]
