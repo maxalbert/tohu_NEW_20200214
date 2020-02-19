@@ -6,7 +6,8 @@ omit =
     */python?.?/*
     */tests/*
     */_version.py
-    */versioneer.py
+    tohu/versioneer.py
+    tohu/logging.py
     *__init__*
 
 exclude_lines =
