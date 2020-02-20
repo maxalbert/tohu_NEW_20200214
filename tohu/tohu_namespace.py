@@ -10,6 +10,12 @@ class TohuNamespaceError(Exception):
 
 
 class NonExistentTohuItemsClass:
+    # This is a placeholder for a proper TohuItemsClass, which will be
+    # created when `TohuNamespace.make_tohu_items_class()` is called.
+    # This only exists to produce a meaningful error message in case
+    # make_tohu_items_class() isn't called before trying to have the
+    # TohuNamespace instance generate items.
+
     def __call__(self):
         raise TohuNamespaceError(
             f"TODO: tohu items class needs to be created before the tohu namespace can generate elements."
@@ -25,7 +31,7 @@ class TohuNamespace:
         self.gen_mapping = {}
 
     def add_generator(self, name, gen):
-        if gen in self.generators.values():
+        if gen in self.gen_mapping:
             gen = Apply(identity, gen)
         gen_spawned = gen.spawn(self.gen_mapping)
         self.generators[name] = gen_spawned
