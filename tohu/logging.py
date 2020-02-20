@@ -5,7 +5,7 @@ __all__ = ["logger"]
 #
 # Create logger
 #
-logger = logging.getLogger("tohu_v7")
+logger = logging.getLogger("tohu")
 logger.setLevel(logging.INFO)
 ch = logging.StreamHandler()
 ch.setLevel(logging.DEBUG)
