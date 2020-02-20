@@ -29,6 +29,10 @@ class CustomGenerator(TohuBaseGenerator):
             self._tohu_namespace.add_generator(name, gen)
         self._tohu_namespace.make_tohu_items_class()
 
+        # Update the instance dict so that the user can access
+        # them directly via the instance attributes if needed.
+        self.__dict__.update(self._tohu_namespace.generators)
+
     def __next__(self):
         return next(self._tohu_namespace)
 
