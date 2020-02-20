@@ -31,6 +31,9 @@ class SeedGenerator:
     def __next__(self):
         return self.randgen.randint(self.minval, self.maxval)
 
+    def _set_state_from(self, other):
+        self.randgen.setstate(other.randgen.getstate())
+
 
 class TohuBaseGenerator:
     """
