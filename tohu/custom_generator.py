@@ -1,6 +1,7 @@
 from .base import TohuBaseGenerator, SeedGenerator
 from .item_list import ItemList
 from .tohu_items_class import make_tohu_items_class, derive_tohu_items_class_name
+from .tohu_namespace import TohuNamespace
 
 
 def find_tohu_generators(x):
@@ -21,32 +22,30 @@ class CustomGenerator(TohuBaseGenerator):
     def __init__(self):
         super().__init__()
         self.seed_generator = SeedGenerator()
-        self._tohu_generators = find_tohu_generators(self)
 
         tohu_items_class_name = derive_tohu_items_class_name(self.__class__.__name__)
-        field_names = self._tohu_generators.keys()
-        self._tohu_items_class = make_tohu_items_class(tohu_items_class_name, field_names)
+        self._tohu_namespace = TohuNamespace(tohu_items_class_name)
+        for name, gen in find_tohu_generators(self).items():
+            self._tohu_namespace.add_generator(name, gen)
+        self._tohu_namespace.make_tohu_items_class()
 
     def __next__(self):
-        return self._tohu_items_class(*(next(g) for g in self._tohu_generators.values()))
+        return next(self._tohu_namespace)
 
     def reset(self, seed):
-        # First reset the internal seed generator. We prepend the provided seed
-        # with the class hierarchy of this generator to avoid a situation where
-        # two different custom generator classes contain constituent generators
-        # of the same type at the same positions in their definition. Otherwise
-        # this would lead to them producing the same elements, which may be
-        # undesired and may lead to accidental.
+        # We construct a new internal seed by prepending the provided seed with
+        # the class hierarchy of this generator. The purpoe of this is to avoid
+        # a situation where two different custom generator classes contain
+        # constituent generators of the same type (and at the same positions
+        # in their definition). Otherwise this would lead to them producing the
+        # same sequence of elements even though they live in two entirely unrelated
+        # custom generators. While this isn't likely to ever be a problem in practice,
+        # it can't do any harm to avoid it.
         str_class_hierarchy = ",".join([str(cls.__name__) for cls in self.__class__.__mro__])
         internal_seed = f"{str_class_hierarchy}{seed}"
-        self.seed_generator.reset(internal_seed)
-
-        # Then reset each constituent generator using
-        # a fresh seed produced by the seed generator.
-        for _, g in self._tohu_generators.items():
-            g.reset(next(self.seed_generator))
+        self._tohu_namespace.reset(internal_seed)
 
         return self
 
     def generate(self, num, *, seed):
-        return ItemList(self.generate_as_list(num, seed=seed), self._tohu_items_class)
+        return ItemList(self.generate_as_list(num, seed=seed), self._tohu_namespace.tohu_items_class)
