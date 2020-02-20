@@ -20,8 +20,18 @@ class Apply(TohuBaseGenerator):
     def reset(self, seed):
         super().reset(seed)
 
-    def spawn(self):
-        new_gen = Apply(self.func, *self.arg_gens, **self.kwarg_gens)
+    def spawn(self, gen_mapping=None):
+        if gen_mapping is None:
+            new_arg_gens = self.arg_gens
+            new_kwarg_gens = self.kwarg_gens
+        else:
+            try:
+                new_arg_gens = [gen_mapping[g.parent] for g in self.arg_gens]
+                new_kwarg_gens = {name: gen_mapping[g.parent] for name, g in self.kwarg_gens.items()}
+            except KeyError:
+                raise ValueError("Generator mapping does not contain a value for some generator!")
+
+        new_gen = Apply(self.func, *new_arg_gens, **new_kwarg_gens)
         new_gen._set_state_from(self)
         return new_gen
 
