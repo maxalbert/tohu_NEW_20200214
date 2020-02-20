@@ -40,6 +40,7 @@ class TohuBaseGenerator:
     def __init__(self):
         self.tohu_name = None
         self.clones = []
+        self.parent = None  # this will only be set for cloned generators to point to their parents
 
     def __repr__(self):
         clsname = self.__class__.__name__
@@ -81,6 +82,7 @@ class TohuBaseGenerator:
     def clone(self):
         new_gen = self.spawn()
         self.clones.append(new_gen)
+        new_gen.parent = self
         return new_gen
 
     def reset(self, seed):
