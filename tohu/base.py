@@ -76,11 +76,11 @@ class TohuBaseGenerator:
         return myhash[:6]
 
     @abstractmethod
-    def spawn(self):  # pragma: no cover
+    def spawn(self, gen_mapping=None):  # pragma: no cover
         raise NotImplementedError(f"Class {self.__class__.__name__} does not implement method 'spawn'.")
 
     def clone(self):
-        new_gen = self.spawn()
+        new_gen = self.spawn(gen_mapping=None)
         self.clones.append(new_gen)
         new_gen.parent = self
         return new_gen
