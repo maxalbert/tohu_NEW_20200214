@@ -1,6 +1,7 @@
 from .base import SeedGenerator
 from .derived_generators import Apply
 from .logging import logger
+from .looping import LoopVariable
 from .utils import identity
 from .tohu_items_class import make_tohu_items_class
 
@@ -53,3 +54,8 @@ class TohuNamespace:
             next_seed = next(self.seed_generator)
             logger.debug(f"  - Resetting {name}={g} with seed={next_seed}")
             g.reset(next_seed)
+
+    def advance_loop_variables(self):
+        for name, g in self.generators.items():
+            if isinstance(g, LoopVariable):
+                g.advance()
