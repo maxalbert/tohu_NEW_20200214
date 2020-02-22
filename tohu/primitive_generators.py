@@ -69,6 +69,7 @@ class Boolean(TohuBaseGenerator):
         return new_gen
 
     def _set_state_from(self, other):
+        super()._set_state_from(other)
         self.randgen.setstate(other.randgen.getstate())
 
 
@@ -105,6 +106,7 @@ class Integer(TohuBaseGenerator):
         return new_gen
 
     def _set_state_from(self, other):
+        super()._set_state_from(other)
         self.randgen.setstate(other.randgen.getstate())
 
 
@@ -146,6 +148,7 @@ class Float(TohuBaseGenerator):
         return new_gen
 
     def _set_state_from(self, other):
+        super()._set_state_from(other)
         self.randgen.setstate(other.randgen.getstate())
 
 
@@ -206,6 +209,7 @@ class HashDigest(TohuBaseGenerator):
         return new_gen
 
     def _set_state_from(self, other):
+        super()._set_state_from(other)
         self.randgen.set_state(other.randgen.get_state())
 
 
@@ -254,6 +258,7 @@ class FakerGenerator(TohuBaseGenerator):
         return new_gen
 
     def _set_state_from(self, other):
+        super()._set_state_from(other)
         self.fake.random.setstate(other.fake.random.getstate())
 
 
@@ -280,6 +285,7 @@ class SelectOne(TohuBaseGenerator):
         return new_gen
 
     def _set_state_from(self, other):
+        super()._set_state_from(other)
         self.randgen.setstate(other.randgen.getstate())
 
 

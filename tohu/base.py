@@ -82,6 +82,9 @@ class TohuBaseGenerator:
     def spawn(self, gen_mapping=None):  # pragma: no cover
         raise NotImplementedError(f"Class {self.__class__.__name__} does not implement method 'spawn'.")
 
+    def _set_state_from(self, other):
+        self.tohu_name = other.tohu_name
+
     def clone(self):
         new_gen = self.spawn(gen_mapping=None)
         self.clones.append(new_gen)
