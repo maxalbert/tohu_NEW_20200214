@@ -613,6 +613,15 @@
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p>[TableOfContents]</p>
+
+</div>
+</div>
+</div>
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Let's first create an <code>ItemList</code> instance, which we use in the rest of this section.</p>
 
 </div>
@@ -686,7 +695,7 @@
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Exporting-to-a-pandas-dataframe">Exporting to a pandas dataframe<a class="anchor-link" href="#Exporting-to-a-pandas-dataframe">&#182;</a></h2>
+<h2 id="Exporting-an-ItemList-to-various-formats">Exporting an <code>ItemList</code> to various formats<a class="anchor-link" href="#Exporting-an-ItemList-to-various-formats">&#182;</a></h2>
 </div>
 </div>
 </div>
@@ -694,7 +703,7 @@
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Default-export">Default export<a class="anchor-link" href="#Default-export">&#182;</a></h3>
+<h3 id="to_df()"><code>to_df()</code><a class="anchor-link" href="#to_df()">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -798,6 +807,14 @@
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="head()"><code>head()</code><a class="anchor-link" href="#head()">&#182;</a></h3>
+</div>
+</div>
+</div>
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>There is also a <code>.head()</code> method, which is analogous to the one for pandas dataframes.</p>
 
 </div>
@@ -880,7 +897,7 @@
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Subsetting-and-rearranging-columns">Subsetting and rearranging columns<a class="anchor-link" href="#Subsetting-and-rearranging-columns">&#182;</a></h3>
+<h2 id="Specifying-which-columns-to-export,-and-in-which-order">Specifying which columns to export, and in which order<a class="anchor-link" href="#Specifying-which-columns-to-export,-and-in-which-order">&#182;</a></h2>
 </div>
 </div>
 </div>
@@ -888,7 +905,7 @@
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We can export only a subset of columns (and/or rearrange them) by specifying a list of field names.</p>
+<p>We can export only a subset of columns, and/or rearrange their order, by specifying a list of field names. In this example we export only the three columns <code>cc</code>, <code>aa</code>, <code>dd</code> (in this order) instead of the full set of columns <code>aa</code>, <code>bb</code>, <code>cc</code>, <code>dd</code>.</p>
 
 </div>
 </div>
@@ -978,7 +995,7 @@
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Custom-field-names">Custom field names<a class="anchor-link" href="#Custom-field-names">&#182;</a></h3>
+<h2 id="Custom-field-names">Custom field names<a class="anchor-link" href="#Custom-field-names">&#182;</a></h2>
 </div>
 </div>
 </div>
@@ -1070,7 +1087,7 @@
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Nested-fields">Nested fields<a class="anchor-link" href="#Nested-fields">&#182;</a></h3>
+<h2 id="Accessing-nested-field-values">Accessing nested field values<a class="anchor-link" href="#Accessing-nested-field-values">&#182;</a></h2>
 </div>
 </div>
 </div>
