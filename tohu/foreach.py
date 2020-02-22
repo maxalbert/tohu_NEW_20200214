@@ -24,8 +24,6 @@ class ForeachGeneratorInstance:
         return f"<@foreach-wrapped {self.cgen_instance} >"
 
     def generate_as_stream(self, *, nums, seed):
-        # TODO: add check that the list `nums` has at least as many values as were given for each of the loop variables!
-
         self.cgen_instance.reset(seed)
 
         for N in nums:
@@ -35,6 +33,9 @@ class ForeachGeneratorInstance:
                 self.cgen_instance.advance_loop_variables()
             except IndexError:
                 break
+
+    def generate_as_list(self, *, nums, seed):
+        return list(self.generate_as_stream(nums=nums, seed=seed))
 
 
 class ForeachGeneratorClass:
