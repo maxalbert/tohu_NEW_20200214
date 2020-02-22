@@ -36,7 +36,7 @@
     
     
       
-        <title>Debugging Support In Tohu - Tohu - Your Friendly Synthetic Data Generator</title>
+        <title>Debugging support - Tohu - Your Friendly Synthetic Data Generator</title>
       
     
     
@@ -64,6 +64,8 @@
     
     
       <link rel="stylesheet" href="../../../css/extra.css">
+    
+      <link rel="stylesheet" href="../../../css/ansi-colours.css">
     
     
       
@@ -107,7 +109,7 @@
             </span>
             <span class="md-header-nav__topic">
               
-                Debugging Support In Tohu
+                Debugging support
               
             </span>
           
@@ -219,8 +221,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../../../tutorials/the_basic_building_blocks_primitive_generators/" title="Primitive Generators - The Basic Building Blocks" class="md-nav__link">
-      Primitive Generators - The Basic Building Blocks
+    <a href="../../../tutorials/primitive_generators_the_basic_building_blocks/" title="Primitive generators the basic building blocks" class="md-nav__link">
+      Primitive generators the basic building blocks
     </a>
   </li>
 
@@ -231,8 +233,20 @@
 
 
   <li class="md-nav__item">
-    <a href="../../../tutorials/custom_generators/" title="Custom Generators" class="md-nav__link">
-      Custom Generators
+    <a href="../../../tutorials/custom_generators/" title="Custom generators" class="md-nav__link">
+      Custom generators
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../tutorials/looping_with_@foreach/" title="Looping with @foreach" class="md-nav__link">
+      Looping with @foreach
     </a>
   </li>
 
@@ -411,18 +425,42 @@
           
           
 
+
+  <li class="md-nav__item">
+    <a href="../../derived_generators/" title="Derived generators" class="md-nav__link">
+      Derived generators
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../item_list/" title="Item list" class="md-nav__link">
+      Item list
+    </a>
+  </li>
+
+        
+          
+          
+          
+
   
 
 
   <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5-3" type="checkbox" id="nav-5-3" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5-5" type="checkbox" id="nav-5-5" checked>
     
-    <label class="md-nav__link" for="nav-5-3">
+    <label class="md-nav__link" for="nav-5-5">
       Internals
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
-      <label class="md-nav__title" for="nav-5-3">
+      <label class="md-nav__title" for="nav-5-5">
         Internals
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -434,8 +472,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../seed_generator/" title="SeedGenerator" class="md-nav__link">
-      SeedGenerator
+    <a href="../seed_generator/" title="Seed generator" class="md-nav__link">
+      Seed generator
     </a>
   </li>
 
@@ -446,8 +484,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../tohu_items_class/" title="Tohu Items" class="md-nav__link">
-      Tohu Items
+    <a href="../tohu_items_class/" title="Tohu items class" class="md-nav__link">
+      Tohu items class
     </a>
   </li>
 
@@ -464,10 +502,22 @@
     <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
     
     
-    <a href="./" title="Debugging Support In Tohu" class="md-nav__link md-nav__link--active">
-      Debugging Support In Tohu
+    <a href="./" title="Debugging support" class="md-nav__link md-nav__link--active">
+      Debugging support
     </a>
     
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../spawning_and_cloning_generators/" title="Spawning and cloning generators" class="md-nav__link">
+      Spawning and cloning generators
+    </a>
   </li>
 
         
@@ -554,16 +604,35 @@
               
                 
                 
-                <h1>Debugging Support In Tohu</h1>
-<div class='jupyterInputCell'>
+                <div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Debugging-Support-In-Tohu">Debugging Support In Tohu<a class="anchor-link" href="#Debugging-Support-In-Tohu">&#182;</a></h1>
+</div>
+</div>
+</div>
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 
 <div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">tohu</span> <span class="kn">import</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">HashDigest</span><span class="p">,</span> <span class="n">CustomGenerator</span>
 </code></pre></div>
 
 </div>
 
+</div>
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Every tohu generator instance has an internal <code>tohu_id</code>.</p>
-<div class='jupyterInputCell'>
+
+</div>
+</div>
+</div>
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 
 <div class="codehilite"><pre><span></span><code><span class="n">g1</span> <span class="o">=</span> <span class="n">Integer</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
 <span class="n">g2</span> <span class="o">=</span> <span class="n">HashDigest</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
@@ -571,7 +640,10 @@
 
 </div>
 
-<div class='jupyterInputCell'>
+</div>
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 
 <div class="codehilite"><pre><span></span><code><span class="c1"># NBVAL_IGNORE_OUTPUT</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">g1</span><span class="o">.</span><span class="n">tohu_id</span><span class="p">)</span>
@@ -580,14 +652,34 @@
 
 </div>
 
-<div class='jupyterOutputCell'>
-<div class="codehilite"><pre><span></span><code>17bf26
-bfc231
-</code></pre></div>
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>d4bebd
+8e8319
+</pre>
+</div>
 </div>
 
+</div>
+</div>
+
+</div>
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>This is also included when generators are printed.</p>
-<div class='jupyterInputCell'>
+
+</div>
+</div>
+</div>
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 
 <div class="codehilite"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">g1</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">g2</span><span class="p">)</span>
@@ -595,27 +687,69 @@ bfc231
 
 </div>
 
-<div class='jupyterOutputCell'>
-<div class="codehilite"><pre><span></span><code>&lt;Integer (id=17bf26)&gt;
-&lt;HashDigest (id=bfc231)&gt;
-</code></pre></div>
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>&lt;Integer (id=d4bebd)&gt;
+&lt;HashDigest (id=8e8319)&gt;
+</pre>
+</div>
 </div>
 
+</div>
+</div>
+
+</div>
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>For debugging purposes, it is possible to assign an explicit name, which can make it easier to identify tohu generators when working out dependencies between them.</p>
-<div class='jupyterInputCell'>
+
+</div>
+</div>
+</div>
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 
 <div class="codehilite"><pre><span></span><code><span class="n">g1</span><span class="o">.</span><span class="n">set_tohu_name</span><span class="p">(</span><span class="s2">&quot;g1&quot;</span><span class="p">)</span>
 </code></pre></div>
 
 </div>
 
-<div class='jupyterOutputCell'>
-<div class="codehilite"><pre><span></span><code>&lt;g1: Integer (id=17bf26)&gt;
-</code></pre></div>
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;g1: Integer (id=d4bebd)&gt;</pre>
 </div>
 
+</div>
+
+</div>
+</div>
+
+</div>
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>A common way to do this is when defining custom generators, like this:</p>
-<div class='jupyterInputCell'>
+
+</div>
+</div>
+</div>
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 
 <div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">QuuxGenerator</span><span class="p">(</span><span class="n">CustomGenerator</span><span class="p">):</span>
     <span class="n">aa</span> <span class="o">=</span> <span class="n">Integer</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
@@ -624,14 +758,46 @@ bfc231
 
 </div>
 
-<div class='jupyterInputCell'>
+</div>
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="codehilite"><pre><span></span><code><span class="n">QuuxGenerator</span><span class="o">.</span><span class="n">bb</span>
+</code></pre></div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;bb: HashDigest (id=f32938)&gt;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 
 <div class="codehilite"><pre><span></span><code><span class="n">g</span> <span class="o">=</span> <span class="n">QuuxGenerator</span><span class="p">()</span>
 </code></pre></div>
 
 </div>
 
-<div class='jupyterInputCell'>
+</div>
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 
 <div class="codehilite"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">aa</span><span class="p">)</span>
@@ -640,11 +806,22 @@ bfc231
 
 </div>
 
-<div class='jupyterOutputCell'>
-<div class="codehilite"><pre><span></span><code>&lt;QuuxGenerator (id=cbdd27)&gt;
-&lt;Integer (id=8f15b3)&gt;
-&lt;bb: HashDigest (id=9eeeef)&gt;
-</code></pre></div>
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>&lt;QuuxGenerator (id=223cd2)&gt;
+&lt;Integer (id=8c1902)&gt;
+&lt;bb: HashDigest (id=21e033)&gt;
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
                 
                   
@@ -667,7 +844,7 @@ bfc231
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../tohu_items_class/" title="Tohu Items" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../tohu_items_class/" title="Tohu items class" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -676,19 +853,19 @@ bfc231
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Tohu Items
+                Tohu items class
               </span>
             </div>
           </a>
         
         
-          <a href="../../../ADRs/" title="What are ADRs?" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../spawning_and_cloning_generators/" title="Spawning and cloning generators" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                What are ADRs?
+                Spawning and cloning generators
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">

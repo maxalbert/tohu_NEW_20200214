@@ -36,7 +36,7 @@
     
     
       
-        <title>Running the tests - Tohu - Your Friendly Synthetic Data Generator</title>
+        <title>Derived generators - Tohu - Your Friendly Synthetic Data Generator</title>
       
     
     
@@ -109,7 +109,7 @@
             </span>
             <span class="md-header-nav__topic">
               
-                Running the tests
+                Derived generators
               
             </span>
           
@@ -260,12 +260,10 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+  <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
     
     <label class="md-nav__link" for="nav-3">
       How to guides
@@ -283,7 +281,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../" title="Introduction" class="md-nav__link">
+    <a href="../../how_to_guides/" title="Introduction" class="md-nav__link">
       Introduction
     </a>
   </li>
@@ -295,7 +293,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../installation/" title="Installing tohu" class="md-nav__link">
+    <a href="../../how_to_guides/installation/" title="Installing tohu" class="md-nav__link">
       Installing tohu
     </a>
   </li>
@@ -307,7 +305,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../setting_up_dev_environment/" title="Setting up a development environment" class="md-nav__link">
+    <a href="../../how_to_guides/setting_up_dev_environment/" title="Setting up a development environment" class="md-nav__link">
       Setting up a development environment
     </a>
   </li>
@@ -317,18 +315,11 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-    
-    <a href="./" title="Running the tests" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../../how_to_guides/running_the_tests/" title="Running the tests" class="md-nav__link">
       Running the tests
     </a>
-    
   </li>
 
         
@@ -389,10 +380,12 @@
       
       
 
+  
 
-  <li class="md-nav__item md-nav__item--nested">
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
     
     <label class="md-nav__link" for="nav-5">
       Reference guides
@@ -410,7 +403,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../reference_guides/" title="Introduction" class="md-nav__link">
+    <a href="../" title="Introduction" class="md-nav__link">
       Introduction
     </a>
   </li>
@@ -422,7 +415,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../reference_guides/primitive_generators/" title="Primitive generators" class="md-nav__link">
+    <a href="../primitive_generators/" title="Primitive generators" class="md-nav__link">
       Primitive generators
     </a>
   </li>
@@ -432,11 +425,18 @@
           
           
 
+  
 
-  <li class="md-nav__item">
-    <a href="../../reference_guides/derived_generators/" title="Derived generators" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+    
+    <a href="./" title="Derived generators" class="md-nav__link md-nav__link--active">
       Derived generators
     </a>
+    
   </li>
 
         
@@ -446,7 +446,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../reference_guides/item_list/" title="Item list" class="md-nav__link">
+    <a href="../item_list/" title="Item list" class="md-nav__link">
       Item list
     </a>
   </li>
@@ -477,7 +477,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../reference_guides/internals/seed_generator/" title="Seed generator" class="md-nav__link">
+    <a href="../internals/seed_generator/" title="Seed generator" class="md-nav__link">
       Seed generator
     </a>
   </li>
@@ -489,7 +489,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../reference_guides/internals/tohu_items_class/" title="Tohu items class" class="md-nav__link">
+    <a href="../internals/tohu_items_class/" title="Tohu items class" class="md-nav__link">
       Tohu items class
     </a>
   </li>
@@ -501,7 +501,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../reference_guides/internals/debugging_support/" title="Debugging support" class="md-nav__link">
+    <a href="../internals/debugging_support/" title="Debugging support" class="md-nav__link">
       Debugging support
     </a>
   </li>
@@ -513,7 +513,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../reference_guides/internals/spawning_and_cloning_generators/" title="Spawning and cloning generators" class="md-nav__link">
+    <a href="../internals/spawning_and_cloning_generators/" title="Spawning and cloning generators" class="md-nav__link">
       Spawning and cloning generators
     </a>
   </li>
@@ -602,20 +602,114 @@
               
                 
                 
-                <h1>Running the tests</h1>
-<div class="codehilite"><pre><span></span><code>$ poetry run pytest
+                <div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Derived-Generators">Derived Generators<a class="anchor-link" href="#Derived-Generators">&#182;</a></h1>
+</div>
+</div>
+</div>
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Apply">Apply<a class="anchor-link" href="#Apply">&#182;</a></h2>
+</div>
+</div>
+</div>
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The <code>Apply</code> generator takes a function <code>f</code> as its first argument and a number of other tohu generators as its subsequent arguments. The items it produces are calculated by applying <code>f</code> to the items produced by the remaining generators.</p>
+
+</div>
+</div>
+</div>
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">tohu</span> <span class="kn">import</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">Apply</span>
+<span class="kn">from</span> <span class="nn">tohu.utils</span> <span class="kn">import</span> <span class="n">print_generated_sequence</span>
 </code></pre></div>
 
-<p>Example output:
-<div class="codehilite"><pre><span></span><code>============================= test session starts ==============================
-platform linux -- Python 3.8.1, pytest-3.10.1, py-1.8.0, pluggy-0.13.0
-rootdir: /path/to/code/tohu, inifile:
-collected 1 item
+</div>
 
-tests/test_tohu.py .                                           [100%]
+</div>
 
-=========================== 1 passed in 0.11 seconds ===========================
-</code></pre></div></p>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="codehilite"><pre><span></span><code><span class="n">x_gen</span> <span class="o">=</span> <span class="n">Integer</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">99</span><span class="p">)</span>
+<span class="n">y_gen</span> <span class="o">=</span> <span class="n">Integer</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">99</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+
+</div>
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">100</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+</code></pre></div>
+
+</div>
+
+</div>
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="codehilite"><pre><span></span><code><span class="n">c</span> <span class="o">=</span> <span class="n">Apply</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">x_gen</span><span class="p">,</span> <span class="n">y_gen</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+
+</div>
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="codehilite"><pre><span></span><code><span class="n">x_gen</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">11111</span><span class="p">)</span>
+<span class="n">y_gen</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">22222</span><span class="p">)</span>
+<span class="n">c</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">33333</span><span class="p">)</span>
+
+<span class="n">print_generated_sequence</span><span class="p">(</span><span class="n">x_gen</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{:&lt;4d}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;  &#39;</span><span class="p">)</span>
+<span class="n">print_generated_sequence</span><span class="p">(</span><span class="n">y_gen</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{:4d}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;  &#39;</span><span class="p">)</span>
+<span class="n">print_generated_sequence</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;  &#39;</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Generated sequence: 52    13    55    56    96    61    24    75    91    31  
+Generated sequence:   43    93    48    72    86    61    33    88    62    33
+Generated sequence: 5243  1393  5548  5672  9686  6161  2433  7588  9162  3133
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>TODO:</strong> Explain why resetting <code>c</code> basically has no effect here and that the constituent generators of an <code>Apply</code> generator are <em>not</em> automatically reset when the latter is reset (rather, this needs to happen externally). Also explain the reasoning behind this.</p>
+
+</div>
+</div>
+</div>
                 
                   
                 
@@ -637,7 +731,7 @@ tests/test_tohu.py .                                           [100%]
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../setting_up_dev_environment/" title="Setting up a development environment" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../primitive_generators/" title="Primitive generators" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -646,19 +740,19 @@ tests/test_tohu.py .                                           [100%]
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Setting up a development environment
+                Primitive generators
               </span>
             </div>
           </a>
         
         
-          <a href="../../discussions/" title="Introduction" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../item_list/" title="Item list" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Introduction
+                Item list
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">

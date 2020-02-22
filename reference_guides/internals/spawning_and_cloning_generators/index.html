@@ -36,7 +36,7 @@
     
     
       
-        <title>Seed generator - Tohu - Your Friendly Synthetic Data Generator</title>
+        <title>Spawning and cloning generators - Tohu - Your Friendly Synthetic Data Generator</title>
       
     
     
@@ -109,7 +109,7 @@
             </span>
             <span class="md-header-nav__topic">
               
-                Seed generator
+                Spawning and cloning generators
               
             </span>
           
@@ -470,18 +470,11 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-    
-    <a href="./" title="Seed generator" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../seed_generator/" title="Seed generator" class="md-nav__link">
       Seed generator
     </a>
-    
   </li>
 
         
@@ -513,11 +506,18 @@
           
           
 
+  
 
-  <li class="md-nav__item">
-    <a href="../spawning_and_cloning_generators/" title="Spawning and cloning generators" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+    
+    <a href="./" title="Spawning and cloning generators" class="md-nav__link md-nav__link--active">
       Spawning and cloning generators
     </a>
+    
   </li>
 
         
@@ -607,7 +607,7 @@
                 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="SeedGenerator">SeedGenerator<a class="anchor-link" href="#SeedGenerator">&#182;</a></h1>
+<h1 id="Spawning-and-cloning-generators">Spawning and cloning generators<a class="anchor-link" href="#Spawning-and-cloning-generators">&#182;</a></h1>
 </div>
 </div>
 </div>
@@ -615,8 +615,15 @@
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The <code>SeedGenerator</code> is is used internally by <code>tohu</code> to produce seeds with which to reset other generators (for example, the constituent generators in a <code>CustomGenerator</code> instance).</p>
-<p>It produces integers in the range from 0 to 2^32-1, as illustrated below.</p>
+<h2 id="Spawning-generators">Spawning generators<a class="anchor-link" href="#Spawning-generators">&#182;</a></h2>
+</div>
+</div>
+</div>
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Calling the <code>spawn()</code> method on any generator produced an exact copy if itself. It is of the same type, initialised with the same parameters and initially has the same state. However, they are otherwise completely independent and resetting one of them has no influence on the other (this is different for cloned generators, see below).</p>
 
 </div>
 </div>
@@ -625,7 +632,8 @@
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">tohu.base</span> <span class="kn">import</span> <span class="n">SeedGenerator</span>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">tohu</span> <span class="kn">import</span> <span class="n">Integer</span>
+<span class="kn">from</span> <span class="nn">tohu.utils</span> <span class="kn">import</span> <span class="n">print_generated_sequence</span>
 </code></pre></div>
 
 </div>
@@ -635,19 +643,28 @@
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
-<div class="codehilite"><pre><span></span><code><span class="n">seed_generator</span> <span class="o">=</span> <span class="n">SeedGenerator</span><span class="p">()</span>
+<div class="codehilite"><pre><span></span><code><span class="n">g</span> <span class="o">=</span> <span class="n">Integer</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">12345</span><span class="p">)</span>
+<span class="n">h</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">spawn</span><span class="p">()</span>
 </code></pre></div>
 
 </div>
 
 </div>
 
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Initially, <code>h</code> is in the same state as <code>g</code> so they will produce the same elements</p>
+
+</div>
+</div>
+</div>
+
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
-<div class="codehilite"><pre><span></span><code><span class="n">seed_generator</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="mi">12345</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">seed_generator</span><span class="p">))</span>
+<div class="codehilite"><pre><span></span><code><span class="n">print_generated_sequence</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">print_generated_sequence</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
 </code></pre></div>
 
 </div>
@@ -658,21 +675,141 @@
 
 <div class="output_area">
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>831769172
-2430986565
-694443915
-1859447115
-2376066489
-2164385946
-636282949
-3087940365
-1466990855
-101022850
+<pre>Generated sequence: 153, 193, 101, 138, 147, 124, 134, 172, 155, 120
+Generated sequence: 153, 193, 101, 138, 147
 </pre>
 </div>
 </div>
 
 </div>
+</div>
+
+</div>
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>If we reset <code>g</code> with a different seed, it will start producing different elements (but <code>h</code> will continue to produce the same elements that <code>g</code> did; notice that the following five produced by <code>h</code> are the same as the last five for <code>g</code> in the previous output).</p>
+
+</div>
+</div>
+</div>
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="codehilite"><pre><span></span><code><span class="n">g</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">99999</span><span class="p">)</span>
+<span class="n">print_generated_sequence</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">print_generated_sequence</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Generated sequence: 115, 139, 164, 183, 194
+Generated sequence: 124, 134, 172, 155, 120
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Cloning-generators">Cloning generators<a class="anchor-link" href="#Cloning-generators">&#182;</a></h2>
+</div>
+</div>
+</div>
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Cloning a generator <code>g</code> also produces an identical copy <code>g_clone</code>. However, unlike in spawning the two are now "linked" in the sense that whenever <code>g</code> is reset it will also automatically reset <code>g_clone</code> using the same seed (but not vice versa!).</p>
+<p><strong>TODO</strong>: Should it even be allowed to reset a cloned generator? Or shall we disallow it for now?</p>
+
+</div>
+</div>
+</div>
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="codehilite"><pre><span></span><code><span class="n">g</span> <span class="o">=</span> <span class="n">Integer</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">12345</span><span class="p">)</span>
+<span class="n">h</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
+</code></pre></div>
+
+</div>
+
+</div>
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="codehilite"><pre><span></span><code><span class="n">print_generated_sequence</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">print_generated_sequence</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Generated sequence: 153, 193, 101, 138, 147, 124, 134, 172, 155, 120
+Generated sequence: 153, 193, 101, 138, 147
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="codehilite"><pre><span></span><code><span class="n">g</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">99999</span><span class="p">)</span>
+<span class="n">print_generated_sequence</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">print_generated_sequence</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Generated sequence: 115, 139, 164, 183, 194
+Generated sequence: 115, 139, 164, 183, 194
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="codehilite"><pre><span></span><code>
+</code></pre></div>
+
 </div>
 
 </div>
@@ -697,7 +834,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../../item_list/" title="Item list" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../debugging_support/" title="Debugging support" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -706,19 +843,19 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Item list
+                Debugging support
               </span>
             </div>
           </a>
         
         
-          <a href="../tohu_items_class/" title="Tohu items class" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../../../ADRs/" title="What are ADRs?" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Tohu items class
+                What are ADRs?
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">

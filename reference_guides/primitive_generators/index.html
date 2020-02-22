@@ -65,6 +65,8 @@
     
       <link rel="stylesheet" href="../../css/extra.css">
     
+      <link rel="stylesheet" href="../../css/ansi-colours.css">
+    
     
       
     
@@ -84,10 +86,6 @@
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
-    
-      <a href="#constant" tabindex="0" class="md-skip">
-        Skip to content
-      </a>
     
     
       <header class="md-header" data-md-component="header">
@@ -223,8 +221,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../../tutorials/the_basic_building_blocks_primitive_generators/" title="Primitive Generators - The Basic Building Blocks" class="md-nav__link">
-      Primitive Generators - The Basic Building Blocks
+    <a href="../../tutorials/primitive_generators_the_basic_building_blocks/" title="Primitive generators the basic building blocks" class="md-nav__link">
+      Primitive generators the basic building blocks
     </a>
   </li>
 
@@ -235,8 +233,20 @@
 
 
   <li class="md-nav__item">
-    <a href="../../tutorials/custom_generators/" title="Custom Generators" class="md-nav__link">
-      Custom Generators
+    <a href="../../tutorials/custom_generators/" title="Custom generators" class="md-nav__link">
+      Custom generators
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorials/looping_with_@foreach/" title="Looping with @foreach" class="md-nav__link">
+      Looping with @foreach
     </a>
   </li>
 
@@ -411,65 +421,34 @@
     <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
     
     
-      <label class="md-nav__link md-nav__link--active" for="__toc">
-        Primitive generators
-      </label>
-    
     <a href="./" title="Primitive generators" class="md-nav__link md-nav__link--active">
       Primitive generators
     </a>
     
-      
-<nav class="md-nav md-nav--secondary">
-  
-  
-  
-    <label class="md-nav__title" for="__toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#constant" class="md-nav__link">
-    Constant
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#boolean" class="md-nav__link">
-    Boolean
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#integer" class="md-nav__link">
-    Integer
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#hashdigest" class="md-nav__link">
-    HashDigest
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#fakergenerator" class="md-nav__link">
-    FakerGenerator
-  </a>
-  
-</li>
-      
-      
-      
-      
-      
-    </ul>
-  
-</nav>
-    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../derived_generators/" title="Derived generators" class="md-nav__link">
+      Derived generators
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../item_list/" title="Item list" class="md-nav__link">
+      Item list
+    </a>
   </li>
 
         
@@ -480,13 +459,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5-3" type="checkbox" id="nav-5-3">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5-5" type="checkbox" id="nav-5-5">
     
-    <label class="md-nav__link" for="nav-5-3">
+    <label class="md-nav__link" for="nav-5-5">
       Internals
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
-      <label class="md-nav__title" for="nav-5-3">
+      <label class="md-nav__title" for="nav-5-5">
         Internals
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -498,8 +477,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../internals/seed_generator/" title="SeedGenerator" class="md-nav__link">
-      SeedGenerator
+    <a href="../internals/seed_generator/" title="Seed generator" class="md-nav__link">
+      Seed generator
     </a>
   </li>
 
@@ -510,8 +489,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../internals/tohu_items_class/" title="Tohu Items" class="md-nav__link">
-      Tohu Items
+    <a href="../internals/tohu_items_class/" title="Tohu items class" class="md-nav__link">
+      Tohu items class
     </a>
   </li>
 
@@ -522,8 +501,20 @@
 
 
   <li class="md-nav__item">
-    <a href="../internals/debugging_support/" title="Debugging Support In Tohu" class="md-nav__link">
-      Debugging Support In Tohu
+    <a href="../internals/debugging_support/" title="Debugging support" class="md-nav__link">
+      Debugging support
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../internals/spawning_and_cloning_generators/" title="Spawning and cloning generators" class="md-nav__link">
+      Spawning and cloning generators
     </a>
   </li>
 
@@ -605,71 +596,22 @@
               </div>
             
             
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-<nav class="md-nav md-nav--secondary">
-  
-  
-  
-    <label class="md-nav__title" for="__toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#constant" class="md-nav__link">
-    Constant
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#boolean" class="md-nav__link">
-    Boolean
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#integer" class="md-nav__link">
-    Integer
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#hashdigest" class="md-nav__link">
-    HashDigest
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#fakergenerator" class="md-nav__link">
-    FakerGenerator
-  </a>
-  
-</li>
-      
-      
-      
-      
-      
-    </ul>
-  
-</nav>
-                  </div>
-                </div>
-              </div>
-            
           
           <div class="md-content">
             <article class="md-content__inner md-typeset">
               
                 
                 
-                <h1>Primitive generators</h1>
-<div class='jupyterInputCell'>
+                <div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Primitive-generators">Primitive generators<a class="anchor-link" href="#Primitive-generators">&#182;</a></h1>
+</div>
+</div>
+</div>
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 
 <div class="codehilite"><pre><span></span><code><span class="c1"># Import the primitive generator and helper function used below.</span>
 <span class="kn">from</span> <span class="nn">tohu.primitive_generators</span> <span class="kn">import</span> <span class="o">*</span>
@@ -678,82 +620,296 @@
 
 </div>
 
-<p>This section demonstrates the primitive generators available in <code>tohu</code>.</p>
-<div class="toc">
-<ul>
-<li><a href="#constant">Constant</a></li>
-<li><a href="#boolean">Boolean</a></li>
-<li><a href="#integer">Integer</a></li>
-<li><a href="#hashdigest">HashDigest</a></li>
-<li><a href="#fakergenerator">FakerGenerator</a></li>
-</ul>
 </div>
-<h2 id="constant">Constant<a class="headerlink" href="#constant" title="Permanent link">&para;</a></h2>
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This section demonstrates the primitive generators available in <code>tohu</code>.</p>
+
+</div>
+</div>
+</div>
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>[TOC]</p>
+
+</div>
+</div>
+</div>
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Constant">Constant<a class="anchor-link" href="#Constant">&#182;</a></h2>
+</div>
+</div>
+</div>
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>The <code>Constant</code> generator produces a sequence whose items all have the same fixed value.</p>
-<div class='jupyterInputCell'>
+
+</div>
+</div>
+</div>
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 
 <div class="codehilite"><pre><span></span><code><span class="n">g</span> <span class="o">=</span> <span class="n">Constant</span><span class="p">(</span><span class="s2">&quot;quux&quot;</span><span class="p">)</span>
 </code></pre></div>
 
 </div>
 
-<div class='jupyterInputCell'>
+</div>
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 
 <div class="codehilite"><pre><span></span><code><span class="n">print_generated_sequence</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">99999</span><span class="p">)</span>
 </code></pre></div>
 
 </div>
 
-<div class='jupyterOutputCell'>
-<div class="codehilite"><pre><span></span><code>Generated sequence: quux, quux, quux, quux, quux, quux, quux, quux, quux, quux
-</code></pre></div>
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Generated sequence: quux, quux, quux, quux, quux, quux, quux, quux, quux, quux
+</pre>
+</div>
 </div>
 
-<h2 id="boolean">Boolean<a class="headerlink" href="#boolean" title="Permanent link">&para;</a></h2>
+</div>
+</div>
+
+</div>
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Boolean">Boolean<a class="anchor-link" href="#Boolean">&#182;</a></h2>
+</div>
+</div>
+</div>
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>The <code>Boolean</code> generator produces a sequence of <code>True</code>/<code>False</code> values, where <code>True</code> is returned with probability <code>p</code>.</p>
-<div class='jupyterInputCell'>
+
+</div>
+</div>
+</div>
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 
 <div class="codehilite"><pre><span></span><code><span class="n">g</span> <span class="o">=</span> <span class="n">Boolean</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
 </code></pre></div>
 
 </div>
 
-<div class='jupyterInputCell'>
+</div>
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 
 <div class="codehilite"><pre><span></span><code><span class="n">print_generated_sequence</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">99999</span><span class="p">)</span>
 </code></pre></div>
 
 </div>
 
-<div class='jupyterOutputCell'>
-<div class="codehilite"><pre><span></span><code>Generated sequence: True, False, False, False, False, True, False, False, False, False
-</code></pre></div>
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Generated sequence: True, False, False, False, False, True, False, False, False, False
+</pre>
+</div>
 </div>
 
-<h2 id="integer">Integer<a class="headerlink" href="#integer" title="Permanent link">&para;</a></h2>
+</div>
+</div>
+
+</div>
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Integer">Integer<a class="anchor-link" href="#Integer">&#182;</a></h2>
+</div>
+</div>
+</div>
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>The <code>Integer</code> generator produces random integers in the range between <code>low</code> and <code>high</code> (both inclusive).</p>
-<div class='jupyterInputCell'>
+
+</div>
+</div>
+</div>
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 
 <div class="codehilite"><pre><span></span><code><span class="n">g</span> <span class="o">=</span> <span class="n">Integer</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
 </code></pre></div>
 
 </div>
 
-<div class='jupyterInputCell'>
+</div>
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 
 <div class="codehilite"><pre><span></span><code><span class="n">print_generated_sequence</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">99999</span><span class="p">)</span>
 </code></pre></div>
 
 </div>
 
-<div class='jupyterOutputCell'>
-<div class="codehilite"><pre><span></span><code>Generated sequence: 115, 139, 164, 183, 194, 130, 145, 152, 125, 132
-</code></pre></div>
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Generated sequence: 115, 139, 164, 183, 194, 130, 145, 152, 125, 132
+</pre>
+</div>
 </div>
 
-<h2 id="hashdigest">HashDigest<a class="headerlink" href="#hashdigest" title="Permanent link">&para;</a></h2>
+</div>
+</div>
+
+</div>
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Float">Float<a class="anchor-link" href="#Float">&#182;</a></h2>
+</div>
+</div>
+</div>
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The <code>Float</code> generator produces random floating point numbers x in the range <code>low &lt;= x &lt;= high</code>.</p>
+
+</div>
+</div>
+</div>
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="codehilite"><pre><span></span><code><span class="n">g</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mf">4.0</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+
+</div>
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="codehilite"><pre><span></span><code><span class="n">print_generated_sequence</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">99999</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Generated sequence:
+
+2.240980952225195
+2.618570007385167
+3.9058397807167204
+3.478847343294601
+2.710360026563966
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>It is possible to truncate generated values to a given number of digits by specifying the <code>ndigits</code> argument.</p>
+
+</div>
+</div>
+</div>
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="codehilite"><pre><span></span><code><span class="n">g0</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mf">4.0</span><span class="p">,</span> <span class="n">ndigits</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">g3</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mf">4.0</span><span class="p">,</span> <span class="n">ndigits</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">g5</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mf">4.0</span><span class="p">,</span> <span class="n">ndigits</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="n">print_generated_sequence</span><span class="p">(</span><span class="n">g0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">99999</span><span class="p">)</span>
+<span class="n">print_generated_sequence</span><span class="p">(</span><span class="n">g3</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">99999</span><span class="p">)</span>
+<span class="n">print_generated_sequence</span><span class="p">(</span><span class="n">g5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">99999</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Generated sequence: 2.0, 3.0, 4.0, 3.0, 3.0, 2.0, 3.0, 4.0, 3.0, 4.0
+Generated sequence: 2.241, 2.619, 3.906, 3.479, 2.71, 2.405, 2.811, 3.848, 3.212, 3.646
+Generated sequence: 2.24098, 2.61857, 3.90584, 3.47885, 2.71036, 2.40515, 2.81102, 3.8477, 3.21194, 3.64639
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="HashDigest">HashDigest<a class="anchor-link" href="#HashDigest">&#182;</a></h2>
+</div>
+</div>
+</div>
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>The <code>HashDigest</code> generator produces a sequence of hex strings representing hash digest values. By default, it produces hex strings of the specified length.</p>
-<div class='jupyterInputCell'>
+
+</div>
+</div>
+</div>
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 
 <div class="codehilite"><pre><span></span><code><span class="n">g</span> <span class="o">=</span> <span class="n">HashDigest</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
 <span class="n">print_generated_sequence</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">99999</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -761,19 +917,39 @@
 
 </div>
 
-<div class='jupyterOutputCell'>
-<div class="codehilite"><pre><span></span><code>Generated sequence:
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Generated sequence:
 
 4B4D02
 9097BC
 EC6DF8
 B3E6CA
 EE19B1
-</code></pre></div>
+</pre>
+</div>
 </div>
 
+</div>
+</div>
+
+</div>
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Instead of hex strings, the generator can produce the equivalent byte strings by setting <code>as_bytes=True</code>.</p>
-<div class='jupyterInputCell'>
+
+</div>
+</div>
+</div>
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 
 <div class="codehilite"><pre><span></span><code><span class="n">g</span> <span class="o">=</span> <span class="n">HashDigest</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">as_bytes</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">print_generated_sequence</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">99999</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -781,19 +957,39 @@ EE19B1
 
 </div>
 
-<div class='jupyterOutputCell'>
-<div class="codehilite"><pre><span></span><code>Generated sequence:
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Generated sequence:
 
 b&#39;KM\x02&#39;
 b&#39;\x90\x97\xbc&#39;
 b&#39;\xecm\xf8&#39;
 b&#39;\xb3\xe6\xca&#39;
 b&#39;\xee\x19\xb1&#39;
-</code></pre></div>
+</pre>
+</div>
 </div>
 
+</div>
+</div>
+
+</div>
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>The <code>lowercase</code> keyword can be used to produce hex strings with lowercase characters (note this has no effect when <code>as_bytes=True</code>).</p>
-<div class='jupyterInputCell'>
+
+</div>
+</div>
+</div>
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 
 <div class="codehilite"><pre><span></span><code><span class="n">g</span> <span class="o">=</span> <span class="n">HashDigest</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">lowercase</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">print_generated_sequence</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">99999</span><span class="p">)</span>
@@ -801,14 +997,41 @@ b&#39;\xee\x19\xb1&#39;
 
 </div>
 
-<div class='jupyterOutputCell'>
-<div class="codehilite"><pre><span></span><code>Generated sequence: 4b4d0235, 9097bc5e, ec6df8fc, b3e6caf3, ee19b1d3, 9fc0b7fd, 6f07a116, ac591849, 91fa77c5, f863c55d
-</code></pre></div>
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Generated sequence: 4b4d0235, 9097bc5e, ec6df8fc, b3e6caf3, ee19b1d3, 9fc0b7fd, 6f07a116, ac591849, 91fa77c5, f863c55d
+</pre>
+</div>
 </div>
 
-<h2 id="fakergenerator">FakerGenerator<a class="headerlink" href="#fakergenerator" title="Permanent link">&para;</a></h2>
+</div>
+</div>
+
+</div>
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="FakerGenerator">FakerGenerator<a class="anchor-link" href="#FakerGenerator">&#182;</a></h2>
+</div>
+</div>
+</div>
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p><code>FakerGenerator</code> allows to produce elements using any of the providers provided by the <a href="https://faker.readthedocs.io/en/master/">Faker</a> package. The provider is specified using the <code>method</code> argument. Examples:</p>
-<div class='jupyterInputCell'>
+
+</div>
+</div>
+</div>
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 
 <div class="codehilite"><pre><span></span><code><span class="n">g</span> <span class="o">=</span> <span class="n">FakerGenerator</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;name&quot;</span><span class="p">)</span>
 <span class="n">print_generated_sequence</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">99999</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -816,18 +1039,30 @@ b&#39;\xee\x19\xb1&#39;
 
 </div>
 
-<div class='jupyterOutputCell'>
-<div class="codehilite"><pre><span></span><code>Generated sequence:
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Generated sequence:
 
 Eric Benton
 Heather Harris
 Thomas Obrien
 Amy Cook
 Kenneth Robles
-</code></pre></div>
+</pre>
+</div>
 </div>
 
-<div class='jupyterInputCell'>
+</div>
+</div>
+
+</div>
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 
 <div class="codehilite"><pre><span></span><code><span class="n">g</span> <span class="o">=</span> <span class="n">FakerGenerator</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;address&quot;</span><span class="p">)</span>
 <span class="n">print_generated_sequence</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">99999</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -835,8 +1070,13 @@ Kenneth Robles
 
 </div>
 
-<div class='jupyterOutputCell'>
-<div class="codehilite"><pre><span></span><code>Generated sequence:
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Generated sequence:
 
 356 Richard Valleys
 Madelineton, ME 76205
@@ -848,7 +1088,56 @@ Duncanfort, PA 04949
 East Margaret, KY 58692
 51904 Garcia Walks
 Port Philip, RI 10457
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="SelectOne">SelectOne<a class="anchor-link" href="#SelectOne">&#182;</a></h2>
+</div>
+</div>
+</div>
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><code>SelectOne</code> produces elements that are randomly chosen from a fixed sequence.</p>
+
+</div>
+</div>
+</div>
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="codehilite"><pre><span></span><code><span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">SelectOne</span><span class="p">(</span><span class="n">numbers</span><span class="p">)</span>
+<span class="n">print_generated_sequence</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">99999</span><span class="p">)</span>
 </code></pre></div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Generated sequence: 2, 5, 9, 4, 6, 7, 4, 5, 7, 10, 10, 9, 4, 1, 6, 9, 7, 10, 5, 5
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
                 
                   
@@ -886,13 +1175,13 @@ Port Philip, RI 10457
           </a>
         
         
-          <a href="../internals/seed_generator/" title="SeedGenerator" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../derived_generators/" title="Derived generators" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                SeedGenerator
+                Derived generators
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">

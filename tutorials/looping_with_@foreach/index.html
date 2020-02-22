@@ -36,7 +36,7 @@
     
     
       
-        <title>Custom generators - Tohu - Your Friendly Synthetic Data Generator</title>
+        <title>Looping with @foreach - Tohu - Your Friendly Synthetic Data Generator</title>
       
     
     
@@ -109,7 +109,7 @@
             </span>
             <span class="md-header-nav__topic">
               
-                Custom generators
+                Looping with @foreach
               
             </span>
           
@@ -233,6 +233,18 @@
           
           
 
+
+  <li class="md-nav__item">
+    <a href="../custom_generators/" title="Custom generators" class="md-nav__link">
+      Custom generators
+    </a>
+  </li>
+
+        
+          
+          
+          
+
   
 
 
@@ -241,22 +253,10 @@
     <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
     
     
-    <a href="./" title="Custom generators" class="md-nav__link md-nav__link--active">
-      Custom generators
-    </a>
-    
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../looping_with_@foreach/" title="Looping with @foreach" class="md-nav__link">
+    <a href="./" title="Looping with @foreach" class="md-nav__link md-nav__link--active">
       Looping with @foreach
     </a>
+    
   </li>
 
         
@@ -605,16 +605,7 @@
                 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Custom-Generators">Custom Generators<a class="anchor-link" href="#Custom-Generators">&#182;</a></h1>
-</div>
-</div>
-</div>
-
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>This section introduces "custom generators", which allow to combine individual generators into a single new entity.</p>
-
+<h1 id="Looping-with-@foreach">Looping with <code>@foreach</code><a class="anchor-link" href="#Looping-with-@foreach">&#182;</a></h1>
 </div>
 </div>
 </div>
@@ -631,43 +622,7 @@
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="&#160;Introduction">&#160;Introduction<a class="anchor-link" href="#&#160;Introduction">&#182;</a></h2>
-</div>
-</div>
-</div>
-
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><a href="../../primitive_generators/">Primitive generators</a> are nice, but on their own they are barely more useful than existing random number generators such as Python's built-in <a href="https://docs.python.org/3/library/random.html">random</a> module, <code>numpy</code>'s <a href="https://docs.scipy.org/doc/numpy/reference/random/index.html">random</a> module or the <a href="https://faker.readthedocs.io/en/master/">faker</a> package. (Perhaps the most useful aspect about primitive generators on their own is that they present a consistent interface for generating random items of different types, but this alone rarely justifies the existence of a package like <code>tohu</code>.)</p>
-
-</div>
-</div>
-</div>
-
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>The real power of <code>tohu</code> lies in how it allows to easily combine other generators into "compound" generators. In <code>tohu</code> these are called <code>CustomGenerators</code> (TODO: should this name be changed to <code>CompoundGenerator</code>?).</p>
-
-</div>
-</div>
-</div>
-
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Example:-Generating-&quot;Person&quot;-Records">Example: Generating "Person" Records<a class="anchor-link" href="#Example:-Generating-&quot;Person&quot;-Records">&#182;</a></h2>
-</div>
-</div>
-</div>
-
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Imagine you want to create synthetic data that represents information about a person. For each person you may want to create a name, an age, and a job decription. As we learned <a href="../../primitive_generators/">before</a> in the section about primitive generators, we can generate these kinds of data separately, but how do we combine them into proper "Person" records? The answer is, we use a <code>CustomGenerator</code>.</p>
-<p>Let's look at an example. As before, we present the full example first and then analyse it in more detail.</p>
-
+<h2 id="Single-loop-variable">Single loop variable<a class="anchor-link" href="#Single-loop-variable">&#182;</a></h2>
 </div>
 </div>
 </div>
@@ -675,16 +630,7 @@
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">tohu</span> <span class="kn">import</span> <span class="n">FakerGenerator</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">CustomGenerator</span>
-
-<span class="k">class</span> <span class="nc">PersonGenerator</span><span class="p">(</span><span class="n">CustomGenerator</span><span class="p">):</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="n">FakerGenerator</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;name&quot;</span><span class="p">)</span>
-    <span class="n">age</span> <span class="o">=</span> <span class="n">Integer</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">99</span><span class="p">)</span>
-    <span class="n">job</span> <span class="o">=</span> <span class="n">FakerGenerator</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;job&quot;</span><span class="p">)</span>
-
-<span class="n">g</span> <span class="o">=</span> <span class="n">PersonGenerator</span><span class="p">()</span>
-
-<span class="n">items</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">num</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">12345</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">tohu</span> <span class="kn">import</span> <span class="n">FakerGenerator</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">CustomGenerator</span><span class="p">,</span> <span class="n">foreach</span>
 </code></pre></div>
 
 </div>
@@ -694,7 +640,22 @@
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
-<div class="codehilite"><pre><span></span><code><span class="n">items</span>
+<div class="codehilite"><pre><span></span><code><span class="nd">@foreach</span><span class="p">(</span><span class="n">match_date</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;2000-01-01&quot;</span><span class="p">,</span> <span class="s2">&quot;2000-01-02&quot;</span><span class="p">,</span> <span class="s2">&quot;2000-01-03&quot;</span><span class="p">])</span>
+<span class="k">class</span> <span class="nc">MatchRecordGenerator</span><span class="p">(</span><span class="n">CustomGenerator</span><span class="p">):</span>
+    <span class="n">date</span> <span class="o">=</span> <span class="n">match_date</span>
+    <span class="n">player</span> <span class="o">=</span> <span class="n">FakerGenerator</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;first_name&quot;</span><span class="p">)</span>
+    <span class="n">points_scored</span> <span class="o">=</span> <span class="n">Integer</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+
+</div>
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="codehilite"><pre><span></span><code><span class="n">g</span> <span class="o">=</span> <span class="n">MatchRecordGenerator</span><span class="p">()</span>
+<span class="n">g</span>
 </code></pre></div>
 
 </div>
@@ -707,7 +668,7 @@
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;ItemList containing 5 items&gt;</pre>
+<pre>&lt;@foreach-wrapped &lt;MatchRecordGenerator (id=d84916)&gt; &gt;</pre>
 </div>
 
 </div>
@@ -720,7 +681,7 @@
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
-<div class="codehilite"><pre><span></span><code><span class="nb">list</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><code><span class="nb">list</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">generate_as_stream</span><span class="p">(</span><span class="n">nums</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">seed</span><span class="o">=</span><span class="mi">11111</span><span class="p">))</span>
 </code></pre></div>
 
 </div>
@@ -733,11 +694,15 @@
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>[Person(name=&#39;Katherine Alvarez&#39;, age=2, job=&#39;Local government officer&#39;),
- Person(name=&#39;Eric Hancock&#39;, age=54, job=&#39;Librarian, public&#39;),
- Person(name=&#39;Daniel Chase&#39;, age=56, job=&#39;Multimedia programmer&#39;),
- Person(name=&#39;Kenneth Walls&#39;, age=80, job=&#39;Sales promotion account executive&#39;),
- Person(name=&#39;William Snow&#39;, age=78, job=&#39;Meteorologist&#39;)]</pre>
+<pre>[MatchRecord(date=&#39;2000-01-01&#39;, player=&#39;Tracy&#39;, points_scored=72),
+ MatchRecord(date=&#39;2000-01-01&#39;, player=&#39;Michael&#39;, points_scored=65),
+ MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;Heidi&#39;, points_scored=37),
+ MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;Jesse&#39;, points_scored=4),
+ MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;Kenneth&#39;, points_scored=92),
+ MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;David&#39;, points_scored=70),
+ MatchRecord(date=&#39;2000-01-03&#39;, player=&#39;Jaime&#39;, points_scored=48),
+ MatchRecord(date=&#39;2000-01-03&#39;, player=&#39;Connie&#39;, points_scored=62),
+ MatchRecord(date=&#39;2000-01-03&#39;, player=&#39;Steven&#39;, points_scored=57)]</pre>
 </div>
 
 </div>
@@ -750,7 +715,8 @@
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>While in many respects an <code>ItemList</code> behaves like a regular list, it is more powerful. For example, it supports exporting its items to a pandas dataframe.</p>
+<p>Since we specified three dates in the <code>@foreach</code> call above, we also must provide three values in the list <code>nums</code> (so that the <code>generate_as_stream()</code> method knows how many elements to produce for each generation.</p>
+<p>It is allowed for the list to be longer (in which case subsequent elements are ignored) or shorter (in which case fewer loop iterations are run), as shown below.</p>
 
 </div>
 </div>
@@ -759,7 +725,9 @@
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
-<div class="codehilite"><pre><span></span><code><span class="n">items</span><span class="o">.</span><span class="n">to_df</span><span class="p">()</span>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Here `num` has fewer elements than there are dates we&#39;re looping over,</span>
+<span class="c1"># so the loop iteration for the third date doesn&#39;t happen.</span>
+<span class="nb">list</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">generate_as_stream</span><span class="p">(</span><span class="n">nums</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">seed</span><span class="o">=</span><span class="mi">11111</span><span class="p">))</span>
 </code></pre></div>
 
 </div>
@@ -770,64 +738,181 @@
 
 <div class="output_area">
 
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>name</th>
-      <th>age</th>
-      <th>job</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>Katherine Alvarez</td>
-      <td>2</td>
-      <td>Local government officer</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>Eric Hancock</td>
-      <td>54</td>
-      <td>Librarian, public</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Daniel Chase</td>
-      <td>56</td>
-      <td>Multimedia programmer</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>Kenneth Walls</td>
-      <td>80</td>
-      <td>Sales promotion account executive</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>William Snow</td>
-      <td>78</td>
-      <td>Meteorologist</td>
-    </tr>
-  </tbody>
-</table>
+<div class="output_text output_subarea output_execute_result">
+<pre>[MatchRecord(date=&#39;2000-01-01&#39;, player=&#39;Tracy&#39;, points_scored=72),
+ MatchRecord(date=&#39;2000-01-01&#39;, player=&#39;Michael&#39;, points_scored=65),
+ MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;Heidi&#39;, points_scored=37),
+ MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;Jesse&#39;, points_scored=4),
+ MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;Kenneth&#39;, points_scored=92)]</pre>
 </div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="codehilite"><pre><span></span><code><span class="c1"># Here `num` has more elements than there are dates we&#39;re looping over,</span>
+<span class="c1"># so the additional elements are ignored for looping.</span>
+<span class="nb">list</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">generate_as_stream</span><span class="p">(</span><span class="n">nums</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">seed</span><span class="o">=</span><span class="mi">11111</span><span class="p">))</span>
+</code></pre></div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[MatchRecord(date=&#39;2000-01-01&#39;, player=&#39;Tracy&#39;, points_scored=72),
+ MatchRecord(date=&#39;2000-01-01&#39;, player=&#39;Michael&#39;, points_scored=65),
+ MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;Heidi&#39;, points_scored=37),
+ MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;Jesse&#39;, points_scored=4),
+ MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;Kenneth&#39;, points_scored=92),
+ MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;David&#39;, points_scored=70),
+ MatchRecord(date=&#39;2000-01-03&#39;, player=&#39;Jaime&#39;, points_scored=48),
+ MatchRecord(date=&#39;2000-01-03&#39;, player=&#39;Connie&#39;, points_scored=62),
+ MatchRecord(date=&#39;2000-01-03&#39;, player=&#39;Steven&#39;, points_scored=57)]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Multiple-loop-variables-(at-the-same-level)">Multiple loop variables (at the same level)<a class="anchor-link" href="#Multiple-loop-variables-(at-the-same-level)">&#182;</a></h2>
+</div>
+</div>
+</div>
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="codehilite"><pre><span></span><code><span class="nd">@foreach</span><span class="p">(</span><span class="n">match_date</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;2000-01-01&quot;</span><span class="p">,</span> <span class="s2">&quot;2000-01-02&quot;</span><span class="p">,</span> <span class="s2">&quot;2000-01-03&quot;</span><span class="p">],</span> <span class="n">match_venue</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Town A&quot;</span><span class="p">,</span> <span class="s2">&quot;Town B&quot;</span><span class="p">,</span> <span class="s2">&quot;Town C&quot;</span><span class="p">])</span>
+<span class="k">class</span> <span class="nc">MatchRecordGenerator</span><span class="p">(</span><span class="n">CustomGenerator</span><span class="p">):</span>
+    <span class="n">date</span> <span class="o">=</span> <span class="n">match_date</span>
+    <span class="n">venue</span> <span class="o">=</span> <span class="n">match_venue</span>
+    <span class="n">player</span> <span class="o">=</span> <span class="n">FakerGenerator</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;first_name&quot;</span><span class="p">)</span>
+    <span class="n">points_scored</span> <span class="o">=</span> <span class="n">Integer</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+
+</div>
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="codehilite"><pre><span></span><code><span class="n">g</span> <span class="o">=</span> <span class="n">MatchRecordGenerator</span><span class="p">()</span>
+</code></pre></div>
+
+</div>
+
+</div>
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Note that in the generated items, the match date and venue are always matched up:</p>
+
+</div>
+</div>
+</div>
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="codehilite"><pre><span></span><code><span class="n">g</span><span class="o">.</span><span class="n">generate_as_list</span><span class="p">(</span><span class="n">nums</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">seed</span><span class="o">=</span><span class="mi">11111</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[MatchRecord(date=&#39;2000-01-01&#39;, venue=&#39;Town A&#39;, player=&#39;Ashlee&#39;, points_scored=36),
+ MatchRecord(date=&#39;2000-01-01&#39;, venue=&#39;Town A&#39;, player=&#39;Kelly&#39;, points_scored=78),
+ MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Jennifer&#39;, points_scored=13),
+ MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Sandra&#39;, points_scored=16),
+ MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Todd&#39;, points_scored=93),
+ MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Stephen&#39;, points_scored=6),
+ MatchRecord(date=&#39;2000-01-03&#39;, venue=&#39;Town C&#39;, player=&#39;Joanna&#39;, points_scored=3),
+ MatchRecord(date=&#39;2000-01-03&#39;, venue=&#39;Town C&#39;, player=&#39;John&#39;, points_scored=36),
+ MatchRecord(date=&#39;2000-01-03&#39;, venue=&#39;Town C&#39;, player=&#39;Robert&#39;, points_scored=66)]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>If one of the loop variables contains more elements than the other, the additional ones are ignored. In other words, we can only do as many loop iterations as specified by the loop variable with the fewest values. Here we can only produce elements for two dates (even there are four venues).</p>
+
+</div>
+</div>
+</div>
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="codehilite"><pre><span></span><code><span class="nd">@foreach</span><span class="p">(</span><span class="n">match_date</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;2000-01-01&quot;</span><span class="p">,</span> <span class="s2">&quot;2000-01-02&quot;</span><span class="p">],</span> <span class="n">match_venue</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Town A&quot;</span><span class="p">,</span> <span class="s2">&quot;Town B&quot;</span><span class="p">,</span> <span class="s2">&quot;Town C&quot;</span><span class="p">,</span> <span class="s2">&quot;Town D&quot;</span><span class="p">])</span>
+<span class="k">class</span> <span class="nc">MatchRecordGenerator</span><span class="p">(</span><span class="n">CustomGenerator</span><span class="p">):</span>
+    <span class="n">date</span> <span class="o">=</span> <span class="n">match_date</span>
+    <span class="n">venue</span> <span class="o">=</span> <span class="n">match_venue</span>
+    <span class="n">player</span> <span class="o">=</span> <span class="n">FakerGenerator</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;first_name&quot;</span><span class="p">)</span>
+    <span class="n">points_scored</span> <span class="o">=</span> <span class="n">Integer</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+
+</div>
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="codehilite"><pre><span></span><code><span class="n">g</span> <span class="o">=</span> <span class="n">MatchRecordGenerator</span><span class="p">()</span>
+<span class="n">g</span><span class="o">.</span><span class="n">generate_as_list</span><span class="p">(</span><span class="n">nums</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">seed</span><span class="o">=</span><span class="mi">11111</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[MatchRecord(date=&#39;2000-01-01&#39;, venue=&#39;Town A&#39;, player=&#39;Ashlee&#39;, points_scored=36),
+ MatchRecord(date=&#39;2000-01-01&#39;, venue=&#39;Town A&#39;, player=&#39;Kelly&#39;, points_scored=78),
+ MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Jennifer&#39;, points_scored=13),
+ MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Sandra&#39;, points_scored=16),
+ MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Todd&#39;, points_scored=93),
+ MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Stephen&#39;, points_scored=6)]</pre>
 </div>
 
 </div>
@@ -857,7 +942,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../primitive_generators_the_basic_building_blocks/" title="Primitive generators the basic building blocks" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../custom_generators/" title="Custom generators" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -866,19 +951,19 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Primitive generators the basic building blocks
+                Custom generators
               </span>
             </div>
           </a>
         
         
-          <a href="../looping_with_@foreach/" title="Looping with @foreach" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../../how_to_guides/" title="Introduction" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Looping with @foreach
+                Introduction
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
