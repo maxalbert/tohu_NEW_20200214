@@ -35,6 +35,11 @@ class LoopVariable(TohuBaseGenerator):
         except IndexError:
             raise IndexError("Loop variable has been exhausted.")
 
+        # TODO: Should advancing of clones happen before we raise the
+        #       IndexError above, or afterwards, or does it not matter?
+        for c in self.clones:
+            c.advance()
+
     def spawn(self, gen_mapping=None):
         new_obj = LoopVariable(self.name, self.values)
         new_obj._set_state_from(self)
