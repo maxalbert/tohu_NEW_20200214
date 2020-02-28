@@ -1,4 +1,5 @@
 arrange:
   - seed_generator.ipynb
   - tohu_items_class.ipynb
+  - loop_variable.ipynb
   - debugging_support.ipynb
