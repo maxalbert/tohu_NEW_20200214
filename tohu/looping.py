@@ -1,8 +1,11 @@
+from typing import Sequence
 from .base import TohuBaseGenerator
 
 
 class LoopVariable(TohuBaseGenerator):
     def __init__(self, name, values):
+        if not isinstance(values, Sequence) or isinstance(values, str):
+            raise TypeError(f"Argument `values` must be a list, tuple, or similar sequence type. Got: {type(values)}")
         super().__init__()
         self.name = name
         self.values = values
