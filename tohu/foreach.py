@@ -18,35 +18,35 @@ def restore_globals(global_vars, names, clashes):
 
 
 class ForeachGeneratorInstance:
-    def __init__(self, cgen_instance):
-        self.cgen_instance = cgen_instance
+    def __init__(self, custom_gen_instance):
+        self.custom_gen_instance = custom_gen_instance
 
     def __repr__(self):
-        return f"<@foreach-wrapped {self.cgen_instance} >"
+        return f"<@foreach-wrapped {self.custom_gen_instance} >"
 
-    def generate_as_stream(self, *, nums, seed):
+    def generate_as_stream(self, *, num_iterations, seed=None):
         if seed is not None:
-            self.cgen_instance.reset(seed)
+            self.custom_gen_instance.reset(seed)
 
-        for N in nums:
+        for N in num_iterations:
             # TODO: reset the generator within each loop instead of only once at the beginning?
-            yield from self.cgen_instance.generate_as_stream(N)
+            yield from self.custom_gen_instance.generate_as_stream(N)
             try:
-                self.cgen_instance.advance_loop_variables()
+                self.custom_gen_instance.advance_loop_variables()
             except IndexError:
                 break
 
-    def generate_as_list(self, *, nums, seed):
-        return list(self.generate_as_stream(nums=nums, seed=seed))
+    def generate_as_list(self, *, num_iterations, seed):
+        return list(self.generate_as_stream(num_iterations=num_iterations, seed=seed))
 
 
 class ForeachGeneratorClass:
-    def __init__(self, cgen_cls):
-        self.cgen_cls = cgen_cls
+    def __init__(self, custom_gen_cls):
+        self.custom_gen_cls = custom_gen_cls
 
     def __call__(self, *args, **kwargs):
-        cgen_instance = self.cgen_cls(*args, **kwargs)
-        return ForeachGeneratorInstance(cgen_instance)
+        custom_gen_instance = self.custom_gen_cls(*args, **kwargs)
+        return ForeachGeneratorInstance(custom_gen_instance)
 
 
 def foreach(**var_defs):
