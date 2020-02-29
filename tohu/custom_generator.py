@@ -54,5 +54,5 @@ class CustomGenerator(TohuBaseGenerator):
     def advance_loop_variables(self):
         self._tohu_namespace.advance_loop_variables()
 
-    def generate(self, num, *, seed):
+    def generate(self, num, *, seed=None):
         return ItemList(self.generate_as_list(num, seed=seed), self._tohu_namespace.tohu_items_class)
