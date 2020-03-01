@@ -65,7 +65,10 @@ class TohuNamespace:
             logger.debug(f"  - Resetting {name}={g} with seed={next_seed}")
             g.reset(next_seed)
 
+    @property
+    def loop_variables(self):
+        return [g for g in self._all_generators.values() if isinstance(g, LoopVariable)]
+
     def advance_loop_variables(self):
-        for name, g in self._all_generators.items():
-            if isinstance(g, LoopVariable):
-                g.advance()
+        for g in self.loop_variables:
+            g.advance()

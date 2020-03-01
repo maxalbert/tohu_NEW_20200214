@@ -51,6 +51,10 @@ class CustomGenerator(TohuBaseGenerator):
 
         return self
 
+    @property
+    def loop_variables(self):
+        return self._tohu_namespace.loop_variables
+
     def advance_loop_variables(self):
         self._tohu_namespace.advance_loop_variables()
 
