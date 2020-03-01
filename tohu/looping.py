@@ -1,5 +1,12 @@
+from collections import defaultdict
 from typing import Sequence
 from .base import TohuBaseGenerator
+
+__all = ["LoopVariable", "LoopRunner"]
+
+
+def is_sequence(seq):
+    return isinstance(seq, Sequence) and not isinstance(seq, str)
 
 
 class UnassignedValuesError(Exception):
@@ -75,3 +82,90 @@ class LoopVariable(TohuBaseGenerator):
     def _set_state_from(self, other):
         self.idx = other.idx
         self.cur_value = other.cur_value
+
+
+class LoopRunner:
+    def __init__(self):
+        self.loop_variables_per_level = defaultdict(dict)
+        self.loop_variables = {}
+        self.max_level = 0
+
+    def add_loop_variable(self, name, loop_variable, *, level):
+        # Check constraints on `level` argument to ensure levels
+        #  are contiguous between 1 and max_level.
+        if level < 1:
+            raise ValueError(f"Level must be >= 1 (got: {level})")
+        if level > self.max_level + 1:
+            raise ValueError(
+                f"Level must be at most <= max_level + 1. " f"Got: level={level}, max_level={self.max_level}."
+            )
+
+        self.max_level = max(self.max_level, level)
+        self.loop_variables_per_level[level][name] = loop_variable
+        self.loop_variables[name] = loop_variable
+
+    def get_loop_var_values(self):
+        return {name: x.cur_value for name, x in self.loop_variables.items()}
+
+    @property
+    def unassigned_variables(self):
+        unassigned_vars = []
+        for name, var in self.loop_variables.items():
+            if not var.has_values_assigned:
+                unassigned_vars.append(name)
+        return unassigned_vars
+
+    @property
+    def has_unassigned_variables(self):
+        return self.unassigned_variables != []
+
+    def assign_values(self, name, values):
+        self.loop_variables[name].assign_values(values)
+
+    def advance_loop_vars_at_level(self, level):
+        for _, x in self.loop_variables_per_level[level].items():
+            x.advance()
+
+    def reset_loop_vars_below_level(self, level):
+        for cur_level in range(1, level):
+            for _, x in self.loop_variables_per_level[cur_level].items():
+                x.reset()
+
+    def run_loop_to_generate_items_with(self, g, num_iterations):
+        if self.has_unassigned_variables:
+            raise UnassignedValuesError(
+                f"LoopRunner has variables with unassigned values: {', '.join(self.unassigned_variables)}"
+            )
+
+        def ensure_callable(num_iterations):
+            if callable(num_iterations):
+                return num_iterations
+            elif isinstance(num_iterations, int):
+
+                def constant_func(**kwargs):
+                    return num_iterations
+
+                return constant_func
+            elif is_sequence(num_iterations):
+                raise NotImplementedError("TODO: Implement me!")
+            else:
+                raise TypeError(f"Unsupported type for `num_iterations`: {type(num_iterations)}")
+
+        f_num_iterations = ensure_callable(num_iterations)
+
+        yield from self._run_loop_impl(g, f_num_iterations, self.max_level)
+
+    def _run_loop_impl(self, g, f_num_iterations, cur_level):
+        cur_loop_var_values = self.get_loop_var_values()
+
+        if cur_level == 0:
+            num_iterations = f_num_iterations(**cur_loop_var_values)
+            yield from g.generate(num=num_iterations)
+        else:
+            while True:
+                self.reset_loop_vars_below_level(cur_level)
+                yield from self._run_loop_impl(g, f_num_iterations, cur_level - 1)
+                try:
+                    self.advance_loop_vars_at_level(cur_level)
+                except IndexError:
+                    break
