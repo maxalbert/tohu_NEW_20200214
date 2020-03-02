@@ -86,7 +86,7 @@ class LoopVariable(TohuBaseGenerator):
 
 class LoopRunner:
     def __init__(self):
-        self.loop_variables_per_level = defaultdict(dict)
+        self.loop_variables_per_level = defaultdict(list)
         self.loop_variables = {}
         self.max_level = 0
 
@@ -101,7 +101,7 @@ class LoopRunner:
             )
 
         self.max_level = max(self.max_level, level)
-        self.loop_variables_per_level[level][name] = loop_variable
+        self.loop_variables_per_level[level].append(name)
         self.loop_variables[name] = loop_variable
 
     def get_loop_var_values(self):
@@ -123,13 +123,13 @@ class LoopRunner:
         self.loop_variables[name].assign_values(values)
 
     def advance_loop_vars_at_level(self, level):
-        for _, x in self.loop_variables_per_level[level].items():
-            x.advance()
+        for name in self.loop_variables_per_level[level]:
+            self.loop_variables[name].advance()
 
     def reset_loop_vars_below_level(self, level):
         for cur_level in range(1, level):
-            for _, x in self.loop_variables_per_level[cur_level].items():
-                x.reset()
+            for name in self.loop_variables_per_level[cur_level]:
+                self.loop_variables[name].reset()
 
     def run_loop_to_generate_items_with(self, g, num_iterations):
         if self.has_unassigned_variables:
