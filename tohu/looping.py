@@ -19,6 +19,9 @@ class LoopVariable(TohuBaseGenerator):
         self.name = name
         self.assign_values(values)
 
+    def __repr__(self):
+        return f"<LoopVariable: {self.name!r}, values={self.values} (id={self.tohu_id})>"
+
     def assign_values(self, values):
         if values is not None and (not isinstance(values, Sequence) or isinstance(values, str)):
             raise TypeError(f"Argument `values` must be a list, tuple, or similar sequence type. Got: {type(values)}")
