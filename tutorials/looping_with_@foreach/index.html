@@ -32,7 +32,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.3">
+      <meta name="generator" content="mkdocs-1.1, mkdocs-material-4.6.3">
     
     
       
@@ -67,6 +67,10 @@
     
       <link rel="stylesheet" href="../../css/ansi-colours.css">
     
+      <link rel="stylesheet" href="../../css/jupyter-cells.css">
+    
+      <link rel="stylesheet" href="../../css/pandas-dataframe.css">
+    
     
       
     
@@ -86,6 +90,10 @@
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#single-loop-variable" tabindex="0" class="md-skip">
+        Skip to content
+      </a>
     
     
       <header class="md-header" data-md-component="header">
@@ -253,9 +261,43 @@
     <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
     
     
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Looping with @foreach
+      </label>
+    
     <a href="./" title="Looping with @foreach" class="md-nav__link md-nav__link--active">
       Looping with @foreach
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#single-loop-variable" class="md-nav__link">
+    Single loop variable
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#multiple-loop-variables-at-the-same-level" class="md-nav__link">
+    Multiple loop variables (at the same level)
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
     
   </li>
 
@@ -501,6 +543,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../../reference_guides/internals/loop_variable/" title="Loop variable" class="md-nav__link">
+      Loop variable
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../../reference_guides/internals/debugging_support/" title="Debugging support" class="md-nav__link">
       Debugging support
     </a>
@@ -596,6 +650,42 @@
               </div>
             
             
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#single-loop-variable" class="md-nav__link">
+    Single loop variable
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#multiple-loop-variables-at-the-same-level" class="md-nav__link">
+    Multiple loop variables (at the same level)
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
           
           <div class="md-content">
             <article class="md-content__inner md-typeset">
@@ -603,30 +693,33 @@
                 
                 
                 <div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Looping-with-@foreach">Looping with <code>@foreach</code><a class="anchor-link" href="#Looping-with-@foreach">&#182;</a></h1>
+<p><div class="inner_cell" markdown="1">
+<div class="text_cell_render border-box-sizing rendered_html" markdown="1"></p>
+<h1>Looping with <code>@foreach</code></h1>
+<p></div>
+</div></p>
 </div>
-</div>
-</div>
-
 <div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>[TableOfContents]</p>
-
+<p><div class="inner_cell" markdown="1">
+<div class="text_cell_render border-box-sizing rendered_html" markdown="1"></p>
+<div class="toc">
+<ul>
+<li><a href="#single-loop-variable">Single loop variable</a></li>
+<li><a href="#multiple-loop-variables-at-the-same-level">Multiple loop variables (at the same level)</a></li>
+</ul>
 </div>
 </div>
 </div>
 
+
+</div>
 <div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Single-loop-variable">Single loop variable<a class="anchor-link" href="#Single-loop-variable">&#182;</a></h2>
+<p><div class="inner_cell" markdown="1">
+<div class="text_cell_render border-box-sizing rendered_html" markdown="1"></p>
+<h2 id="single-loop-variable">Single loop variable<a class="headerlink" href="#single-loop-variable" title="Permanent link">&para;</a></h2>
+<p></div>
+</div></p>
 </div>
-</div>
-</div>
-
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -636,7 +729,6 @@
 </div>
 
 </div>
-
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -650,7 +742,6 @@
 </div>
 
 </div>
-
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -660,49 +751,47 @@
 
 </div>
 
-<div class="output_wrapper">
-<div class="output">
+<div class="output_wrapper" markdown="1">
+<div class="output" markdown="1">
 
 
-<div class="output_area">
+<div class="output_area" markdown="1">
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;@foreach-wrapped &lt;MatchRecordGenerator (id=d84916)&gt; &gt;</pre>
+<pre>&lt;@foreach-wrapped &lt;MatchRecordGenerator (id=f369fd)&gt; &gt;</pre>
 </div>
 
 </div>
 
 </div>
-</div>
-
 </div>
 
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
-<div class="codehilite"><pre><span></span><code><span class="nb">list</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">generate_as_stream</span><span class="p">(</span><span class="n">nums</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">seed</span><span class="o">=</span><span class="mi">11111</span><span class="p">))</span>
+<div class="codehilite"><pre><span></span><code><span class="nb">list</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">generate_as_stream</span><span class="p">(</span><span class="n">num_iterations</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">seed</span><span class="o">=</span><span class="mi">11111</span><span class="p">))</span>
 </code></pre></div>
 
 </div>
 
-<div class="output_wrapper">
-<div class="output">
+<div class="output_wrapper" markdown="1">
+<div class="output" markdown="1">
 
 
-<div class="output_area">
+<div class="output_area" markdown="1">
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>[MatchRecord(date=&#39;2000-01-01&#39;, player=&#39;Tracy&#39;, points_scored=72),
- MatchRecord(date=&#39;2000-01-01&#39;, player=&#39;Michael&#39;, points_scored=65),
- MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;Heidi&#39;, points_scored=37),
- MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;Jesse&#39;, points_scored=4),
- MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;Kenneth&#39;, points_scored=92),
- MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;David&#39;, points_scored=70),
- MatchRecord(date=&#39;2000-01-03&#39;, player=&#39;Jaime&#39;, points_scored=48),
- MatchRecord(date=&#39;2000-01-03&#39;, player=&#39;Connie&#39;, points_scored=62),
- MatchRecord(date=&#39;2000-01-03&#39;, player=&#39;Steven&#39;, points_scored=57)]</pre>
+<pre>[MatchRecord(date=&#39;2000-01-01&#39;, player=&#39;Ashlee&#39;, points_scored=36),
+ MatchRecord(date=&#39;2000-01-01&#39;, player=&#39;Kelly&#39;, points_scored=78),
+ MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;Jennifer&#39;, points_scored=13),
+ MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;Sandra&#39;, points_scored=16),
+ MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;Todd&#39;, points_scored=93),
+ MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;Stephen&#39;, points_scored=6),
+ MatchRecord(date=&#39;2000-01-03&#39;, player=&#39;Joanna&#39;, points_scored=3),
+ MatchRecord(date=&#39;2000-01-03&#39;, player=&#39;John&#39;, points_scored=36),
+ MatchRecord(date=&#39;2000-01-03&#39;, player=&#39;Robert&#39;, points_scored=66)]</pre>
 </div>
 
 </div>
@@ -711,47 +800,43 @@
 </div>
 
 </div>
-
+</div>
 <div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Since we specified three dates in the <code>@foreach</code> call above, we also must provide three values in the list <code>nums</code> (so that the <code>generate_as_stream()</code> method knows how many elements to produce for each generation.</p>
-<p>It is allowed for the list to be longer (in which case subsequent elements are ignored) or shorter (in which case fewer loop iterations are run), as shown below.</p>
-
+<p><div class="inner_cell" markdown="1">
+<div class="text_cell_render border-box-sizing rendered_html" markdown="1">
+Since we specified three dates in the <code>@foreach</code> call above, we also must provide three values in the list <code>nums</code> (so that the <code>generate_as_stream()</code> method knows how many elements to produce for each generation.</p>
+<p>It is allowed for the list to be longer (in which case subsequent elements are ignored) or shorter (in which case fewer loop iterations are run), as shown below.
 </div>
+</div></p>
 </div>
-</div>
-
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
 <div class="codehilite"><pre><span></span><code><span class="c1"># Here `num` has fewer elements than there are dates we&#39;re looping over,</span>
 <span class="c1"># so the loop iteration for the third date doesn&#39;t happen.</span>
-<span class="nb">list</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">generate_as_stream</span><span class="p">(</span><span class="n">nums</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">seed</span><span class="o">=</span><span class="mi">11111</span><span class="p">))</span>
+<span class="nb">list</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">generate_as_stream</span><span class="p">(</span><span class="n">num_iterations</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">seed</span><span class="o">=</span><span class="mi">11111</span><span class="p">))</span>
 </code></pre></div>
 
 </div>
 
-<div class="output_wrapper">
-<div class="output">
+<div class="output_wrapper" markdown="1">
+<div class="output" markdown="1">
 
 
-<div class="output_area">
+<div class="output_area" markdown="1">
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>[MatchRecord(date=&#39;2000-01-01&#39;, player=&#39;Tracy&#39;, points_scored=72),
- MatchRecord(date=&#39;2000-01-01&#39;, player=&#39;Michael&#39;, points_scored=65),
- MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;Heidi&#39;, points_scored=37),
- MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;Jesse&#39;, points_scored=4),
- MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;Kenneth&#39;, points_scored=92)]</pre>
+<pre>[MatchRecord(date=&#39;2000-01-01&#39;, player=&#39;Ashlee&#39;, points_scored=36),
+ MatchRecord(date=&#39;2000-01-01&#39;, player=&#39;Kelly&#39;, points_scored=78),
+ MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;Jennifer&#39;, points_scored=13),
+ MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;Sandra&#39;, points_scored=16),
+ MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;Todd&#39;, points_scored=93)]</pre>
 </div>
 
 </div>
 
 </div>
-</div>
-
 </div>
 
 <div class="cell border-box-sizing code_cell rendered">
@@ -759,28 +844,28 @@
 
 <div class="codehilite"><pre><span></span><code><span class="c1"># Here `num` has more elements than there are dates we&#39;re looping over,</span>
 <span class="c1"># so the additional elements are ignored for looping.</span>
-<span class="nb">list</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">generate_as_stream</span><span class="p">(</span><span class="n">nums</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">seed</span><span class="o">=</span><span class="mi">11111</span><span class="p">))</span>
+<span class="nb">list</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">generate_as_stream</span><span class="p">(</span><span class="n">num_iterations</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">seed</span><span class="o">=</span><span class="mi">11111</span><span class="p">))</span>
 </code></pre></div>
 
 </div>
 
-<div class="output_wrapper">
-<div class="output">
+<div class="output_wrapper" markdown="1">
+<div class="output" markdown="1">
 
 
-<div class="output_area">
+<div class="output_area" markdown="1">
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>[MatchRecord(date=&#39;2000-01-01&#39;, player=&#39;Tracy&#39;, points_scored=72),
- MatchRecord(date=&#39;2000-01-01&#39;, player=&#39;Michael&#39;, points_scored=65),
- MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;Heidi&#39;, points_scored=37),
- MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;Jesse&#39;, points_scored=4),
- MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;Kenneth&#39;, points_scored=92),
- MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;David&#39;, points_scored=70),
- MatchRecord(date=&#39;2000-01-03&#39;, player=&#39;Jaime&#39;, points_scored=48),
- MatchRecord(date=&#39;2000-01-03&#39;, player=&#39;Connie&#39;, points_scored=62),
- MatchRecord(date=&#39;2000-01-03&#39;, player=&#39;Steven&#39;, points_scored=57)]</pre>
+<pre>[MatchRecord(date=&#39;2000-01-01&#39;, player=&#39;Ashlee&#39;, points_scored=36),
+ MatchRecord(date=&#39;2000-01-01&#39;, player=&#39;Kelly&#39;, points_scored=78),
+ MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;Jennifer&#39;, points_scored=13),
+ MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;Sandra&#39;, points_scored=16),
+ MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;Todd&#39;, points_scored=93),
+ MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;Stephen&#39;, points_scored=6),
+ MatchRecord(date=&#39;2000-01-03&#39;, player=&#39;Joanna&#39;, points_scored=3),
+ MatchRecord(date=&#39;2000-01-03&#39;, player=&#39;John&#39;, points_scored=36),
+ MatchRecord(date=&#39;2000-01-03&#39;, player=&#39;Robert&#39;, points_scored=66)]</pre>
 </div>
 
 </div>
@@ -789,15 +874,14 @@
 </div>
 
 </div>
-
+</div>
 <div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Multiple-loop-variables-(at-the-same-level)">Multiple loop variables (at the same level)<a class="anchor-link" href="#Multiple-loop-variables-(at-the-same-level)">&#182;</a></h2>
+<p><div class="inner_cell" markdown="1">
+<div class="text_cell_render border-box-sizing rendered_html" markdown="1"></p>
+<h2 id="multiple-loop-variables-at-the-same-level">Multiple loop variables (at the same level)<a class="headerlink" href="#multiple-loop-variables-at-the-same-level" title="Permanent link">&para;</a></h2>
+<p></div>
+</div></p>
 </div>
-</div>
-</div>
-
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -812,7 +896,6 @@
 </div>
 
 </div>
-
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -822,62 +905,57 @@
 </div>
 
 </div>
-
 <div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Note that in the generated items, the match date and venue are always matched up:</p>
-
+<p><div class="inner_cell" markdown="1">
+<div class="text_cell_render border-box-sizing rendered_html" markdown="1">
+Note that in the generated items, the match date and venue are always matched up:
 </div>
+</div></p>
 </div>
-</div>
-
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
-<div class="codehilite"><pre><span></span><code><span class="n">g</span><span class="o">.</span><span class="n">generate_as_list</span><span class="p">(</span><span class="n">nums</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">seed</span><span class="o">=</span><span class="mi">11111</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><code><span class="n">g</span><span class="o">.</span><span class="n">generate_as_list</span><span class="p">(</span><span class="n">num_iterations</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">seed</span><span class="o">=</span><span class="mi">11111</span><span class="p">)</span>
 </code></pre></div>
 
 </div>
 
-<div class="output_wrapper">
-<div class="output">
+<div class="output_wrapper" markdown="1">
+<div class="output" markdown="1">
 
 
-<div class="output_area">
+<div class="output_area" markdown="1">
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>[MatchRecord(date=&#39;2000-01-01&#39;, venue=&#39;Town A&#39;, player=&#39;Ashlee&#39;, points_scored=36),
- MatchRecord(date=&#39;2000-01-01&#39;, venue=&#39;Town A&#39;, player=&#39;Kelly&#39;, points_scored=78),
- MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Jennifer&#39;, points_scored=13),
- MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Sandra&#39;, points_scored=16),
- MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Todd&#39;, points_scored=93),
- MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Stephen&#39;, points_scored=6),
- MatchRecord(date=&#39;2000-01-03&#39;, venue=&#39;Town C&#39;, player=&#39;Joanna&#39;, points_scored=3),
- MatchRecord(date=&#39;2000-01-03&#39;, venue=&#39;Town C&#39;, player=&#39;John&#39;, points_scored=36),
- MatchRecord(date=&#39;2000-01-03&#39;, venue=&#39;Town C&#39;, player=&#39;Robert&#39;, points_scored=66)]</pre>
+<pre>[MatchRecord(date=&#39;2000-01-01&#39;, venue=&#39;Town A&#39;, player=&#39;Cindy&#39;, points_scored=79),
+ MatchRecord(date=&#39;2000-01-01&#39;, venue=&#39;Town A&#39;, player=&#39;Melanie&#39;, points_scored=2),
+ MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Joseph&#39;, points_scored=76),
+ MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Linda&#39;, points_scored=94),
+ MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Christopher&#39;, points_scored=97),
+ MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Ian&#39;, points_scored=57),
+ MatchRecord(date=&#39;2000-01-03&#39;, venue=&#39;Town C&#39;, player=&#39;Justin&#39;, points_scored=30),
+ MatchRecord(date=&#39;2000-01-03&#39;, venue=&#39;Town C&#39;, player=&#39;Barbara&#39;, points_scored=67),
+ MatchRecord(date=&#39;2000-01-03&#39;, venue=&#39;Town C&#39;, player=&#39;Heather&#39;, points_scored=80)]</pre>
 </div>
 
 </div>
 
 </div>
-</div>
-
 </div>
 
 <div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>If one of the loop variables contains more elements than the other, the additional ones are ignored. In other words, we can only do as many loop iterations as specified by the loop variable with the fewest values. Here we can only produce elements for two dates (even there are four venues).</p>
-
+<p><div class="inner_cell" markdown="1">
+<div class="text_cell_render border-box-sizing rendered_html" markdown="1">
+If one of the loop variables contains more elements than the other, the additional ones are ignored. In other words, we can only do as many loop iterations as specified by the loop variable with the fewest values. Here we can only produce elements for two dates (even though there are four venues).
 </div>
+</div></p>
 </div>
-</div>
-
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
+</div>
+</div>
 <div class="codehilite"><pre><span></span><code><span class="nd">@foreach</span><span class="p">(</span><span class="n">match_date</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;2000-01-01&quot;</span><span class="p">,</span> <span class="s2">&quot;2000-01-02&quot;</span><span class="p">],</span> <span class="n">match_venue</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Town A&quot;</span><span class="p">,</span> <span class="s2">&quot;Town B&quot;</span><span class="p">,</span> <span class="s2">&quot;Town C&quot;</span><span class="p">,</span> <span class="s2">&quot;Town D&quot;</span><span class="p">])</span>
 <span class="k">class</span> <span class="nc">MatchRecordGenerator</span><span class="p">(</span><span class="n">CustomGenerator</span><span class="p">):</span>
     <span class="n">date</span> <span class="o">=</span> <span class="n">match_date</span>
@@ -888,31 +966,29 @@
 
 </div>
 
-</div>
-
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
 <div class="codehilite"><pre><span></span><code><span class="n">g</span> <span class="o">=</span> <span class="n">MatchRecordGenerator</span><span class="p">()</span>
-<span class="n">g</span><span class="o">.</span><span class="n">generate_as_list</span><span class="p">(</span><span class="n">nums</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">seed</span><span class="o">=</span><span class="mi">11111</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">generate_as_list</span><span class="p">(</span><span class="n">num_iterations</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">seed</span><span class="o">=</span><span class="mi">11111</span><span class="p">)</span>
 </code></pre></div>
 
 </div>
 
-<div class="output_wrapper">
-<div class="output">
+<div class="output_wrapper" markdown="1">
+<div class="output" markdown="1">
 
 
-<div class="output_area">
+<div class="output_area" markdown="1">
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>[MatchRecord(date=&#39;2000-01-01&#39;, venue=&#39;Town A&#39;, player=&#39;Ashlee&#39;, points_scored=36),
- MatchRecord(date=&#39;2000-01-01&#39;, venue=&#39;Town A&#39;, player=&#39;Kelly&#39;, points_scored=78),
- MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Jennifer&#39;, points_scored=13),
- MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Sandra&#39;, points_scored=16),
- MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Todd&#39;, points_scored=93),
- MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Stephen&#39;, points_scored=6)]</pre>
+<pre>[MatchRecord(date=&#39;2000-01-01&#39;, venue=&#39;Town A&#39;, player=&#39;Cindy&#39;, points_scored=79),
+ MatchRecord(date=&#39;2000-01-01&#39;, venue=&#39;Town A&#39;, player=&#39;Melanie&#39;, points_scored=2),
+ MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Joseph&#39;, points_scored=76),
+ MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Linda&#39;, points_scored=94),
+ MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Christopher&#39;, points_scored=97),
+ MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Ian&#39;, points_scored=57)]</pre>
 </div>
 
 </div>
@@ -993,7 +1069,7 @@
     
       <script src="../../assets/javascripts/application.c33a9706.js"></script>
       
-      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      <script>app.initialize({version:"1.1",url:{base:"../.."}})</script>
       
     
   </body>

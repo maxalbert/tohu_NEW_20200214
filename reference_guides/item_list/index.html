@@ -32,7 +32,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.3">
+      <meta name="generator" content="mkdocs-1.1, mkdocs-material-4.6.3">
     
     
       
@@ -67,6 +67,10 @@
     
       <link rel="stylesheet" href="../../css/ansi-colours.css">
     
+      <link rel="stylesheet" href="../../css/jupyter-cells.css">
+    
+      <link rel="stylesheet" href="../../css/pandas-dataframe.css">
+    
     
       
     
@@ -86,6 +90,10 @@
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#exporting-an-itemlist-to-various-formats" tabindex="0" class="md-skip">
+        Skip to content
+      </a>
     
     
       <header class="md-header" data-md-component="header">
@@ -245,7 +253,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../tutorials/looping_with_@foreach/" title="Looping with @foreach" class="md-nav__link">
+    <a href="../../tutorials/looping_with_%40foreach/" title="Looping with @foreach" class="md-nav__link">
       Looping with @foreach
     </a>
   </li>
@@ -445,9 +453,77 @@
     <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
     
     
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Item list
+      </label>
+    
     <a href="./" title="Item list" class="md-nav__link md-nav__link--active">
       Item list
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#exporting-an-itemlist-to-various-formats" class="md-nav__link">
+    Exporting an ItemList to various formats
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#to_df" class="md-nav__link">
+    to_df()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#head" class="md-nav__link">
+    head()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specifying-which-columns-to-export-and-in-which-order" class="md-nav__link">
+    Specifying which columns to export, and in which order
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#custom-field-names" class="md-nav__link">
+    Custom field names
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#accessing-nested-field-values" class="md-nav__link">
+    Accessing nested field values
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
     
   </li>
 
@@ -491,6 +567,18 @@
   <li class="md-nav__item">
     <a href="../internals/tohu_items_class/" title="Tohu items class" class="md-nav__link">
       Tohu items class
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../internals/loop_variable/" title="Loop variable" class="md-nav__link">
+      Loop variable
     </a>
   </li>
 
@@ -596,6 +684,76 @@
               </div>
             
             
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#exporting-an-itemlist-to-various-formats" class="md-nav__link">
+    Exporting an ItemList to various formats
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#to_df" class="md-nav__link">
+    to_df()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#head" class="md-nav__link">
+    head()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specifying-which-columns-to-export-and-in-which-order" class="md-nav__link">
+    Specifying which columns to export, and in which order
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#custom-field-names" class="md-nav__link">
+    Custom field names
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#accessing-nested-field-values" class="md-nav__link">
+    Accessing nested field values
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
           
           <div class="md-content">
             <article class="md-content__inner md-typeset">
@@ -603,31 +761,39 @@
                 
                 
                 <div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="ItemList">ItemList<a class="anchor-link" href="#ItemList">&#182;</a></h1>
+<p><div class="inner_cell" markdown="1">
+<div class="text_cell_render border-box-sizing rendered_html" markdown="1"></p>
+<h1>ItemList</h1>
+<p></div>
+</div></p>
 </div>
-</div>
-</div>
-
 <div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>[TableOfContents]</p>
-
+<p><div class="inner_cell" markdown="1">
+<div class="text_cell_render border-box-sizing rendered_html" markdown="1"></p>
+<div class="toc">
+<ul>
+<li><a href="#exporting-an-itemlist-to-various-formats">Exporting an ItemList to various formats</a><ul>
+<li><a href="#to_df">to_df()</a></li>
+<li><a href="#head">head()</a></li>
+</ul>
+</li>
+<li><a href="#specifying-which-columns-to-export-and-in-which-order">Specifying which columns to export, and in which order</a></li>
+<li><a href="#custom-field-names">Custom field names</a></li>
+<li><a href="#accessing-nested-field-values">Accessing nested field values</a></li>
+</ul>
 </div>
 </div>
 </div>
 
+
+</div>
 <div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Let's first create an <code>ItemList</code> instance, which we use in the rest of this section.</p>
-
+<p><div class="inner_cell" markdown="1">
+<div class="text_cell_render border-box-sizing rendered_html" markdown="1">
+Let's first create an <code>ItemList</code> instance, which we use in the rest of this section.
 </div>
+</div></p>
 </div>
-</div>
-
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -638,7 +804,6 @@
 </div>
 
 </div>
-
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -648,7 +813,6 @@
 </div>
 
 </div>
-
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -664,7 +828,6 @@
 </div>
 
 </div>
-
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -674,11 +837,11 @@
 
 </div>
 
-<div class="output_wrapper">
-<div class="output">
+<div class="output_wrapper" markdown="1">
+<div class="output" markdown="1">
 
 
-<div class="output_area">
+<div class="output_area" markdown="1">
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -690,33 +853,28 @@
 </div>
 </div>
 
-</div>
-
 <div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Exporting-an-ItemList-to-various-formats">Exporting an <code>ItemList</code> to various formats<a class="anchor-link" href="#Exporting-an-ItemList-to-various-formats">&#182;</a></h2>
+<p><div class="inner_cell" markdown="1">
+<div class="text_cell_render border-box-sizing rendered_html" markdown="1"></p>
+<h2 id="exporting-an-itemlist-to-various-formats">Exporting an <code>ItemList</code> to various formats<a class="headerlink" href="#exporting-an-itemlist-to-various-formats" title="Permanent link">&para;</a></h2>
+<p></div>
+</div></p>
 </div>
-</div>
-</div>
-
 <div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="to_df()"><code>to_df()</code><a class="anchor-link" href="#to_df()">&#182;</a></h3>
+<p><div class="inner_cell" markdown="1">
+<div class="text_cell_render border-box-sizing rendered_html" markdown="1"></p>
+<h3 id="to_df"><code>to_df()</code><a class="headerlink" href="#to_df" title="Permanent link">&para;</a></h3>
+<p></div>
+</div></p>
 </div>
 </div>
-</div>
-
 <div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>When calling <code>.to_df()</code> without any arguments, all fields from all items will be exported.</p>
-
+<p><div class="inner_cell" markdown="1">
+<div class="text_cell_render border-box-sizing rendered_html" markdown="1">
+When calling <code>.to_df()</code> without any arguments, all fields from all items will be exported.
 </div>
+</div></p>
 </div>
-</div>
-
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -725,11 +883,11 @@
 
 </div>
 
-<div class="output_wrapper">
-<div class="output">
+<div class="output_wrapper" markdown="1">
+<div class="output" markdown="1">
 
 
-<div class="output_area">
+<div class="output_area" markdown="1">
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -802,38 +960,35 @@
 </div>
 </div>
 
-</div>
-
 <div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="head()"><code>head()</code><a class="anchor-link" href="#head()">&#182;</a></h3>
+<p><div class="inner_cell" markdown="1">
+<div class="text_cell_render border-box-sizing rendered_html" markdown="1"></p>
+<h3 id="head"><code>head()</code><a class="headerlink" href="#head" title="Permanent link">&para;</a></h3>
+<p></div>
+</div></p>
 </div>
-</div>
-</div>
-
 <div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>There is also a <code>.head()</code> method, which is analogous to the one for pandas dataframes.</p>
-
+<p><div class="inner_cell" markdown="1">
+<div class="text_cell_render border-box-sizing rendered_html" markdown="1">
+There is also a <code>.head()</code> method, which is analogous to the one for pandas dataframes.
 </div>
+</div></p>
 </div>
-</div>
-
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
+</div>
+</div>
 <div class="codehilite"><pre><span></span><code><span class="n">item_list</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 </code></pre></div>
 
 </div>
 
-<div class="output_wrapper">
-<div class="output">
+<div class="output_wrapper" markdown="1">
+<div class="output" markdown="1">
 
 
-<div class="output_area">
+<div class="output_area" markdown="1">
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -892,25 +1047,20 @@
 </div>
 </div>
 
-</div>
-
 <div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Specifying-which-columns-to-export,-and-in-which-order">Specifying which columns to export, and in which order<a class="anchor-link" href="#Specifying-which-columns-to-export,-and-in-which-order">&#182;</a></h2>
+<p><div class="inner_cell" markdown="1">
+<div class="text_cell_render border-box-sizing rendered_html" markdown="1"></p>
+<h2 id="specifying-which-columns-to-export-and-in-which-order">Specifying which columns to export, and in which order<a class="headerlink" href="#specifying-which-columns-to-export-and-in-which-order" title="Permanent link">&para;</a></h2>
+<p></div>
+</div></p>
 </div>
-</div>
-</div>
-
 <div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>We can export only a subset of columns, and/or rearrange their order, by specifying a list of field names. In this example we export only the three columns <code>cc</code>, <code>aa</code>, <code>dd</code> (in this order) instead of the full set of columns <code>aa</code>, <code>bb</code>, <code>cc</code>, <code>dd</code>.</p>
-
+<p><div class="inner_cell" markdown="1">
+<div class="text_cell_render border-box-sizing rendered_html" markdown="1">
+We can export only a subset of columns, and/or rearrange their order, by specifying a list of field names. In this example we export only the three columns <code>cc</code>, <code>aa</code>, <code>dd</code> (in this order) instead of the full set of columns <code>aa</code>, <code>bb</code>, <code>cc</code>, <code>dd</code>.
 </div>
+</div></p>
 </div>
-</div>
-
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -919,11 +1069,11 @@
 
 </div>
 
-<div class="output_wrapper">
-<div class="output">
+<div class="output_wrapper" markdown="1">
+<div class="output" markdown="1">
 
 
-<div class="output_area">
+<div class="output_area" markdown="1">
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -990,38 +1140,35 @@
 </div>
 </div>
 
-</div>
-
 <div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Custom-field-names">Custom field names<a class="anchor-link" href="#Custom-field-names">&#182;</a></h2>
+<p><div class="inner_cell" markdown="1">
+<div class="text_cell_render border-box-sizing rendered_html" markdown="1"></p>
+<h2 id="custom-field-names">Custom field names<a class="headerlink" href="#custom-field-names" title="Permanent link">&para;</a></h2>
+<p></div>
+</div></p>
 </div>
-</div>
-</div>
-
 <div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>If we want to rename the columns we can pass a dictionary of the form <code>{&lt;new_column_name&gt;: &lt;existing_field_name&gt;}</code>, for example:</p>
-
+<p><div class="inner_cell" markdown="1">
+<div class="text_cell_render border-box-sizing rendered_html" markdown="1">
+If we want to rename the columns we can pass a dictionary of the form <code>{&lt;new_column_name&gt;: &lt;existing_field_name&gt;}</code>, for example:
 </div>
+</div></p>
 </div>
-</div>
-
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
+</div>
+</div>
 <div class="codehilite"><pre><span></span><code><span class="n">item_list</span><span class="o">.</span><span class="n">to_df</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;First Name&quot;</span><span class="p">:</span> <span class="s2">&quot;cc&quot;</span><span class="p">,</span> <span class="s2">&quot;Age&quot;</span><span class="p">:</span> <span class="s2">&quot;aa&quot;</span><span class="p">})</span>
 </code></pre></div>
 
 </div>
 
-<div class="output_wrapper">
-<div class="output">
+<div class="output_wrapper" markdown="1">
+<div class="output" markdown="1">
 
 
-<div class="output_area">
+<div class="output_area" markdown="1">
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -1082,25 +1229,20 @@
 </div>
 </div>
 
-</div>
-
 <div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Accessing-nested-field-values">Accessing nested field values<a class="anchor-link" href="#Accessing-nested-field-values">&#182;</a></h2>
+<p><div class="inner_cell" markdown="1">
+<div class="text_cell_render border-box-sizing rendered_html" markdown="1"></p>
+<h2 id="accessing-nested-field-values">Accessing nested field values<a class="headerlink" href="#accessing-nested-field-values" title="Permanent link">&para;</a></h2>
+<p></div>
+</div></p>
 </div>
-</div>
-</div>
-
 <div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Let's create a second <code>ItemList</code> instance which contains nested items.</p>
-
+<p><div class="inner_cell" markdown="1">
+<div class="text_cell_render border-box-sizing rendered_html" markdown="1">
+Let's create a second <code>ItemList</code> instance which contains nested items.
 </div>
+</div></p>
 </div>
-</div>
-
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -1111,7 +1253,6 @@
 </div>
 
 </div>
-
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -1129,16 +1270,13 @@
 </div>
 
 </div>
-
 <div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>If we simply call <code>to_df()</code> without specifying the <code>fields</code> argument, the cells in column <code>bb</code> will contain the full nested values of the items of type <code>Foo</code>.</p>
-
+<p><div class="inner_cell" markdown="1">
+<div class="text_cell_render border-box-sizing rendered_html" markdown="1">
+If we simply call <code>to_df()</code> without specifying the <code>fields</code> argument, the cells in column <code>bb</code> will contain the full nested values of the items of type <code>Foo</code>.
 </div>
+</div></p>
 </div>
-</div>
-
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -1147,11 +1285,11 @@
 
 </div>
 
-<div class="output_wrapper">
-<div class="output">
+<div class="output_wrapper" markdown="1">
+<div class="output" markdown="1">
 
 
-<div class="output_area">
+<div class="output_area" markdown="1">
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -1224,17 +1362,13 @@
 </div>
 </div>
 
-</div>
-
 <div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>If we are only interested in some of the individual values in the nested items <code>Foo</code> or <code>Bar</code>, it is possible to "reach into" them and extract those values by using the usual <code>.</code> notation for accessing attributes.</p>
-
+<p><div class="inner_cell" markdown="1">
+<div class="text_cell_render border-box-sizing rendered_html" markdown="1">
+If we are only interested in some of the individual values in the nested items <code>Foo</code> or <code>Bar</code>, it is possible to "reach into" them and extract those values by using the usual <code>.</code> notation for accessing attributes.
 </div>
+</div></p>
 </div>
-</div>
-
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -1245,11 +1379,11 @@
 
 </div>
 
-<div class="output_wrapper">
-<div class="output">
+<div class="output_wrapper" markdown="1">
+<div class="output" markdown="1">
 
 
-<div class="output_area">
+<div class="output_area" markdown="1">
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -1317,16 +1451,14 @@
 </div>
 
 </div>
-
+</div>
 <div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Let's verify that an error is raised if an attribute name specified in the <code>fields</code> argument doesn't exist at any level.</p>
-
+<p><div class="inner_cell" markdown="1">
+<div class="text_cell_render border-box-sizing rendered_html" markdown="1">
+Let's verify that an error is raised if an attribute name specified in the <code>fields</code> argument doesn't exist at any level.
 </div>
+</div></p>
 </div>
-</div>
-
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -1417,7 +1549,7 @@
     
       <script src="../../assets/javascripts/application.c33a9706.js"></script>
       
-      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      <script>app.initialize({version:"1.1",url:{base:"../.."}})</script>
       
     
   </body>
