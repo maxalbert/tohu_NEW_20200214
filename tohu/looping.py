@@ -2,7 +2,9 @@ from collections import defaultdict
 from typing import Sequence
 from .base import TohuBaseGenerator
 
-__all = ["LoopVariable", "LoopRunner"]
+__all = ["LoopVariable", "PLACEHOLDER", "LoopRunner"]
+
+PLACEHOLDER = None  # alias for unassigned loop variable values, for better readability in @foreach decorators
 
 
 def is_sequence(seq):
