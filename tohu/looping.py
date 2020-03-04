@@ -50,6 +50,9 @@ class LoopVariable(TohuBaseGenerator):
             self.has_values_assigned = False
             self.is_hidden = True
 
+        for c in self.clones:
+            c.assign_values(values)
+
     def __next__(self):
         return self.cur_value
 
