@@ -29,6 +29,7 @@ class ForeachGeneratorInstance:
         if seed is not None:
             self.custom_gen_instance.reset(seed)
 
+        # FIXME: this grossly violates the law of Demeter!
         yield from self.custom_gen_instance._tohu_namespace.loop_runner.run_loop_to_generate_items_with(
             self.custom_gen_instance, num_iterations
         )
