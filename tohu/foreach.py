@@ -24,7 +24,8 @@ class ForeachGeneratorInstance:
         return f"<@foreach-wrapped {self.cgen_instance} >"
 
     def generate_as_stream(self, *, nums, seed):
-        self.cgen_instance.reset(seed)
+        if seed is not None:
+            self.cgen_instance.reset(seed)
 
         for N in nums:
             # TODO: reset the generator within each loop instead of only once at the beginning?
