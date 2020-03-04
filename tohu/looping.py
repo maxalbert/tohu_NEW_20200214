@@ -194,7 +194,12 @@ class LoopRunner:
         cur_loop_var_values = self.get_loop_var_values()
 
         if cur_level == 0:
-            num_iterations = f_num_iterations(**cur_loop_var_values)
+            try:
+                num_iterations = f_num_iterations(**cur_loop_var_values)
+            except StopIteration:
+                # This can happen if num_iterations was originally
+                # a sequence whose values have now been exhausted.
+                return
             yield from g.generate(num=num_iterations)
         else:
             while True:
