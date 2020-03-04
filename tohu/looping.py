@@ -29,7 +29,7 @@ class LoopVariable(TohuBaseGenerator):
 
     @loop_level.setter
     def loop_level(self, value):
-        if value < 1:
+        if value is not None and value < 1:
             raise ValueError(f"Loop level must be >= 1 (got: {value})")
         self._loop_level = value
 
