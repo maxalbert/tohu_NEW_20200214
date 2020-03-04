@@ -99,6 +99,24 @@ class LoopVariable(TohuBaseGenerator):
         self.loop_level = other.loop_level
 
 
+class SequenceIterator:
+    """
+    Helper class which creates a callable that whenever it is called
+    simply returns successive values in the input sequence until it
+    is exhausted (at which point it raises StopIteration).
+
+    The input arguments to the callable are ignored because they have
+    no impact on the number of iterations of loops performed by the
+    LoopRunner (which the context in which this class is used).
+    """
+
+    def __init__(self, seq):
+        self.iterator = iter(seq)
+
+    def __call__(self, *args, **kwargs):
+        return next(self.iterator)
+
+
 class LoopRunner:
     def __init__(self):
         self.loop_variables_per_level = defaultdict(list)
@@ -163,7 +181,7 @@ class LoopRunner:
 
                 return constant_func
             elif is_sequence(num_iterations):
-                raise NotImplementedError("TODO: Implement me!")
+                return SequenceIterator(num_iterations)
             else:
                 raise TypeError(f"Unsupported type for `num_iterations`: {type(num_iterations)}")
 
