@@ -1,6 +1,7 @@
 import inspect
 
 from .base import TohuBaseGenerator
+from .custom_generator import CustomGenerator
 from .looping import LoopVariable
 
 __all__ = ["foreach"]
@@ -41,8 +42,9 @@ class ForeachGeneratorInstance:
 
 
 class ForeachGeneratorClass:
-    def __init__(self, custom_gen_cls):
+    def __init__(self, custom_gen_cls, loop_level):
         self.custom_gen_cls = custom_gen_cls
+        self.loop_level = loop_level
 
     def __call__(self, *args, **kwargs):
         custom_gen_instance = self.custom_gen_cls(*args, **kwargs)
@@ -61,14 +63,22 @@ def foreach(**var_defs):
     def wrapper(cls):
         restore_globals(global_vars, new_names, clashes)
 
-        stored_gens = {name: x for (name, x) in cls.__dict__.items() if isinstance(x, TohuBaseGenerator)}
-        for name in stored_gens.keys():
-            delattr(cls, name)
-        for name, x in loop_vars.items():
-            setattr(cls, name, x)
-        for name, g in stored_gens.items():
-            setattr(cls, name, g)
+        if inspect.isclass(cls) and issubclass(cls, CustomGenerator):
+            custom_gen_cls = cls
+            loop_level = 1
+        else:
+            assert isinstance(cls, ForeachGeneratorClass)
+            custom_gen_cls = cls.custom_gen_cls
+            loop_level = cls.loop_level + 1
 
-        return ForeachGeneratorClass(cls)
+        stored_gens = {name: x for (name, x) in custom_gen_cls.__dict__.items() if isinstance(x, TohuBaseGenerator)}
+        for name in stored_gens.keys():
+            delattr(custom_gen_cls, name)
+        for name, x in loop_vars.items():
+            setattr(custom_gen_cls, name, x)
+        for name, g in stored_gens.items():
+            setattr(custom_gen_cls, name, g)
+
+        return ForeachGeneratorClass(custom_gen_cls, loop_level)
 
     return wrapper

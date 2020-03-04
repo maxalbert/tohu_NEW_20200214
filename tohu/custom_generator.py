@@ -19,6 +19,8 @@ class CustomGenerator(TohuBaseGenerator):
     CustomGenerator allows combining other generators into a single entity.
     """
 
+    loop_level = 0
+
     def __init__(self):
         super().__init__()
         self.seed_generator = SeedGenerator()
