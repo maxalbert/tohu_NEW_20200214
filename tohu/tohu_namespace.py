@@ -17,7 +17,7 @@ class NonExistentTohuItemsClass:
     # make_tohu_items_class() isn't called before trying to have the
     # TohuNamespace instance generate items.
 
-    def __call__(self):
+    def __call__(self, *args, **kwargs):
         raise TohuNamespaceError(
             f"TODO: tohu items class needs to be created before the tohu namespace can generate elements."
         )
