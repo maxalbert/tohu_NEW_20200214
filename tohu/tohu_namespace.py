@@ -1,7 +1,7 @@
 from .base import SeedGenerator
 from .derived_generators import Apply
 from .logging import logger
-from .looping import LoopVariable
+from .looping import LoopVariable, LoopRunner
 from .utils import identity
 from .tohu_items_class import make_tohu_items_class
 
@@ -31,6 +31,7 @@ class TohuNamespace:
         self.gen_mapping = {}
         self.hidden_generators = {}
         self.generators = {}
+        self.loop_runner = LoopRunner()
 
     @property
     def _all_generators(self):
@@ -47,6 +48,9 @@ class TohuNamespace:
             self.hidden_generators[name] = gen_spawned
         else:
             self.generators[name] = gen_spawned
+
+        if isinstance(gen_spawned, LoopVariable):
+            self.loop_runner.add_loop_variable(gen_spawned.name, gen_spawned)
 
     def make_tohu_items_class(self):
         field_names = list(self.generators.keys())

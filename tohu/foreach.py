@@ -29,13 +29,9 @@ class ForeachGeneratorInstance:
         if seed is not None:
             self.custom_gen_instance.reset(seed)
 
-        for N in num_iterations:
-            # TODO: reset the generator within each loop instead of only once at the beginning?
-            yield from self.custom_gen_instance.generate_as_stream(N)
-            try:
-                self.custom_gen_instance.advance_loop_variables()
-            except IndexError:
-                break
+        yield from self.custom_gen_instance._tohu_namespace.loop_runner.run_loop_to_generate_items_with(
+            self.custom_gen_instance, num_iterations
+        )
 
     def generate_as_list(self, *, num_iterations, seed):
         return list(self.generate_as_stream(num_iterations=num_iterations, seed=seed))

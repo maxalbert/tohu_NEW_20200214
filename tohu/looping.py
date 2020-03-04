@@ -109,10 +109,10 @@ class LoopRunner:
         # Check constraints on `level` argument to ensure levels
         #  are contiguous between 1 and max_level.
         level = loop_variable.loop_level
-        if level > self.max_level + 1:
-            raise ValueError(
-                f"Level must be at most <= max_level + 1. " f"Got: level={level}, max_level={self.max_level}."
-            )
+        # if level > self.max_level + 1:
+        #     raise ValueError(
+        #         f"Level must be at most <= max_level + 1. " f"Got: level={level}, max_level={self.max_level}."
+        #     )
 
         self.max_level = max(self.max_level, level)
         self.loop_variables_per_level[level].append(name)
@@ -146,6 +146,8 @@ class LoopRunner:
                 self.loop_variables[name].reset()
 
     def run_loop_to_generate_items_with(self, g, num_iterations):
+        # TODO: add sanity check that loop variable levels take all the values between 1 and max_level?
+
         if self.has_unassigned_variables:
             raise UnassignedValuesError(
                 f"LoopRunner has variables with unassigned values: {', '.join(self.unassigned_variables)}"
@@ -170,6 +172,7 @@ class LoopRunner:
         yield from self._run_loop_impl(g, f_num_iterations, self.max_level)
 
     def _run_loop_impl(self, g, f_num_iterations, cur_level):
+        # TODO: Reset generators within each loop iteration?! Should this happen here or somewhere else?!?
         cur_loop_var_values = self.get_loop_var_values()
 
         if cur_level == 0:
