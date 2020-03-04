@@ -25,6 +25,7 @@ class LoopVariable(TohuBaseGenerator):
         # to be called at the very beginning of the loop. There may be advantages
         # to this approach, but it feels slightly less consistent across tohu
         # generators, so for now we choose this approach.
+        super().reset(seed)
         self.idx = 0
         self.cur_value = self.values[0]
 
