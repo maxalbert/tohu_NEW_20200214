@@ -17,10 +17,21 @@ class LoopVariable(TohuBaseGenerator):
     def __init__(self, name, values=None):
         super().__init__()
         self.name = name
+        self._loop_level = None
         self.assign_values(values)
 
     def __repr__(self):
-        return f"<LoopVariable: {self.name!r}, values={self.values} (id={self.tohu_id})>"
+        return f"<LoopVariable: {self.name!r}, level={self.loop_level}, values={self.values} (id={self.tohu_id})>"
+
+    @property
+    def loop_level(self):
+        return self._loop_level
+
+    @loop_level.setter
+    def loop_level(self, value):
+        if value < 1:
+            raise ValueError(f"Loop level must be >= 1 (got: {value})")
+        self._loop_level = value
 
     def assign_values(self, values):
         if values is not None and (not isinstance(values, Sequence) or isinstance(values, str)):
@@ -85,6 +96,7 @@ class LoopVariable(TohuBaseGenerator):
     def _set_state_from(self, other):
         self.idx = other.idx
         self.cur_value = other.cur_value
+        self.loop_level = other.loop_level
 
 
 class LoopRunner:
@@ -93,11 +105,10 @@ class LoopRunner:
         self.loop_variables = {}
         self.max_level = 0
 
-    def add_loop_variable(self, name, loop_variable, *, level):
+    def add_loop_variable(self, name, loop_variable):
         # Check constraints on `level` argument to ensure levels
         #  are contiguous between 1 and max_level.
-        if level < 1:
-            raise ValueError(f"Level must be >= 1 (got: {level})")
+        level = loop_variable.loop_level
         if level > self.max_level + 1:
             raise ValueError(
                 f"Level must be at most <= max_level + 1. " f"Got: level={level}, max_level={self.max_level}."

@@ -71,6 +71,9 @@ def foreach(**var_defs):
             custom_gen_cls = cls.custom_gen_cls
             loop_level = cls.loop_level + 1
 
+        for x in loop_vars.values():
+            x.loop_level = loop_level
+
         stored_gens = {name: x for (name, x) in custom_gen_cls.__dict__.items() if isinstance(x, TohuBaseGenerator)}
         for name in stored_gens.keys():
             delattr(custom_gen_cls, name)
