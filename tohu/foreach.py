@@ -1,5 +1,6 @@
 import inspect
 
+from .base import TohuBaseGenerator
 from .looping import LoopVariable
 
 __all__ = ["foreach"]
@@ -59,6 +60,15 @@ def foreach(**var_defs):
 
     def wrapper(cls):
         restore_globals(global_vars, new_names, clashes)
+
+        stored_gens = {name: x for (name, x) in cls.__dict__.items() if isinstance(x, TohuBaseGenerator)}
+        for name in stored_gens.keys():
+            delattr(cls, name)
+        for name, x in loop_vars.items():
+            setattr(cls, name, x)
+        for name, g in stored_gens.items():
+            setattr(cls, name, g)
+
         return ForeachGeneratorClass(cls)
 
     return wrapper

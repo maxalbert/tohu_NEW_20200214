@@ -44,6 +44,7 @@ class TohuBaseGenerator:
         self.tohu_name = None
         self.clones = []
         self.parent = None  # this will only be set for cloned generators to point to their parents
+        self.is_hidden = False  # this is used for loop variables
 
     def __repr__(self):
         clsname = self.__class__.__name__

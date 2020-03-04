@@ -25,18 +25,28 @@ class NonExistentTohuItemsClass:
 
 class TohuNamespace:
     def __init__(self, tohu_items_class_name):
-        self.generators = {}
         self.tohu_items_class_name = tohu_items_class_name
         self.tohu_items_class = NonExistentTohuItemsClass()
         self.seed_generator = SeedGenerator()
         self.gen_mapping = {}
+        self.hidden_generators = {}
+        self.generators = {}
+
+    @property
+    def _all_generators(self):
+        res = self.hidden_generators.copy()
+        res.update(self.generators)
+        return res
 
     def add_generator(self, name, gen):
         if gen in self.gen_mapping:
             gen = Apply(identity, gen)
         gen_spawned = gen.spawn(self.gen_mapping)
-        self.generators[name] = gen_spawned
         self.gen_mapping[gen] = gen_spawned
+        if gen.is_hidden:
+            self.hidden_generators[name] = gen_spawned
+        else:
+            self.generators[name] = gen_spawned
 
     def make_tohu_items_class(self):
         field_names = list(self.generators.keys())
@@ -50,12 +60,12 @@ class TohuNamespace:
         self.seed_generator.reset(seed)
 
         logger.debug(f"In TohuNamespace for items class '{self.tohu_items_class_name}':")
-        for name, g in self.generators.items():
+        for name, g in self._all_generators.items():
             next_seed = next(self.seed_generator)
             logger.debug(f"  - Resetting {name}={g} with seed={next_seed}")
             g.reset(next_seed)
 
     def advance_loop_variables(self):
-        for name, g in self.generators.items():
+        for name, g in self._all_generators.items():
             if isinstance(g, LoopVariable):
                 g.advance()

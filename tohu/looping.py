@@ -8,6 +8,7 @@ class LoopVariable(TohuBaseGenerator):
         self.values = values
         self.idx = 0
         self.cur_value = self.values[0]
+        self.is_hidden = True
 
     def __next__(self):
         return self.cur_value
