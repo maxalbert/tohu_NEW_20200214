@@ -73,6 +73,14 @@ class TohuNamespace:
     def loop_variables(self):
         return [g for g in self._all_generators.values() if isinstance(g, LoopVariable)]
 
+    @property
+    def unassigned_loop_variables(self):
+        return [x for x in self.loop_variables if not x.has_values_assigned]
+
+    @property
+    def has_unassigned_loop_variables(self):
+        return self.unassigned_loop_variables != []
+
     def advance_loop_variables(self):
         for g in self.loop_variables:
             g.advance()
