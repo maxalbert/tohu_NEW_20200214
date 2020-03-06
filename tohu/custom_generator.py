@@ -33,7 +33,7 @@ class CustomGenerator(TohuBaseGenerator):
 
         # Update the instance dict so that the user can access
         # them directly via the instance attributes if needed.
-        self.__dict__.update(self._tohu_namespace.generators)
+        self.__dict__.update(self._tohu_namespace.field_generators)
 
     def __next__(self):
         return next(self._tohu_namespace)

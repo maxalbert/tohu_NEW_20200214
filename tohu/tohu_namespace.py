@@ -30,13 +30,13 @@ class TohuNamespace:
         self.seed_generator = SeedGenerator()
         self.gen_mapping = {}
         self.hidden_generators = {}
-        self.generators = {}
+        self.field_generators = {}
         self.loop_runner = LoopRunner()
 
     @property
     def _all_generators(self):
         res = self.hidden_generators.copy()
-        res.update(self.generators)
+        res.update(self.field_generators)
         return res
 
     def add_generator(self, name, gen):
@@ -47,17 +47,17 @@ class TohuNamespace:
         if gen.is_hidden:
             self.hidden_generators[name] = gen_spawned
         else:
-            self.generators[name] = gen_spawned
+            self.field_generators[name] = gen_spawned
 
         if isinstance(gen_spawned, LoopVariable):
             self.loop_runner.add_loop_variable(gen_spawned.name, gen_spawned)
 
     def make_tohu_items_class(self):
-        field_names = list(self.generators.keys())
+        field_names = list(self.field_generators.keys())
         self.tohu_items_class = make_tohu_items_class(self.tohu_items_class_name, field_names)
 
     def __next__(self):
-        gen_vals = (next(g) for g in self.generators.values())
+        gen_vals = (next(g) for g in self.field_generators.values())
         return self.tohu_items_class(*gen_vals)
 
     def reset(self, seed):
