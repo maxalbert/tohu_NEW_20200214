@@ -31,13 +31,8 @@ class TohuNamespace:
         self.gen_mapping = {}
         self.hidden_generators = {}
         self.field_generators = {}
+        self.all_generators = {}
         self.loop_runner = LoopRunner()
-
-    @property
-    def _all_generators(self):
-        res = self.hidden_generators.copy()
-        res.update(self.field_generators)
-        return res
 
     def add_generator(self, name, gen):
         if gen in self.gen_mapping:
@@ -48,6 +43,7 @@ class TohuNamespace:
             self.hidden_generators[name] = gen_spawned
         else:
             self.field_generators[name] = gen_spawned
+        self.all_generators[name] = gen_spawned
 
         if isinstance(gen_spawned, LoopVariable):
             self.loop_runner.add_loop_variable(gen_spawned.name, gen_spawned)
@@ -64,14 +60,14 @@ class TohuNamespace:
         self.seed_generator.reset(seed)
 
         logger.debug(f"In TohuNamespace for items class '{self.tohu_items_class_name}':")
-        for name, g in self._all_generators.items():
+        for name, g in self.all_generators.items():
             next_seed = next(self.seed_generator)
             logger.debug(f"  - Resetting {name}={g} with seed={next_seed}")
             g.reset(next_seed)
 
     @property
     def loop_variables(self):
-        return [g for g in self._all_generators.values() if isinstance(g, LoopVariable)]
+        return [g for g in self.all_generators.values() if isinstance(g, LoopVariable)]
 
     @property
     def unassigned_loop_variables(self):
