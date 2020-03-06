@@ -1,3 +1,4 @@
+from abc import ABCMeta
 from .base import TohuBaseGenerator, SeedGenerator
 from .item_list import ItemList
 from .tohu_items_class import make_tohu_items_class, derive_tohu_items_class_name
@@ -14,7 +15,40 @@ def find_tohu_generators(x):
     return {name: gen for (name, gen) in candidates if isinstance(gen, TohuBaseGenerator)}
 
 
-class CustomGenerator(TohuBaseGenerator):
+def augment_init_method(cls):
+    """
+    Replace the existing cls.__init__() method with a new one which
+    also initialises the field generators and similar bookkeeping.
+    """
+
+    orig_init = cls.__init__
+
+    def new_init(self, *args, **kwargs):
+        self._tohu_init_args = args
+        self._tohu_init_kwargs = kwargs
+        orig_init(self, *args, **kwargs)
+
+        # After the original __init__() method, call CustomGenerator.__init__() in
+        # order to build up the tohu_namespace with the constituent generators, etc.
+        super(cls, self).__init__()  # TODO: does this behave correctly with longer inheritance chains? I think so...(?)
+
+    cls.__init__ = new_init
+
+
+class CustomGeneratorMeta(ABCMeta):
+    def __new__(metacls, cg_name, bases, clsdict):
+        # Create new custom generator class
+        new_cls = super(CustomGeneratorMeta, metacls).__new__(metacls, cg_name, bases, clsdict)
+
+        # Augment original init method with bookkeeping needed for custom generators
+        # (but only
+        if new_cls._is_proper_custom_generator_subclass():
+            augment_init_method(new_cls)
+
+        return new_cls
+
+
+class CustomGenerator(TohuBaseGenerator, metaclass=CustomGeneratorMeta):
     """
     CustomGenerator allows combining other generators into a single entity.
     """
@@ -34,6 +68,21 @@ class CustomGenerator(TohuBaseGenerator):
         # Update the instance dict so that the user can access
         # them directly via the instance attributes if needed.
         self.__dict__.update(self._tohu_namespace.field_generators)
+
+    @classmethod
+    def _is_proper_custom_generator_subclass(cls):
+        try:
+            return cls is not CustomGenerator
+        except NameError:
+            # This can happen inside CustomGeneratorMeta above while
+            # the CustomGenerator class itself is being created, so
+            # that the `CustomGenerator` symbol doesn't exist yet.
+            return False
+
+    def spawn(self, gen_mapping=None):
+        # Note: the attributes _tohu_init_args and _tohu_init_kwargs are set in
+        # the custom generator metaclass (in the augmented __init__() method).
+        return self.__class__(*self._tohu_init_args, **self._tohu_init_kwargs)
 
     def __next__(self):
         return next(self._tohu_namespace)
