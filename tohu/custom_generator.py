@@ -21,7 +21,24 @@ def augment_init_method(cls):
     also initialises the field generators and similar bookkeeping.
     """
 
-    orig_init = cls.__init__
+    def missing_init_method(*args, **kwargs):
+        return
+
+    # Store the original __init__() method so that we can call it
+    # from the augmented one below. However, only do this if the user
+    # explicitly defined __init__() on the class `cls`, otherwise we'd
+    # set orig_init = CustomGenerator.__init__ and we would end  up
+    # calling it twice - once through `orig_init(self, *args, **kwargs)`
+    # and a second time through `super(cls, self).__init__()`.
+    if cls.__init__ is not CustomGenerator.__init__:
+        # Store the original __init__ method so that we can
+        # call it from the augmented one below.
+        orig_init = cls.__init__
+    else:
+        # The user didn't explicitly define __init__ on the class `cls`,
+        # so we replace it with a no-op placeholder (otherwise we'd end
+        # up calling CustomGenerator.__init__ twice).
+        orig_init = missing_init_method
 
     def new_init(self, *args, **kwargs):
         self._tohu_init_args = args
