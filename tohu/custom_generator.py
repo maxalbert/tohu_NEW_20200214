@@ -82,9 +82,16 @@ class CustomGenerator(TohuBaseGenerator, metaclass=CustomGeneratorMeta):
             self._tohu_namespace.add_generator(name, gen)
         self._tohu_namespace.make_tohu_items_class()
 
-        # Update the instance dict so that the user can access
-        # them directly via the instance attributes if needed.
+        # Update the instance dict so that the user can access the
+        # custom generator's constituent generators directly via
+        # instance attributes if needed.
+        #
+        # Note that we also make the 'hidden' generators accessible
+        # via instance attributes. They are only hidden in the sense
+        # that the values produced by them won't be exported as fields
+        # on the generated output items.
         self.__dict__.update(self._tohu_namespace.field_generators)
+        self.__dict__.update(self._tohu_namespace.hidden_generators)
 
     @classmethod
     def _is_proper_custom_generator_subclass(cls):
