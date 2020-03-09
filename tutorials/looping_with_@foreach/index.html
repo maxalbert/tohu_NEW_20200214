@@ -291,6 +291,20 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#nested-loop-variables" class="md-nav__link">
+    Nested loop variables
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#placeholder-loop-variables-filling-in-values-later" class="md-nav__link">
+    Placeholder loop variables (filling in values later)
+  </a>
+  
+</li>
+      
       
       
       
@@ -675,6 +689,20 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#nested-loop-variables" class="md-nav__link">
+    Nested loop variables
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#placeholder-loop-variables-filling-in-values-later" class="md-nav__link">
+    Placeholder loop variables (filling in values later)
+  </a>
+  
+</li>
+      
       
       
       
@@ -706,6 +734,8 @@
 <ul>
 <li><a href="#single-loop-variable">Single loop variable</a></li>
 <li><a href="#multiple-loop-variables-at-the-same-level">Multiple loop variables (at the same level)</a></li>
+<li><a href="#nested-loop-variables">Nested loop variables</a></li>
+<li><a href="#placeholder-loop-variables-filling-in-values-later">Placeholder loop variables (filling in values later)</a></li>
 </ul>
 </div>
 </div>
@@ -759,7 +789,7 @@
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;@foreach-wrapped &lt;MatchRecordGenerator (id=f369fd)&gt; &gt;</pre>
+<pre>&lt;@foreach-wrapped &lt;MatchRecordGenerator (id=c37185)&gt; &gt;</pre>
 </div>
 
 </div>
@@ -994,6 +1024,244 @@ If one of the loop variables contains more elements than the other, the addition
 </div>
 
 </div>
+</div>
+
+<div class="cell border-box-sizing text_cell rendered">
+<p><div class="inner_cell" markdown="1">
+<div class="text_cell_render border-box-sizing rendered_html" markdown="1"></p>
+<h2 id="nested-loop-variables">Nested loop variables<a class="headerlink" href="#nested-loop-variables" title="Permanent link">&para;</a></h2>
+<p></div>
+</div></p>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+</div>
+</div>
+<div class="codehilite"><pre><span></span><code><span class="nd">@foreach</span><span class="p">(</span><span class="n">match_date</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;2000-01-01&quot;</span><span class="p">,</span> <span class="s2">&quot;2000-01-02&quot;</span><span class="p">,</span> <span class="s2">&quot;2000-01-03&quot;</span><span class="p">])</span>
+<span class="nd">@foreach</span><span class="p">(</span><span class="n">match_venue</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Town A&quot;</span><span class="p">,</span> <span class="s2">&quot;Town B&quot;</span><span class="p">])</span>
+<span class="k">class</span> <span class="nc">MatchRecordGenerator</span><span class="p">(</span><span class="n">CustomGenerator</span><span class="p">):</span>
+    <span class="n">date</span> <span class="o">=</span> <span class="n">match_date</span>
+    <span class="n">venue</span> <span class="o">=</span> <span class="n">match_venue</span>
+    <span class="n">player</span> <span class="o">=</span> <span class="n">FakerGenerator</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;first_name&quot;</span><span class="p">)</span>
+    <span class="n">points_scored</span> <span class="o">=</span> <span class="n">Integer</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="codehilite"><pre><span></span><code><span class="n">g</span> <span class="o">=</span> <span class="n">MatchRecordGenerator</span><span class="p">()</span>
+<span class="n">g</span><span class="o">.</span><span class="n">generate_as_list</span><span class="p">(</span><span class="n">num_iterations</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">seed</span><span class="o">=</span><span class="mi">11111</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+
+<div class="output_wrapper" markdown="1">
+<div class="output" markdown="1">
+
+
+<div class="output_area" markdown="1">
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[MatchRecord(date=&#39;2000-01-01&#39;, venue=&#39;Town A&#39;, player=&#39;Cindy&#39;, points_scored=79),
+ MatchRecord(date=&#39;2000-01-01&#39;, venue=&#39;Town A&#39;, player=&#39;Melanie&#39;, points_scored=2),
+ MatchRecord(date=&#39;2000-01-01&#39;, venue=&#39;Town B&#39;, player=&#39;Joseph&#39;, points_scored=76),
+ MatchRecord(date=&#39;2000-01-01&#39;, venue=&#39;Town B&#39;, player=&#39;Linda&#39;, points_scored=94),
+ MatchRecord(date=&#39;2000-01-01&#39;, venue=&#39;Town B&#39;, player=&#39;Christopher&#39;, points_scored=97),
+ MatchRecord(date=&#39;2000-01-01&#39;, venue=&#39;Town B&#39;, player=&#39;Ian&#39;, points_scored=57),
+ MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town A&#39;, player=&#39;Justin&#39;, points_scored=30),
+ MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town A&#39;, player=&#39;Barbara&#39;, points_scored=67),
+ MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town A&#39;, player=&#39;Heather&#39;, points_scored=80),
+ MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Michelle&#39;, points_scored=52),
+ MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Becky&#39;, points_scored=53)]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">f_num_iterations</span><span class="p">(</span><span class="n">match_date</span><span class="p">,</span> <span class="n">match_venue</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">match_venue</span> <span class="o">==</span> <span class="s2">&quot;Town A&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">3</span>
+    <span class="k">elif</span> <span class="n">match_venue</span> <span class="o">==</span> <span class="s2">&quot;Town B&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid venue&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="codehilite"><pre><span></span><code><span class="n">g</span><span class="o">.</span><span class="n">generate_as_list</span><span class="p">(</span><span class="n">num_iterations</span><span class="o">=</span><span class="n">f_num_iterations</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">11111</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+
+<div class="output_wrapper" markdown="1">
+<div class="output" markdown="1">
+
+
+<div class="output_area" markdown="1">
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[MatchRecord(date=&#39;2000-01-01&#39;, venue=&#39;Town A&#39;, player=&#39;Cindy&#39;, points_scored=79),
+ MatchRecord(date=&#39;2000-01-01&#39;, venue=&#39;Town A&#39;, player=&#39;Melanie&#39;, points_scored=2),
+ MatchRecord(date=&#39;2000-01-01&#39;, venue=&#39;Town A&#39;, player=&#39;Joseph&#39;, points_scored=76),
+ MatchRecord(date=&#39;2000-01-01&#39;, venue=&#39;Town B&#39;, player=&#39;Linda&#39;, points_scored=94),
+ MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town A&#39;, player=&#39;Christopher&#39;, points_scored=97),
+ MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town A&#39;, player=&#39;Ian&#39;, points_scored=57),
+ MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town A&#39;, player=&#39;Justin&#39;, points_scored=30),
+ MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Barbara&#39;, points_scored=67),
+ MatchRecord(date=&#39;2000-01-03&#39;, venue=&#39;Town A&#39;, player=&#39;Heather&#39;, points_scored=80),
+ MatchRecord(date=&#39;2000-01-03&#39;, venue=&#39;Town A&#39;, player=&#39;Michelle&#39;, points_scored=52),
+ MatchRecord(date=&#39;2000-01-03&#39;, venue=&#39;Town A&#39;, player=&#39;Becky&#39;, points_scored=53),
+ MatchRecord(date=&#39;2000-01-03&#39;, venue=&#39;Town B&#39;, player=&#39;Kayla&#39;, points_scored=84)]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+<div class="cell border-box-sizing text_cell rendered">
+<p><div class="inner_cell" markdown="1">
+<div class="text_cell_render border-box-sizing rendered_html" markdown="1"></p>
+<h2 id="placeholder-loop-variables-filling-in-values-later">Placeholder loop variables (filling in values later)<a class="headerlink" href="#placeholder-loop-variables-filling-in-values-later" title="Permanent link">&para;</a></h2>
+<p></div>
+</div></p>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+</div>
+</div>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pytest</span>
+<span class="kn">from</span> <span class="nn">tohu.looping</span> <span class="kn">import</span> <span class="n">PLACEHOLDER</span><span class="p">,</span> <span class="n">UnassignedValuesError</span>
+</code></pre></div>
+
+</div>
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="codehilite"><pre><span></span><code><span class="nd">@foreach</span><span class="p">(</span><span class="n">match_date</span><span class="o">=</span><span class="n">PLACEHOLDER</span><span class="p">)</span>
+<span class="nd">@foreach</span><span class="p">(</span><span class="n">match_venue</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Town A&quot;</span><span class="p">,</span> <span class="s2">&quot;Town B&quot;</span><span class="p">])</span>
+<span class="k">class</span> <span class="nc">MatchRecordGenerator</span><span class="p">(</span><span class="n">CustomGenerator</span><span class="p">):</span>
+    <span class="n">date</span> <span class="o">=</span> <span class="n">match_date</span>
+    <span class="n">venue</span> <span class="o">=</span> <span class="n">match_venue</span>
+    <span class="n">player</span> <span class="o">=</span> <span class="n">FakerGenerator</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;first_name&quot;</span><span class="p">)</span>
+    <span class="n">points_scored</span> <span class="o">=</span> <span class="n">Integer</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="codehilite"><pre><span></span><code><span class="n">g</span> <span class="o">=</span> <span class="n">MatchRecordGenerator</span><span class="p">()</span>
+</code></pre></div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="codehilite"><pre><span></span><code><span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="n">UnassignedValuesError</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="s2">&quot;Loop variable &#39;match_date&#39; has not been assigned any values.&quot;</span><span class="p">):</span>
+    <span class="n">g</span><span class="o">.</span><span class="n">generate_as_list</span><span class="p">(</span><span class="n">num_iterations</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">11111</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="codehilite"><pre><span></span><code><span class="n">g</span><span class="o">.</span><span class="n">foreach</span><span class="p">(</span><span class="n">match_date</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;2020-01-01&quot;</span><span class="p">,</span> <span class="s2">&quot;2020-01-02&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">generate_as_list</span><span class="p">(</span><span class="n">num_iterations</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">11111</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+
+<div class="output_wrapper" markdown="1">
+<div class="output" markdown="1">
+
+
+<div class="output_area" markdown="1">
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[MatchRecord(date=&#39;2020-01-01&#39;, venue=&#39;Town A&#39;, player=&#39;Cindy&#39;, points_scored=79),
+ MatchRecord(date=&#39;2020-01-01&#39;, venue=&#39;Town A&#39;, player=&#39;Melanie&#39;, points_scored=2),
+ MatchRecord(date=&#39;2020-01-01&#39;, venue=&#39;Town B&#39;, player=&#39;Joseph&#39;, points_scored=76),
+ MatchRecord(date=&#39;2020-01-01&#39;, venue=&#39;Town B&#39;, player=&#39;Linda&#39;, points_scored=94),
+ MatchRecord(date=&#39;2020-01-02&#39;, venue=&#39;Town A&#39;, player=&#39;Christopher&#39;, points_scored=97),
+ MatchRecord(date=&#39;2020-01-02&#39;, venue=&#39;Town A&#39;, player=&#39;Ian&#39;, points_scored=57),
+ MatchRecord(date=&#39;2020-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Justin&#39;, points_scored=30),
+ MatchRecord(date=&#39;2020-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Barbara&#39;, points_scored=67)]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="codehilite"><pre><span></span><code><span class="n">g</span><span class="o">.</span><span class="n">foreach</span><span class="p">(</span><span class="n">match_date</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;2020-01-01&quot;</span><span class="p">,</span> <span class="s2">&quot;2020-01-02&quot;</span><span class="p">,</span> <span class="s2">&quot;2020-01-03&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">generate_as_list</span><span class="p">(</span><span class="n">num_iterations</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">11111</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+
+<div class="output_wrapper" markdown="1">
+<div class="output" markdown="1">
+
+
+<div class="output_area" markdown="1">
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[MatchRecord(date=&#39;2020-01-01&#39;, venue=&#39;Town A&#39;, player=&#39;Cindy&#39;, points_scored=79),
+ MatchRecord(date=&#39;2020-01-01&#39;, venue=&#39;Town A&#39;, player=&#39;Melanie&#39;, points_scored=2),
+ MatchRecord(date=&#39;2020-01-01&#39;, venue=&#39;Town B&#39;, player=&#39;Joseph&#39;, points_scored=76),
+ MatchRecord(date=&#39;2020-01-01&#39;, venue=&#39;Town B&#39;, player=&#39;Linda&#39;, points_scored=94),
+ MatchRecord(date=&#39;2020-01-02&#39;, venue=&#39;Town A&#39;, player=&#39;Christopher&#39;, points_scored=97),
+ MatchRecord(date=&#39;2020-01-02&#39;, venue=&#39;Town A&#39;, player=&#39;Ian&#39;, points_scored=57),
+ MatchRecord(date=&#39;2020-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Justin&#39;, points_scored=30),
+ MatchRecord(date=&#39;2020-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Barbara&#39;, points_scored=67),
+ MatchRecord(date=&#39;2020-01-03&#39;, venue=&#39;Town A&#39;, player=&#39;Heather&#39;, points_scored=80),
+ MatchRecord(date=&#39;2020-01-03&#39;, venue=&#39;Town A&#39;, player=&#39;Michelle&#39;, points_scored=52),
+ MatchRecord(date=&#39;2020-01-03&#39;, venue=&#39;Town B&#39;, player=&#39;Becky&#39;, points_scored=53),
+ MatchRecord(date=&#39;2020-01-03&#39;, venue=&#39;Town B&#39;, player=&#39;Kayla&#39;, points_scored=84)]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="codehilite"><pre><span></span><code><span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="n">UnassignedValuesError</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="s2">&quot;Loop variable &#39;match_date&#39; has not been assigned any values.&quot;</span><span class="p">):</span>
+    <span class="n">g</span><span class="o">.</span><span class="n">generate_as_list</span><span class="p">(</span><span class="n">num_iterations</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">11111</span><span class="p">)</span>
+</code></pre></div>
+
 </div>
 
 </div>
