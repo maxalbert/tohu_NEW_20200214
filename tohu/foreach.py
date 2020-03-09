@@ -25,11 +25,20 @@ class ForeachGeneratorInstance:
     def __repr__(self):
         return f"<@foreach-wrapped {self.custom_gen_instance} >"
 
+    def foreach(self, **var_names_and_values):
+        new_custom_gen_instance = self.custom_gen_instance.spawn()
+
+        for name, values in var_names_and_values.items():
+            # FIXME: Demeter violation!
+            new_custom_gen_instance._tohu_namespace.loop_runner.assign_values(name, values)
+
+        return ForeachGeneratorInstance(new_custom_gen_instance)
+
     def generate_as_stream(self, *, num_iterations, seed=None):
         if seed is not None:
             self.custom_gen_instance.reset(seed)
 
-        # FIXME: this grossly violates the law of Demeter!
+        # FIXME: Demeter violation!
         yield from self.custom_gen_instance._tohu_namespace.loop_runner.run_loop_to_generate_items_with(
             self.custom_gen_instance, num_iterations
         )
