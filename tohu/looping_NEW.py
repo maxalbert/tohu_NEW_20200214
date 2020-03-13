@@ -76,6 +76,18 @@ class LoopRunner:
                 )
 
     def iter_loop_var_values_at_level(self, loop_level):
+        """
+        Yield a sequence of dictionaries of the form `{name: value}`, where
+        `value` iterates through the possible values for the loop variable
+        with name `name`.
+
+        Examples
+        --------
+        >>> loop_runner.iter_loop_var_values_at_level(loop_level=1)
+        [{"x": 111, "y": "AAA"},
+         {"x": 222, "y": "BBB"},
+         {"x": 333, "y": "CCC"}]
+        """
         loop_vars_at_level = self.get_loop_variables_at_level(loop_level)
         var_names = list(loop_vars_at_level)
         all_var_values = zip(*(x.values for x in loop_vars_at_level.values()))
