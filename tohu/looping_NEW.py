@@ -1,3 +1,4 @@
+from itertools import groupby
 from typing import Callable, Sequence
 
 
@@ -100,10 +101,29 @@ class LoopRunner:
         for vals in all_var_values:
             yield dict(zip(var_names, vals))
 
-    def get_loop_iteration_lengths(self, num_iterations):
-        get_num_iterations = make_num_iterations_getter(num_iterations)
+    def _get_loop_iteration_lengths_impl(self, num_iterations):
+        get_num_iterations_at_level_0 = make_num_iterations_getter(num_iterations)
 
         def f_do_stuff(**kwargs):
-            yield (kwargs, get_num_iterations(**kwargs))
+            try:
+                yield (kwargs, get_num_iterations_at_level_0(**kwargs))
+            except StopIteration:
+                return
 
         return self.run_loop_iterations_with(f_do_stuff)
+
+    def get_loop_iteration_lengths(self, num_iterations, loop_level=1):
+        vars_at_level_or_above = list(self.get_loop_variables_at_level_or_above(loop_level))
+
+        def key_func(loop_var_values):
+            return {name: loop_var_values[0][name] for name in vars_at_level_or_above}
+
+        groups = []
+        uniquekeys = []
+        for k, g in groupby(self._get_loop_iteration_lengths_impl(num_iterations), key_func):
+            uniquekeys.append(k)
+            groups.append(list(g))
+
+        loop_iteration_lengths = [sum([x[1] for x in g]) for g in groups]
+
+        return list(zip(uniquekeys, loop_iteration_lengths))
