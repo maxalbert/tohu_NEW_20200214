@@ -113,6 +113,11 @@ class LoopRunner:
         return self.run_loop_iterations_with(f_do_stuff)
 
     def get_loop_iteration_lengths(self, num_iterations, loop_level=1):
+        if loop_level < 1 or loop_level > self.max_level:
+            raise ValueError(
+                f"The value of loop_level must be in the range 1 <= loop_level <= {self.max_level}. Got: {loop_level}"
+            )
+
         vars_at_level_or_above = list(self.get_loop_variables_at_level_or_above(loop_level))
 
         def key_func(loop_var_values):
