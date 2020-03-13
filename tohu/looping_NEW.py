@@ -118,12 +118,5 @@ class LoopRunner:
         def key_func(loop_var_values):
             return {name: loop_var_values[0][name] for name in vars_at_level_or_above}
 
-        groups = []
-        uniquekeys = []
         for k, g in groupby(self._get_loop_iteration_lengths_impl(num_iterations), key_func):
-            uniquekeys.append(k)
-            groups.append(list(g))
-
-        loop_iteration_lengths = [sum([x[1] for x in g]) for g in groups]
-
-        return list(zip(uniquekeys, loop_iteration_lengths))
+            yield (k, sum([x[1] for x in g]))
