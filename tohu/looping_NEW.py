@@ -8,7 +8,7 @@ class LoopVariable:
         self.loop_level = None
 
     def __repr__(self):
-        return f"<LoopVariable: name={self.name!r}, values={self.values!r}>"
+        return f"<LoopVariable: name={self.name!r}, loop_level={self.loop_level!r}, values={self.values!r}>"
 
     def set_loop_level(self, loop_level):
         self.loop_level = loop_level
