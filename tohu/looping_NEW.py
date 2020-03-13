@@ -63,6 +63,12 @@ class LoopRunner:
     def get_loop_variables_at_level(self, loop_level):
         return {name: x for name, x in self.loop_variables.items() if x.loop_level == loop_level}
 
+    def get_loop_variables_at_level_or_above(self, loop_level):
+        res = dict()
+        for cur_level in range(loop_level, self.max_level + 1):
+            res.update(self.get_loop_variables_at_level(cur_level))
+        return res
+
     def run_loop_iterations_with(self, f_do_stuff):
         return self._run_loop_iterations_impl(f_do_stuff, self.max_level)
 
