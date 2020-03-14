@@ -1,19 +1,45 @@
 from itertools import groupby
 from typing import Callable, Sequence
 
+from .base import TohuBaseGenerator
 
-class LoopVariable:
+
+class LoopVariable(TohuBaseGenerator):
     def __init__(self, name, values):
+        super().__init__()
         self.name = name
-        self.values = values
+        self.values = list(values)
         self.loop_level = None
+        self.is_hidden = True
+        self.idx = 0
+        self.cur_value = self.values[0]
+
+    def __next__(self):
+        return self.cur_value
 
     def __repr__(self):
         return f"<LoopVariable: name={self.name!r}, loop_level={self.loop_level!r}, values={self.values!r}>"
 
+    def advance(self):
+        self.idx += 1
+        try:
+            self.cur_value = self.values[self.idx]
+        except IndexError:
+            raise StopIteration(f"Loop variable has been exhausted: {self}")
+
+        for c in self.clones:
+            c.advance()
+
+    def reset_loop_variable(self):
+        self.idx = 0
+        self.cur_value = self.values[0]
+
     def set_loop_level(self, loop_level):
         self.loop_level = loop_level
         return self
+
+    def spawn(self, gen_mapping=None):
+        return LoopVariable(self.name, self.values).set_loop_level(self.loop_level)
 
 
 class NumIterationsGetterFromCallable:
