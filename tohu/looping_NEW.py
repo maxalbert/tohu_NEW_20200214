@@ -70,16 +70,16 @@ class LoopRunner:
             res.update(self.get_loop_variables_at_level(cur_level))
         return res
 
-    def run_loop_iterations_with(self, f_do_stuff):
-        return self._run_loop_iterations_impl(f_do_stuff, self.max_level)
+    def run_loop_iterations_with(self, f_run_iteration):
+        return self._run_loop_iterations_impl(f_run_iteration, self.max_level)
 
-    def _run_loop_iterations_impl(self, f_do_stuff, cur_loop_level, **loop_var_values_at_higher_levels):
+    def _run_loop_iterations_impl(self, f_run_iteration, cur_loop_level, **loop_var_values_at_higher_levels):
         if cur_loop_level == 0:
             yield from f_do_stuff(**loop_var_values_at_higher_levels)
         else:
             for cur_vals in self.iter_loop_var_values_at_level(cur_loop_level):
                 yield from self._run_loop_iterations_impl(
-                    f_do_stuff, cur_loop_level=cur_loop_level - 1, **cur_vals, **loop_var_values_at_higher_levels
+                    f_run_iteration, cur_loop_level=cur_loop_level - 1, **cur_vals, **loop_var_values_at_higher_levels
                 )
 
     def iter_loop_var_values_at_level(self, loop_level):
