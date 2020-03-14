@@ -42,7 +42,7 @@ class NumIterationsGetterFromSequence:
         try:
             return self.seq_num_iterations[self.idx]
         except IndexError:
-            raise StopIteration
+            raise StopIteration(f"num_iterations sequence has been exhausted: {self.seq_num_iterations}")
 
 
 def make_num_iterations_getter(num_iterations):
