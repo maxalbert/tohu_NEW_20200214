@@ -32,6 +32,12 @@ class NumIterationsGetterFromInt:
         return self.num_iterations
 
 
+class NumIterationsSequenceExhausted(Exception):
+    """
+    Custom exception to indicate that a `num_iterations` sequence has been exhausted.
+    """
+
+
 class NumIterationsGetterFromSequence:
     def __init__(self, seq_num_iterations):
         self.seq_num_iterations = seq_num_iterations
@@ -42,7 +48,9 @@ class NumIterationsGetterFromSequence:
         try:
             return self.seq_num_iterations[self.idx]
         except IndexError:
-            raise StopIteration(f"num_iterations sequence has been exhausted: {self.seq_num_iterations}")
+            raise NumIterationsSequenceExhausted(
+                f"num_iterations sequence has been exhausted: {self.seq_num_iterations}"
+            )
 
 
 def make_num_iterations_getter(num_iterations):
@@ -75,7 +83,10 @@ class LoopRunner:
 
     def _run_loop_iterations_impl(self, f_run_iteration, cur_loop_level, **loop_var_values_at_higher_levels):
         if cur_loop_level == 0:
-            yield from f_do_stuff(**loop_var_values_at_higher_levels)
+            try:
+                yield from f_run_iteration(**loop_var_values_at_higher_levels)
+            except NumIterationsSequenceExhausted:
+                return
         else:
             for cur_vals in self.iter_loop_var_values_at_level(cur_loop_level):
                 yield from self._run_loop_iterations_impl(
