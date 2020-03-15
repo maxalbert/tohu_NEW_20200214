@@ -34,8 +34,15 @@ class LoopVariable(TohuBaseGenerator):
         self.idx = 0
         self.cur_value = self.values[0]
 
+        for c in self.clones:
+            c.reset_loop_variable()
+
     def set_loop_level(self, loop_level):
         self.loop_level = loop_level
+
+        for c in self.clones:
+            c.set_loop_level(loop_level)
+
         return self
 
     def spawn(self, gen_mapping=None):
