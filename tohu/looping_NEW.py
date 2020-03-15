@@ -18,7 +18,7 @@ class LoopVariable(TohuBaseGenerator):
         return self.cur_value
 
     def __repr__(self):
-        return f"<LoopVariable: name={self.name!r}, loop_level={self.loop_level!r}, values={self.values!r}>"
+        return f"<LoopVariable: name={self.name!r}, loop_level={self.loop_level!r}, values={self.values!r}, cur_value={self.cur_value!r}>"
 
     def advance(self):
         self.idx += 1
