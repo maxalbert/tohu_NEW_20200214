@@ -4,6 +4,24 @@ from typing import Callable, Sequence
 from .base import TohuBaseGenerator
 
 
+class NumIterationsSequenceExhausted(Exception):
+    """
+    Custom exception to indicate that a `num_iterations` sequence has been exhausted.
+    """
+
+
+class LoopVariableExhausted(Exception):
+    """
+    Custom exception to indicate that a loop variable has iterated through all its values.
+    """
+
+
+class LoopExhausted(Exception):
+    """
+    Custom exception to indicate that a loop has iterated through all its values.
+    """
+
+
 class LoopVariable(TohuBaseGenerator):
     def __init__(self, name, values):
         super().__init__()
@@ -25,7 +43,7 @@ class LoopVariable(TohuBaseGenerator):
         try:
             self.cur_value = self.values[self.idx]
         except IndexError:
-            raise StopIteration(f"Loop variable has been exhausted: {self}")
+            raise LoopVariableExhausted(f"Loop variable has been exhausted: {self}")
 
         for c in self.clones:
             c.advance()
@@ -63,12 +81,6 @@ class NumIterationsGetterFromInt:
 
     def __call__(self, **kwargs):
         return self.num_iterations
-
-
-class NumIterationsSequenceExhausted(Exception):
-    """
-    Custom exception to indicate that a `num_iterations` sequence has been exhausted.
-    """
 
 
 class NumIterationsGetterFromSequence:
@@ -116,15 +128,18 @@ class LoopRunner:
 
     def _run_loop_iterations_impl(self, f_run_iteration, cur_loop_level, **loop_var_values_at_higher_levels):
         if cur_loop_level == 0:
-            try:
-                yield from f_run_iteration(**loop_var_values_at_higher_levels)
-            except NumIterationsSequenceExhausted:
-                return
+            yield from f_run_iteration(**loop_var_values_at_higher_levels)
         else:
             for cur_vals in self.iter_loop_var_values_at_level(cur_loop_level):
-                yield from self._run_loop_iterations_impl(
-                    f_run_iteration, cur_loop_level=cur_loop_level - 1, **cur_vals, **loop_var_values_at_higher_levels
-                )
+                try:
+                    yield from self._run_loop_iterations_impl(
+                        f_run_iteration,
+                        cur_loop_level=cur_loop_level - 1,
+                        **cur_vals,
+                        **loop_var_values_at_higher_levels,
+                    )
+                except LoopExhausted:
+                    return
 
     def iter_loop_var_values_at_level(self, loop_level):
         """
