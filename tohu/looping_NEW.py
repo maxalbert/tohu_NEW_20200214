@@ -123,17 +123,24 @@ class LoopRunner:
             res.update(self.get_loop_variables_at_level(cur_level))
         return res
 
-    def run_loop_iterations_with(self, f_run_iteration):
-        return self._run_loop_iterations_impl(f_run_iteration, self.max_level)
+    def run_loop_iterations_with(self, f_run_iteration, f_get_num_iterations):
+        return self._run_loop_iterations_impl(f_run_iteration, f_get_num_iterations, self.max_level)
 
-    def _run_loop_iterations_impl(self, f_run_iteration, cur_loop_level, **loop_var_values_at_higher_levels):
+    def _run_loop_iterations_impl(
+        self, f_run_iteration, f_get_num_iterations, cur_loop_level, **loop_var_values_at_higher_levels
+    ):
         if cur_loop_level == 0:
-            yield from f_run_iteration(**loop_var_values_at_higher_levels)
+            try:
+                num_iterations = f_get_num_iterations(**loop_var_values_at_higher_levels)
+            except NumIterationsSequenceExhausted:
+                return
+            yield from f_run_iteration(num_iterations, **loop_var_values_at_higher_levels)
         else:
             for cur_vals in self.iter_loop_var_values_at_level(cur_loop_level):
                 try:
                     yield from self._run_loop_iterations_impl(
                         f_run_iteration,
+                        f_get_num_iterations,
                         cur_loop_level=cur_loop_level - 1,
                         **cur_vals,
                         **loop_var_values_at_higher_levels,
@@ -160,18 +167,18 @@ class LoopRunner:
         for vals in all_var_values:
             yield dict(zip(var_names, vals))
 
-    def _get_loop_iteration_lengths_impl(self, num_iterations):
-        get_num_iterations_at_level_0 = make_num_iterations_getter(num_iterations)
-
-        def f_do_stuff(**kwargs):
+    def _get_loop_iteration_lengths_impl(self, f_get_num_iterations):
+        def f_do_stuff(num_iterations, **kwargs):
             try:
-                yield (kwargs, get_num_iterations_at_level_0(**kwargs))
+                yield (kwargs, num_iterations)
             except StopIteration:
                 return
 
-        return self.run_loop_iterations_with(f_do_stuff)
+        return self.run_loop_iterations_with(f_do_stuff, f_get_num_iterations)
 
     def get_loop_iteration_lengths(self, num_iterations, loop_level=1):
+        f_get_num_iterations = make_num_iterations_getter(num_iterations)
+
         if loop_level < 1 or loop_level > self.max_level:
             raise ValueError(
                 f"The value of loop_level must be in the range 1 <= loop_level <= {self.max_level}. Got: {loop_level}"
@@ -182,7 +189,7 @@ class LoopRunner:
         def key_func(loop_var_values):
             return {name: loop_var_values[0][name] for name in vars_at_level_or_above}
 
-        for k, g in groupby(self._get_loop_iteration_lengths_impl(num_iterations), key_func):
+        for k, g in groupby(self._get_loop_iteration_lengths_impl(f_get_num_iterations), key_func):
             yield (k, sum([x[1] for x in g]))
 
     def advance_loop_variables(self, loop_level=1):
