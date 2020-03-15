@@ -184,3 +184,35 @@ class LoopRunner:
 
         for k, g in groupby(self._get_loop_iteration_lengths_impl(num_iterations), key_func):
             yield (k, sum([x[1] for x in g]))
+
+    def advance_loop_variables(self, loop_level=1):
+        """
+        Advance loop variables at the given level. If this raises
+        StopIteration because the loop variables have already been
+        exhausted, reset them and advance the ones at level+1 instead
+        (and so on).
+        """
+        if loop_level > self.max_level:
+            raise LoopExhausted("Loop has been exhausted.")
+
+        try:
+            for x in self.get_loop_variables_at_level(loop_level).values():
+                x.advance()
+        except LoopVariableExhausted:
+            self.reset_loop_variables_at_level_and_below(loop_level)
+            self.advance_loop_variables(loop_level + 1)
+
+    def reset_loop_variables_at_level_and_below(self, loop_level):
+        """
+        Reset loop variables from `loop_level` downwards (i.e., at loop level and at all lower levels).
+        If `loop_level` is `None`, reset all loop variables in this loop runner.
+        """
+        if loop_level == 0:
+            return
+        else:
+            for x in self.get_loop_variables_at_level(loop_level).values():
+                x.reset_loop_variable()
+            self.reset_loop_variables_at_level_and_below(loop_level - 1)
+
+    def reset_all_loop_variables(self):
+        self.reset_loop_variables_at_level_and_below(self.max_level)
