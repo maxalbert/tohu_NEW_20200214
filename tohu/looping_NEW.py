@@ -123,13 +123,26 @@ class LoopRunner:
             res.update(self.get_loop_variables_at_level(cur_level))
         return res
 
-    def run_loop_iterations_with(self, f_run_iteration, f_get_num_iterations):
-        return self._run_loop_iterations_impl(f_run_iteration, f_get_num_iterations, self.max_level)
+    def run_loop_iterations_with(self, f_run_iteration, num_iterations, loop_level_to_operate_on=0):
+        f_get_num_iterations = make_num_iterations_getter(num_iterations)
+        return self._run_loop_iterations_impl(
+            f_run_iteration, f_get_num_iterations, loop_level_to_operate_on, self.max_level
+        )
 
     def _run_loop_iterations_impl(
-        self, f_run_iteration, f_get_num_iterations, cur_loop_level, **loop_var_values_at_higher_levels
+        self,
+        f_run_iteration,
+        f_get_num_iterations,
+        loop_level_to_operate_on,
+        cur_loop_level,
+        **loop_var_values_at_higher_levels,
     ):
-        if cur_loop_level == 0:
+        if loop_level_to_operate_on > cur_loop_level:
+            raise ValueError(
+                f"cur_loop_level must be >= loop_level_to_operate_on. Got: {cur_loop_level} < {loop_level_to_operate_on}"
+            )
+
+        if cur_loop_level == loop_level_to_operate_on:
             try:
                 num_iterations = f_get_num_iterations(**loop_var_values_at_higher_levels)
             except NumIterationsSequenceExhausted:
@@ -141,6 +154,7 @@ class LoopRunner:
                     yield from self._run_loop_iterations_impl(
                         f_run_iteration,
                         f_get_num_iterations,
+                        loop_level_to_operate_on,
                         cur_loop_level=cur_loop_level - 1,
                         **cur_vals,
                         **loop_var_values_at_higher_levels,
