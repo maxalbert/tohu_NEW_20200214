@@ -1,14 +1,22 @@
 from itertools import groupby
-from typing import Callable, Dict
+from typing import Callable, Dict, Optional
 
-from .base import TohuBaseGenerator
+from .base import TohuBaseGenerator, SeedGenerator
 
 __all__ = ["LoopVariable", "LoopRunner"]
 
 
 class LoopVariableExhausted(Exception):
     """
-    Custom exception to indicate that a loop variable has iterated through all its values.
+    Custom exception to indicate that a loop variable
+    has iterated through all its values.
+    """
+
+
+class LoopExhausted(Exception):
+    """
+    Custom exception to indicate that a loop has iterated
+    through combinations of values of its loop variables.
     """
 
 
@@ -118,3 +126,48 @@ class LoopRunner:
             f_num_iterations, loop_level
         ):
             yield from f_callback(num_iterations, **loop_var_values)
+
+    def print_current_loop_var_values(self):
+        """
+        Helper function which displays the current loop variable values.
+        """
+        print({name: x.cur_value for name, x in self.loop_variables.items()})
+
+    def reset_all_loop_variables(self):
+        for _, x in self.loop_variables.items():
+            x.reset_loop_variable()
+
+    def reset_loop_vars_at_level(self, loop_level):
+        for _, x in self.get_loop_vars_at_level(loop_level).items():
+            x.reset_loop_variable()
+
+    def advance_loop_variables(self, loop_level=1):
+        if loop_level > self.max_level:
+            raise LoopExhausted("Loop has been exhausted.")
+
+        try:
+            for _, x in self.get_loop_vars_at_level(loop_level).items():
+                x.advance()
+        except LoopVariableExhausted:
+            self.reset_loop_vars_at_level(loop_level)
+            self.advance_loop_variables(loop_level + 1)
+
+    def iter_loop_var_combinations_with_generator(
+        self, g: TohuBaseGenerator, f_num_iterations: Callable, seed: Optional[int] = None
+    ):
+
+        seed_generator = SeedGenerator()
+        if seed is not None:
+            seed_generator.reset(seed)
+
+        def f_callback(num_iterations, **kwargs):
+            g.reset(next(seed_generator))
+            # TODO: reset `g` during each iteration?!
+            yield from g.generate_as_list(num=num_iterations)
+            try:
+                self.advance_loop_variables()
+            except LoopExhausted:
+                return
+
+        self.reset_all_loop_variables()
+        yield from self.iter_loop_var_combinations_with_callback(f_callback, f_num_iterations)
