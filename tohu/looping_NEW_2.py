@@ -1,4 +1,5 @@
 from itertools import groupby
+from typing import Callable, Dict
 
 from .base import TohuBaseGenerator
 
@@ -57,17 +58,17 @@ class LoopVariable(TohuBaseGenerator):
 
 
 class LoopRunner:
-    def __init__(self, loop_variables):
+    def __init__(self, loop_variables: Dict[str, LoopVariable]):
         self.loop_variables = loop_variables
         self.max_level = max([x.loop_level for _, x in self.loop_variables.items()])
 
-    def get_loop_vars_at_level(self, loop_level):
+    def get_loop_vars_at_level(self, loop_level: int):
         return {name: x for (name, x) in self.loop_variables.items() if x.loop_level == loop_level}
 
-    def get_loop_vars_at_level_and_above(self, loop_level):
+    def get_loop_vars_at_level_and_above(self, loop_level: int):
         return {name: x for (name, x) in self.loop_variables.items() if x.loop_level >= loop_level}
 
-    def iter_loop_var_combinations_at_level(self, loop_level):
+    def iter_loop_var_combinations_at_level(self, loop_level: int):
         loop_vars_at_level = self.get_loop_vars_at_level(loop_level)
         var_names = loop_vars_at_level.keys()
 
@@ -86,7 +87,7 @@ class LoopRunner:
                     cur_level - 1, **cur_loop_var_values, **loop_var_values_at_higher_levels
                 )
 
-    def iter_loop_var_combinations_with_num_iterations(self, f_num_iterations, loop_level=1):
+    def iter_loop_var_combinations_with_num_iterations(self, f_num_iterations: Callable, loop_level: int = 1):
         assert 1 <= loop_level and loop_level <= self.max_level
         if loop_level == 1:
             yield from self._iter_loop_var_combinations_with_num_iterations_at_level_1(f_num_iterations)
@@ -107,12 +108,12 @@ class LoopRunner:
                 num_iterations = [x[1] for x in grp]
                 yield key, sum(num_iterations)
 
-    def _iter_loop_var_combinations_with_num_iterations_at_level_1(self, f_num_iterations):
+    def _iter_loop_var_combinations_with_num_iterations_at_level_1(self, f_num_iterations: Callable):
         assert callable(f_num_iterations)
         for loop_var_values in self.iter_loop_var_combinations():
             yield loop_var_values, f_num_iterations(**loop_var_values)
 
-    def iter_loop_var_combinations_with_callback(self, f_callback, f_num_iterations, loop_level=1):
+    def iter_loop_var_combinations_with_callback(self, f_callback: Callable, f_num_iterations: Callable, loop_level=1):
         for loop_var_values, num_iterations in self.iter_loop_var_combinations_with_num_iterations(
             f_num_iterations, loop_level
         ):
