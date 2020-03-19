@@ -1,9 +1,9 @@
-import warnings
 from itertools import groupby
 from string import Formatter
 from typing import Callable, Dict, Optional, Sequence, Union
 
 from .base import TohuBaseGenerator, SeedGenerator
+from .logging import logger
 
 __all__ = ["LoopVariable", "LoopRunner"]
 
@@ -43,7 +43,9 @@ class NumIterationsSpecifierFromSequence:
         try:
             return self.seq_num_iterations[self.idx]
         except IndexError:
-            warnings.warn(f"Not enough elements available in num_iterations sequence: {self.seq_num_iterations}")
+            logger.warn(
+                f"num_iterations sequence does not contain enough elements to complete loop: {self.seq_num_iterations}"
+            )
             raise NumIterationsSequenceExhausted(
                 f"num_iterations sequence has been exhausted: {self.seq_num_iterations}"
             )
