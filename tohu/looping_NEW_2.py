@@ -1,10 +1,61 @@
 from itertools import groupby
 from string import Formatter
-from typing import Callable, Dict, Optional
+from typing import Callable, Dict, Optional, Sequence, Union
 
 from .base import TohuBaseGenerator, SeedGenerator
 
 __all__ = ["LoopVariable", "LoopRunner"]
+
+
+NumIterationsSpecifier = Union[int, Sequence[int], Callable]
+
+
+class NumIterationsSequenceExhausted(Exception):
+    """
+    Custom exception to indicate that a `num_iterations` sequence has been exhausted.
+    """
+
+
+class NumIterationsSpecifierFromCallable:
+    def __init__(self, func_num_iterations: Callable):
+        self.func_num_iterations = func_num_iterations
+
+    def __call__(self, **kwargs):
+        return self.func_num_iterations(**kwargs)
+
+
+class NumIterationsSpecifierFromInt:
+    def __init__(self, num_iterations: int):
+        self.num_iterations = num_iterations
+
+    def __call__(self, **kwargs):
+        return self.num_iterations
+
+
+class NumIterationsSpecifierFromSequence:
+    def __init__(self, seq_num_iterations: Sequence[int]):
+        self.seq_num_iterations = seq_num_iterations
+        self.idx = -1
+
+    def __call__(self, **kwargs):
+        self.idx += 1
+        try:
+            return self.seq_num_iterations[self.idx]
+        except IndexError:
+            raise NumIterationsSequenceExhausted(
+                f"num_iterations sequence has been exhausted: {self.seq_num_iterations}"
+            )
+
+
+def make_num_iterations_specifier(num_iterations):
+    if isinstance(num_iterations, Callable):
+        return NumIterationsSpecifierFromCallable(num_iterations)
+    elif isinstance(num_iterations, int):
+        return NumIterationsSpecifierFromInt(num_iterations)
+    elif isinstance(num_iterations, Sequence):
+        return NumIterationsSpecifierFromSequence(num_iterations)
+    else:
+        raise TypeError("Invalid type for argument `num_iterations`. Must be one of: integer, sequence, callable")
 
 
 class LoopVariableExhausted(Exception):
@@ -105,10 +156,12 @@ class LoopRunner:
                     cur_level - 1, **cur_loop_var_values, **loop_var_values_at_higher_levels
                 )
 
-    def iter_loop_var_combinations_with_num_iterations(self, f_num_iterations: Callable, loop_level: int = 1):
+    def iter_loop_var_combinations_with_num_iterations(
+        self, num_iterations: NumIterationsSpecifier, loop_level: int = 1
+    ):
         assert 1 <= loop_level and loop_level <= self.max_level
         if loop_level == 1:
-            yield from self._iter_loop_var_combinations_with_num_iterations_at_level_1(f_num_iterations)
+            yield from self._iter_loop_var_combinations_with_num_iterations_at_level_1(num_iterations)
         else:
             loop_var_names_at_level_and_above = list(self.get_loop_vars_at_level_and_above(loop_level))
 
@@ -120,20 +173,22 @@ class LoopRunner:
                     if name in loop_var_names_at_level_and_above
                 }
 
-            data = self.iter_loop_var_combinations_with_num_iterations(f_num_iterations, loop_level=1)
+            data = self.iter_loop_var_combinations_with_num_iterations(num_iterations, loop_level=1)
             grouped_data = groupby(data, key=key_func)
             for key, grp in grouped_data:
                 num_iterations = [x[1] for x in grp]
                 yield key, sum(num_iterations)
 
-    def _iter_loop_var_combinations_with_num_iterations_at_level_1(self, f_num_iterations: Callable):
-        assert callable(f_num_iterations)
+    def _iter_loop_var_combinations_with_num_iterations_at_level_1(self, num_iterations: NumIterationsSpecifier):
+        num_iterations = make_num_iterations_specifier(num_iterations)
         for loop_var_values in self.iter_loop_var_combinations():
-            yield loop_var_values, f_num_iterations(**loop_var_values)
+            yield loop_var_values, num_iterations(**loop_var_values)
 
-    def iter_loop_var_combinations_with_callback(self, f_callback: Callable, f_num_iterations: Callable, loop_level=1):
+    def iter_loop_var_combinations_with_callback(
+        self, f_callback: Callable, num_iterations: NumIterationsSpecifier, loop_level=1
+    ):
         for loop_var_values, num_iterations in self.iter_loop_var_combinations_with_num_iterations(
-            f_num_iterations, loop_level
+            num_iterations, loop_level
         ):
             yield from f_callback(num_iterations, **loop_var_values)
 
@@ -163,7 +218,7 @@ class LoopRunner:
             self.advance_loop_variables(loop_level + 1)
 
     def iter_loop_var_combinations_with_generator(
-        self, g: TohuBaseGenerator, f_num_iterations: Callable, seed: Optional[int] = None
+        self, g: TohuBaseGenerator, num_iterations: NumIterationsSpecifier, seed: Optional[int] = None
     ):
 
         seed_generator = SeedGenerator()
@@ -180,7 +235,7 @@ class LoopRunner:
                 return
 
         self.reset_all_loop_variables()
-        yield from self.iter_loop_var_combinations_with_callback(f_callback, f_num_iterations)
+        yield from self.iter_loop_var_combinations_with_callback(f_callback, num_iterations)
 
     def iter_loop_var_combinations_with_filename_pattern(self, filename_pattern: str):
         fmt_lst = list(Formatter().parse(filename_pattern))
