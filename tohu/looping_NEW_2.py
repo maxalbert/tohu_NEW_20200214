@@ -67,9 +67,18 @@ class LoopVariable(TohuBaseGenerator):
 
 
 class LoopRunner:
-    def __init__(self, loop_variables: Dict[str, LoopVariable]):
-        self.loop_variables = loop_variables
-        self.max_level = max([x.loop_level for _, x in self.loop_variables.items()])
+    def __init__(self, loop_variables: Optional[Dict[str, LoopVariable]] = None):
+        if loop_variables is None:
+            self.loop_variables = {}
+            self.max_level = 0
+        else:
+            self.loop_variables = loop_variables
+            self.max_level = max([x.loop_level for _, x in self.loop_variables.items()])
+
+    def add_loop_variable(self, name, loop_variable):
+        level = loop_variable.loop_level
+        self.max_level = max(self.max_level, level)
+        self.loop_variables[name] = loop_variable
 
     def get_loop_vars_at_level(self, loop_level: int):
         return {name: x for (name, x) in self.loop_variables.items() if x.loop_level == loop_level}
