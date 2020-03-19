@@ -76,14 +76,6 @@ class TohuNamespace:
 
         raise ValueError(f"TohuNamespace does not contain any loop variables called '{name}'")
 
-    @property
-    def unassigned_loop_variables(self):
-        return [x for x in self.loop_variables if not x.has_values_assigned]
-
-    @property
-    def has_unassigned_loop_variables(self):
-        return self.unassigned_loop_variables != []
-
     def assign_loop_variable_values(self, name, values):
         self.get_loop_variable(name).assign_values(values)
 
