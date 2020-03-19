@@ -2,7 +2,7 @@ import inspect
 
 from .base import TohuBaseGenerator
 from .custom_generator import CustomGenerator
-from .looping_NEW_2 import LoopVariable
+from .looping import LoopVariable
 
 __all__ = ["foreach"]
 

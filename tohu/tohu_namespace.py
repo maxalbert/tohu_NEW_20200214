@@ -1,7 +1,7 @@
 from .base import SeedGenerator
 from .derived_generators import Apply
 from .logging import logger
-from .looping_NEW_2 import LoopVariable, LoopRunner
+from .looping import LoopVariable, LoopRunner
 from .utils import identity
 from .tohu_items_class import make_tohu_items_class
 
