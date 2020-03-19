@@ -1,3 +1,4 @@
+import warnings
 from itertools import groupby
 from string import Formatter
 from typing import Callable, Dict, Optional, Sequence, Union
@@ -42,6 +43,7 @@ class NumIterationsSpecifierFromSequence:
         try:
             return self.seq_num_iterations[self.idx]
         except IndexError:
+            warnings.warn(f"Not enough elements available in num_iterations sequence: {self.seq_num_iterations}")
             raise NumIterationsSequenceExhausted(
                 f"num_iterations sequence has been exhausted: {self.seq_num_iterations}"
             )
@@ -182,7 +184,10 @@ class LoopRunner:
     def _iter_loop_var_combinations_with_num_iterations_at_level_1(self, num_iterations: NumIterationsSpecifier):
         num_iterations = make_num_iterations_specifier(num_iterations)
         for loop_var_values in self.iter_loop_var_combinations():
-            yield loop_var_values, num_iterations(**loop_var_values)
+            try:
+                yield loop_var_values, num_iterations(**loop_var_values)
+            except NumIterationsSequenceExhausted:
+                return
 
     def iter_loop_var_combinations_with_callback(
         self, f_callback: Callable, num_iterations: NumIterationsSpecifier, loop_level=1
