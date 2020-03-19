@@ -5,8 +5,9 @@ from typing import Callable, Dict, Optional, Sequence, Union
 from .base import TohuBaseGenerator, SeedGenerator
 from .logging import logger
 
-__all__ = ["LoopVariable", "LoopRunner"]
+__all__ = ["LoopVariable", "LoopRunner", "PLACEHOLDER"]
 
+PLACEHOLDER = None  # alias for unassigned loop variable values, for better readability in @foreach decorators
 
 NumIterationsSpecifier = Union[int, Sequence[int], Callable]
 
@@ -76,21 +77,50 @@ class LoopExhausted(Exception):
     """
 
 
+class UnassignedValuesError(Exception):
+    """
+    Custom exception to indicate that a loop variable has not been assigned any values.
+    """
+
+
 class LoopVariable(TohuBaseGenerator):
-    def __init__(self, name, values):
+    def __init__(self, name, values=None):
         super().__init__()
         self.name = name
-        self.values = list(values)
         self.loop_level = None
         self.is_hidden = True
-        self.idx = 0
-        self.cur_value = self.values[0]
+        self.assign_values(values)
+
+    def assign_values(self, values):
+        if values is not None and (not isinstance(values, Sequence) or isinstance(values, str)):
+            raise TypeError(f"Argument `values` must be a list, tuple, or similar sequence type. Got: {type(values)}")
+
+        if values:
+            self._values = values
+            self.idx = 0
+            self.cur_value = self._values[0]
+            self.has_values_assigned = True
+        else:
+            self._values = None
+            self.idx = None
+            self.cur_value = None
+            self.has_values_assigned = False
+
+        for c in self.clones:
+            c.assign_values(values)
 
     def __next__(self):
         return self.cur_value
 
     def __repr__(self):
-        return f"<LoopVariable: name={self.name!r}, loop_level={self.loop_level!r}, values={self.values!r}, cur_value={self.cur_value!r}>"
+        return f"<LoopVariable: name={self.name!r}, loop_level={self.loop_level!r}, values={self._values!r}, cur_value={self.cur_value!r}>"
+
+    @property
+    def values(self):
+        if self._values is not None:
+            return self._values
+        else:
+            raise UnassignedValuesError(f"Loop variable '{self.name}' has not been assigned any values.")
 
     def advance(self):
         self.idx += 1
@@ -118,7 +148,7 @@ class LoopVariable(TohuBaseGenerator):
         return self
 
     def spawn(self, gen_mapping=None):
-        return LoopVariable(self.name, self.values).set_loop_level(self.loop_level)
+        return LoopVariable(self.name, self._values).set_loop_level(self.loop_level)
 
 
 class LoopRunner:
