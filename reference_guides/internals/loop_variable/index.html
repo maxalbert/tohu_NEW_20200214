@@ -555,8 +555,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#reset" class="md-nav__link">
-    .reset()
+  <a href="#reset_loop_variable" class="md-nav__link">
+    .reset_loop_variable()
   </a>
   
 </li>
@@ -569,6 +569,18 @@
   
 </nav>
     
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../loop_runner/" title="Loop runner" class="md-nav__link">
+      Loop runner
+    </a>
   </li>
 
         
@@ -713,8 +725,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#reset" class="md-nav__link">
-    .reset()
+  <a href="#reset_loop_variable" class="md-nav__link">
+    .reset_loop_variable()
   </a>
   
 </li>
@@ -752,7 +764,7 @@
 <li><a href="#cur_value">.cur_value</a></li>
 <li><a href="#__next__">.__next__()</a></li>
 <li><a href="#advance">.advance()</a></li>
-<li><a href="#reset">.reset()</a></li>
+<li><a href="#reset_loop_variable">.reset_loop_variable()</a></li>
 </ul>
 </div>
 </div>
@@ -982,8 +994,9 @@ Once all values have been cycled through, calling <code>.advance()</code> again 
 <div class="input">
 
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pytest</span>
+<span class="kn">from</span> <span class="nn">tohu.looping</span> <span class="kn">import</span> <span class="n">LoopVariableExhausted</span>
 
-<span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">IndexError</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="s2">&quot;Loop variable has been exhausted.&quot;</span><span class="p">):</span>
+<span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="n">LoopVariableExhausted</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="s2">&quot;Loop variable has been exhausted&quot;</span><span class="p">):</span>
     <span class="n">xx</span><span class="o">.</span><span class="n">advance</span><span class="p">()</span>
 </code></pre></div>
 
@@ -993,21 +1006,21 @@ Once all values have been cycled through, calling <code>.advance()</code> again 
 <div class="cell border-box-sizing text_cell rendered">
 <p><div class="inner_cell" markdown="1">
 <div class="text_cell_render border-box-sizing rendered_html" markdown="1"></p>
-<h2 id="reset"><code>.reset()</code><a class="headerlink" href="#reset" title="Permanent link">&para;</a></h2>
+<h2 id="reset_loop_variable"><code>.reset_loop_variable()</code><a class="headerlink" href="#reset_loop_variable" title="Permanent link">&para;</a></h2>
 <p></div>
 </div></p>
 </div>
 <div class="cell border-box-sizing text_cell rendered">
 <p><div class="inner_cell" markdown="1">
 <div class="text_cell_render border-box-sizing rendered_html" markdown="1">
-When calling <code>.reset()</code> on a loop variable, it will reset the generator to its initial state so that it can be iterated over again in the same way as before.
+When calling <code>.reset_loop_variable()</code> on a loop variable, it will reset the generator to its initial state so that it can be iterated over again in the same way as before.
 </div>
 </div></p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
-<div class="codehilite"><pre><span></span><code><span class="n">xx</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+<div class="codehilite"><pre><span></span><code><span class="n">xx</span><span class="o">.</span><span class="n">reset_loop_variable</span><span class="p">()</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">xx</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">xx</span><span class="p">))</span>
@@ -1079,13 +1092,13 @@ When calling <code>.reset()</code> on a loop variable, it will reset the generat
           </a>
         
         
-          <a href="../debugging_support/" title="Debugging support" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../loop_runner/" title="Loop runner" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Debugging support
+                Loop runner
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">

@@ -569,6 +569,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../../reference_guides/internals/loop_runner/" title="Loop runner" class="md-nav__link">
+      Loop runner
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../../reference_guides/internals/debugging_support/" title="Debugging support" class="md-nav__link">
       Debugging support
     </a>
@@ -789,7 +801,7 @@
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;@foreach-wrapped &lt;MatchRecordGenerator (id=c37185)&gt; &gt;</pre>
+<pre>&lt;@foreach-wrapped &lt;MatchRecordGenerator (id=85b700)&gt; &gt;</pre>
 </div>
 
 </div>
@@ -813,15 +825,15 @@
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>[MatchRecord(date=&#39;2000-01-01&#39;, player=&#39;Ashlee&#39;, points_scored=36),
- MatchRecord(date=&#39;2000-01-01&#39;, player=&#39;Kelly&#39;, points_scored=78),
- MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;Jennifer&#39;, points_scored=13),
- MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;Sandra&#39;, points_scored=16),
- MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;Todd&#39;, points_scored=93),
- MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;Stephen&#39;, points_scored=6),
- MatchRecord(date=&#39;2000-01-03&#39;, player=&#39;Joanna&#39;, points_scored=3),
- MatchRecord(date=&#39;2000-01-03&#39;, player=&#39;John&#39;, points_scored=36),
- MatchRecord(date=&#39;2000-01-03&#39;, player=&#39;Robert&#39;, points_scored=66)]</pre>
+<pre>[MatchRecord(date=&#39;2000-01-01&#39;, player=&#39;Amanda&#39;, points_scored=63),
+ MatchRecord(date=&#39;2000-01-01&#39;, player=&#39;Louis&#39;, points_scored=83),
+ MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;Patrick&#39;, points_scored=24),
+ MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;Maria&#39;, points_scored=76),
+ MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;John&#39;, points_scored=70),
+ MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;Ashley&#39;, points_scored=23),
+ MatchRecord(date=&#39;2000-01-03&#39;, player=&#39;Meredith&#39;, points_scored=31),
+ MatchRecord(date=&#39;2000-01-03&#39;, player=&#39;Maria&#39;, points_scored=53),
+ MatchRecord(date=&#39;2000-01-03&#39;, player=&#39;Joshua&#39;, points_scored=85)]</pre>
 </div>
 
 </div>
@@ -831,6 +843,38 @@
 
 </div>
 </div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="codehilite"><pre><span></span><code><span class="nb">list</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">generate_as_stream</span><span class="p">(</span><span class="n">num_iterations</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">seed</span><span class="o">=</span><span class="mi">11111</span><span class="p">))</span>
+</code></pre></div>
+
+</div>
+
+<div class="output_wrapper" markdown="1">
+<div class="output" markdown="1">
+
+
+<div class="output_area" markdown="1">
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[MatchRecord(date=&#39;2000-01-01&#39;, player=&#39;Amanda&#39;, points_scored=63),
+ MatchRecord(date=&#39;2000-01-01&#39;, player=&#39;Louis&#39;, points_scored=83),
+ MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;Patrick&#39;, points_scored=24),
+ MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;Maria&#39;, points_scored=76),
+ MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;John&#39;, points_scored=70),
+ MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;Ashley&#39;, points_scored=23),
+ MatchRecord(date=&#39;2000-01-03&#39;, player=&#39;Meredith&#39;, points_scored=31),
+ MatchRecord(date=&#39;2000-01-03&#39;, player=&#39;Maria&#39;, points_scored=53),
+ MatchRecord(date=&#39;2000-01-03&#39;, player=&#39;Joshua&#39;, points_scored=85)]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
 <div class="cell border-box-sizing text_cell rendered">
 <p><div class="inner_cell" markdown="1">
 <div class="text_cell_render border-box-sizing rendered_html" markdown="1">
@@ -839,7 +883,8 @@ Since we specified three dates in the <code>@foreach</code> call above, we also 
 </div>
 </div></p>
 </div>
-<div class="cell border-box-sizing code_cell rendered">
+<div class="cell border-box-sizing code_cell rendered"></div>
+</div>
 <div class="input">
 
 <div class="codehilite"><pre><span></span><code><span class="c1"># Here `num` has fewer elements than there are dates we&#39;re looping over,</span>
@@ -854,14 +899,21 @@ Since we specified three dates in the <code>@foreach</code> call above, we also 
 
 
 <div class="output_area" markdown="1">
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>2020-03-19 17:19:32 WARNING  num_iterations sequence does not contain enough elements to complete loop: [2, 3]
+</pre>
+</div>
+</div>
+
+<div class="output_area" markdown="1">
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>[MatchRecord(date=&#39;2000-01-01&#39;, player=&#39;Ashlee&#39;, points_scored=36),
- MatchRecord(date=&#39;2000-01-01&#39;, player=&#39;Kelly&#39;, points_scored=78),
- MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;Jennifer&#39;, points_scored=13),
- MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;Sandra&#39;, points_scored=16),
- MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;Todd&#39;, points_scored=93)]</pre>
+<pre>[MatchRecord(date=&#39;2000-01-01&#39;, player=&#39;Amanda&#39;, points_scored=63),
+ MatchRecord(date=&#39;2000-01-01&#39;, player=&#39;Louis&#39;, points_scored=83),
+ MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;Patrick&#39;, points_scored=24),
+ MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;Maria&#39;, points_scored=76),
+ MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;John&#39;, points_scored=70)]</pre>
 </div>
 
 </div>
@@ -887,15 +939,15 @@ Since we specified three dates in the <code>@foreach</code> call above, we also 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>[MatchRecord(date=&#39;2000-01-01&#39;, player=&#39;Ashlee&#39;, points_scored=36),
- MatchRecord(date=&#39;2000-01-01&#39;, player=&#39;Kelly&#39;, points_scored=78),
- MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;Jennifer&#39;, points_scored=13),
- MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;Sandra&#39;, points_scored=16),
- MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;Todd&#39;, points_scored=93),
- MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;Stephen&#39;, points_scored=6),
- MatchRecord(date=&#39;2000-01-03&#39;, player=&#39;Joanna&#39;, points_scored=3),
- MatchRecord(date=&#39;2000-01-03&#39;, player=&#39;John&#39;, points_scored=36),
- MatchRecord(date=&#39;2000-01-03&#39;, player=&#39;Robert&#39;, points_scored=66)]</pre>
+<pre>[MatchRecord(date=&#39;2000-01-01&#39;, player=&#39;Amanda&#39;, points_scored=63),
+ MatchRecord(date=&#39;2000-01-01&#39;, player=&#39;Louis&#39;, points_scored=83),
+ MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;Patrick&#39;, points_scored=24),
+ MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;Maria&#39;, points_scored=76),
+ MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;John&#39;, points_scored=70),
+ MatchRecord(date=&#39;2000-01-02&#39;, player=&#39;Ashley&#39;, points_scored=23),
+ MatchRecord(date=&#39;2000-01-03&#39;, player=&#39;Meredith&#39;, points_scored=31),
+ MatchRecord(date=&#39;2000-01-03&#39;, player=&#39;Maria&#39;, points_scored=53),
+ MatchRecord(date=&#39;2000-01-03&#39;, player=&#39;Joshua&#39;, points_scored=85)]</pre>
 </div>
 
 </div>
@@ -903,8 +955,6 @@ Since we specified three dates in the <code>@foreach</code> call above, we also 
 </div>
 </div>
 
-</div>
-</div>
 <div class="cell border-box-sizing text_cell rendered">
 <p><div class="inner_cell" markdown="1">
 <div class="text_cell_render border-box-sizing rendered_html" markdown="1"></p>
@@ -915,6 +965,8 @@ Since we specified three dates in the <code>@foreach</code> call above, we also 
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
+</div>
+</div>
 <div class="codehilite"><pre><span></span><code><span class="nd">@foreach</span><span class="p">(</span><span class="n">match_date</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;2000-01-01&quot;</span><span class="p">,</span> <span class="s2">&quot;2000-01-02&quot;</span><span class="p">,</span> <span class="s2">&quot;2000-01-03&quot;</span><span class="p">],</span> <span class="n">match_venue</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Town A&quot;</span><span class="p">,</span> <span class="s2">&quot;Town B&quot;</span><span class="p">,</span> <span class="s2">&quot;Town C&quot;</span><span class="p">])</span>
 <span class="k">class</span> <span class="nc">MatchRecordGenerator</span><span class="p">(</span><span class="n">CustomGenerator</span><span class="p">):</span>
     <span class="n">date</span> <span class="o">=</span> <span class="n">match_date</span>
@@ -925,7 +977,6 @@ Since we specified three dates in the <code>@foreach</code> call above, we also 
 
 </div>
 
-</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -958,15 +1009,15 @@ Note that in the generated items, the match date and venue are always matched up
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>[MatchRecord(date=&#39;2000-01-01&#39;, venue=&#39;Town A&#39;, player=&#39;Cindy&#39;, points_scored=79),
- MatchRecord(date=&#39;2000-01-01&#39;, venue=&#39;Town A&#39;, player=&#39;Melanie&#39;, points_scored=2),
- MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Joseph&#39;, points_scored=76),
- MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Linda&#39;, points_scored=94),
- MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Christopher&#39;, points_scored=97),
- MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Ian&#39;, points_scored=57),
- MatchRecord(date=&#39;2000-01-03&#39;, venue=&#39;Town C&#39;, player=&#39;Justin&#39;, points_scored=30),
- MatchRecord(date=&#39;2000-01-03&#39;, venue=&#39;Town C&#39;, player=&#39;Barbara&#39;, points_scored=67),
- MatchRecord(date=&#39;2000-01-03&#39;, venue=&#39;Town C&#39;, player=&#39;Heather&#39;, points_scored=80)]</pre>
+<pre>[MatchRecord(date=&#39;2000-01-01&#39;, venue=&#39;Town A&#39;, player=&#39;Renee&#39;, points_scored=54),
+ MatchRecord(date=&#39;2000-01-01&#39;, venue=&#39;Town A&#39;, player=&#39;Robert&#39;, points_scored=25),
+ MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Steven&#39;, points_scored=43),
+ MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Sherri&#39;, points_scored=60),
+ MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Jeremy&#39;, points_scored=86),
+ MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Brian&#39;, points_scored=90),
+ MatchRecord(date=&#39;2000-01-03&#39;, venue=&#39;Town C&#39;, player=&#39;Ann&#39;, points_scored=64),
+ MatchRecord(date=&#39;2000-01-03&#39;, venue=&#39;Town C&#39;, player=&#39;David&#39;, points_scored=72),
+ MatchRecord(date=&#39;2000-01-03&#39;, venue=&#39;Town C&#39;, player=&#39;Jennifer&#39;, points_scored=62)]</pre>
 </div>
 
 </div>
@@ -1013,12 +1064,12 @@ If one of the loop variables contains more elements than the other, the addition
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>[MatchRecord(date=&#39;2000-01-01&#39;, venue=&#39;Town A&#39;, player=&#39;Cindy&#39;, points_scored=79),
- MatchRecord(date=&#39;2000-01-01&#39;, venue=&#39;Town A&#39;, player=&#39;Melanie&#39;, points_scored=2),
- MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Joseph&#39;, points_scored=76),
- MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Linda&#39;, points_scored=94),
- MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Christopher&#39;, points_scored=97),
- MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Ian&#39;, points_scored=57)]</pre>
+<pre>[MatchRecord(date=&#39;2000-01-01&#39;, venue=&#39;Town A&#39;, player=&#39;Renee&#39;, points_scored=54),
+ MatchRecord(date=&#39;2000-01-01&#39;, venue=&#39;Town A&#39;, player=&#39;Robert&#39;, points_scored=25),
+ MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Steven&#39;, points_scored=43),
+ MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Sherri&#39;, points_scored=60),
+ MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Jeremy&#39;, points_scored=86),
+ MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Brian&#39;, points_scored=90)]</pre>
 </div>
 
 </div>
@@ -1063,20 +1114,27 @@ If one of the loop variables contains more elements than the other, the addition
 
 
 <div class="output_area" markdown="1">
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>2020-03-19 17:19:32 WARNING  num_iterations sequence does not contain enough elements to complete loop: [2, 4, 3, 2]
+</pre>
+</div>
+</div>
+
+<div class="output_area" markdown="1">
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>[MatchRecord(date=&#39;2000-01-01&#39;, venue=&#39;Town A&#39;, player=&#39;Cindy&#39;, points_scored=79),
- MatchRecord(date=&#39;2000-01-01&#39;, venue=&#39;Town A&#39;, player=&#39;Melanie&#39;, points_scored=2),
- MatchRecord(date=&#39;2000-01-01&#39;, venue=&#39;Town B&#39;, player=&#39;Joseph&#39;, points_scored=76),
- MatchRecord(date=&#39;2000-01-01&#39;, venue=&#39;Town B&#39;, player=&#39;Linda&#39;, points_scored=94),
- MatchRecord(date=&#39;2000-01-01&#39;, venue=&#39;Town B&#39;, player=&#39;Christopher&#39;, points_scored=97),
- MatchRecord(date=&#39;2000-01-01&#39;, venue=&#39;Town B&#39;, player=&#39;Ian&#39;, points_scored=57),
- MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town A&#39;, player=&#39;Justin&#39;, points_scored=30),
- MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town A&#39;, player=&#39;Barbara&#39;, points_scored=67),
- MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town A&#39;, player=&#39;Heather&#39;, points_scored=80),
- MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Michelle&#39;, points_scored=52),
- MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Becky&#39;, points_scored=53)]</pre>
+<pre>[MatchRecord(date=&#39;2000-01-01&#39;, venue=&#39;Town A&#39;, player=&#39;Renee&#39;, points_scored=54),
+ MatchRecord(date=&#39;2000-01-01&#39;, venue=&#39;Town A&#39;, player=&#39;Robert&#39;, points_scored=25),
+ MatchRecord(date=&#39;2000-01-01&#39;, venue=&#39;Town B&#39;, player=&#39;Steven&#39;, points_scored=43),
+ MatchRecord(date=&#39;2000-01-01&#39;, venue=&#39;Town B&#39;, player=&#39;Sherri&#39;, points_scored=60),
+ MatchRecord(date=&#39;2000-01-01&#39;, venue=&#39;Town B&#39;, player=&#39;Jeremy&#39;, points_scored=86),
+ MatchRecord(date=&#39;2000-01-01&#39;, venue=&#39;Town B&#39;, player=&#39;Brian&#39;, points_scored=90),
+ MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town A&#39;, player=&#39;Ann&#39;, points_scored=64),
+ MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town A&#39;, player=&#39;David&#39;, points_scored=72),
+ MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town A&#39;, player=&#39;Jennifer&#39;, points_scored=62),
+ MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Jeremy&#39;, points_scored=20),
+ MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;John&#39;, points_scored=47)]</pre>
 </div>
 
 </div>
@@ -1116,18 +1174,18 @@ If one of the loop variables contains more elements than the other, the addition
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>[MatchRecord(date=&#39;2000-01-01&#39;, venue=&#39;Town A&#39;, player=&#39;Cindy&#39;, points_scored=79),
- MatchRecord(date=&#39;2000-01-01&#39;, venue=&#39;Town A&#39;, player=&#39;Melanie&#39;, points_scored=2),
- MatchRecord(date=&#39;2000-01-01&#39;, venue=&#39;Town A&#39;, player=&#39;Joseph&#39;, points_scored=76),
- MatchRecord(date=&#39;2000-01-01&#39;, venue=&#39;Town B&#39;, player=&#39;Linda&#39;, points_scored=94),
- MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town A&#39;, player=&#39;Christopher&#39;, points_scored=97),
- MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town A&#39;, player=&#39;Ian&#39;, points_scored=57),
- MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town A&#39;, player=&#39;Justin&#39;, points_scored=30),
- MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Barbara&#39;, points_scored=67),
- MatchRecord(date=&#39;2000-01-03&#39;, venue=&#39;Town A&#39;, player=&#39;Heather&#39;, points_scored=80),
- MatchRecord(date=&#39;2000-01-03&#39;, venue=&#39;Town A&#39;, player=&#39;Michelle&#39;, points_scored=52),
- MatchRecord(date=&#39;2000-01-03&#39;, venue=&#39;Town A&#39;, player=&#39;Becky&#39;, points_scored=53),
- MatchRecord(date=&#39;2000-01-03&#39;, venue=&#39;Town B&#39;, player=&#39;Kayla&#39;, points_scored=84)]</pre>
+<pre>[MatchRecord(date=&#39;2000-01-01&#39;, venue=&#39;Town A&#39;, player=&#39;Renee&#39;, points_scored=54),
+ MatchRecord(date=&#39;2000-01-01&#39;, venue=&#39;Town A&#39;, player=&#39;Robert&#39;, points_scored=25),
+ MatchRecord(date=&#39;2000-01-01&#39;, venue=&#39;Town A&#39;, player=&#39;Kimberly&#39;, points_scored=32),
+ MatchRecord(date=&#39;2000-01-01&#39;, venue=&#39;Town B&#39;, player=&#39;Steven&#39;, points_scored=43),
+ MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town A&#39;, player=&#39;Ann&#39;, points_scored=64),
+ MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town A&#39;, player=&#39;David&#39;, points_scored=72),
+ MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town A&#39;, player=&#39;Jennifer&#39;, points_scored=62),
+ MatchRecord(date=&#39;2000-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Jeremy&#39;, points_scored=20),
+ MatchRecord(date=&#39;2000-01-03&#39;, venue=&#39;Town A&#39;, player=&#39;Michael&#39;, points_scored=51),
+ MatchRecord(date=&#39;2000-01-03&#39;, venue=&#39;Town A&#39;, player=&#39;Tina&#39;, points_scored=81),
+ MatchRecord(date=&#39;2000-01-03&#39;, venue=&#39;Town A&#39;, player=&#39;Amy&#39;, points_scored=25),
+ MatchRecord(date=&#39;2000-01-03&#39;, venue=&#39;Town B&#39;, player=&#39;Kathryn&#39;, points_scored=2)]</pre>
 </div>
 
 </div>
@@ -1156,7 +1214,7 @@ If one of the loop variables contains more elements than the other, the addition
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
-<div class="codehilite"><pre><span></span><code><span class="nd">@foreach</span><span class="p">(</span><span class="n">match_date</span><span class="o">=</span><span class="n">PLACEHOLDER</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><code><span class="nd">@foreach</span><span class="p">(</span><span class="n">match_date</span><span class="o">=</span><span class="n">PLACEHOLDER</span><span class="p">)</span>  <span class="c1"># it is also possible to write `match_date=...`</span>
 <span class="nd">@foreach</span><span class="p">(</span><span class="n">match_venue</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Town A&quot;</span><span class="p">,</span> <span class="s2">&quot;Town B&quot;</span><span class="p">])</span>
 <span class="k">class</span> <span class="nc">MatchRecordGenerator</span><span class="p">(</span><span class="n">CustomGenerator</span><span class="p">):</span>
     <span class="n">date</span> <span class="o">=</span> <span class="n">match_date</span>
@@ -1203,14 +1261,14 @@ If one of the loop variables contains more elements than the other, the addition
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>[MatchRecord(date=&#39;2020-01-01&#39;, venue=&#39;Town A&#39;, player=&#39;Cindy&#39;, points_scored=79),
- MatchRecord(date=&#39;2020-01-01&#39;, venue=&#39;Town A&#39;, player=&#39;Melanie&#39;, points_scored=2),
- MatchRecord(date=&#39;2020-01-01&#39;, venue=&#39;Town B&#39;, player=&#39;Joseph&#39;, points_scored=76),
- MatchRecord(date=&#39;2020-01-01&#39;, venue=&#39;Town B&#39;, player=&#39;Linda&#39;, points_scored=94),
- MatchRecord(date=&#39;2020-01-02&#39;, venue=&#39;Town A&#39;, player=&#39;Christopher&#39;, points_scored=97),
- MatchRecord(date=&#39;2020-01-02&#39;, venue=&#39;Town A&#39;, player=&#39;Ian&#39;, points_scored=57),
- MatchRecord(date=&#39;2020-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Justin&#39;, points_scored=30),
- MatchRecord(date=&#39;2020-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Barbara&#39;, points_scored=67)]</pre>
+<pre>[MatchRecord(date=&#39;2020-01-01&#39;, venue=&#39;Town A&#39;, player=&#39;Renee&#39;, points_scored=54),
+ MatchRecord(date=&#39;2020-01-01&#39;, venue=&#39;Town A&#39;, player=&#39;Robert&#39;, points_scored=25),
+ MatchRecord(date=&#39;2020-01-01&#39;, venue=&#39;Town B&#39;, player=&#39;Steven&#39;, points_scored=43),
+ MatchRecord(date=&#39;2020-01-01&#39;, venue=&#39;Town B&#39;, player=&#39;Sherri&#39;, points_scored=60),
+ MatchRecord(date=&#39;2020-01-02&#39;, venue=&#39;Town A&#39;, player=&#39;Ann&#39;, points_scored=64),
+ MatchRecord(date=&#39;2020-01-02&#39;, venue=&#39;Town A&#39;, player=&#39;David&#39;, points_scored=72),
+ MatchRecord(date=&#39;2020-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Jeremy&#39;, points_scored=20),
+ MatchRecord(date=&#39;2020-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;John&#39;, points_scored=47)]</pre>
 </div>
 
 </div>
@@ -1234,18 +1292,18 @@ If one of the loop variables contains more elements than the other, the addition
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>[MatchRecord(date=&#39;2020-01-01&#39;, venue=&#39;Town A&#39;, player=&#39;Cindy&#39;, points_scored=79),
- MatchRecord(date=&#39;2020-01-01&#39;, venue=&#39;Town A&#39;, player=&#39;Melanie&#39;, points_scored=2),
- MatchRecord(date=&#39;2020-01-01&#39;, venue=&#39;Town B&#39;, player=&#39;Joseph&#39;, points_scored=76),
- MatchRecord(date=&#39;2020-01-01&#39;, venue=&#39;Town B&#39;, player=&#39;Linda&#39;, points_scored=94),
- MatchRecord(date=&#39;2020-01-02&#39;, venue=&#39;Town A&#39;, player=&#39;Christopher&#39;, points_scored=97),
- MatchRecord(date=&#39;2020-01-02&#39;, venue=&#39;Town A&#39;, player=&#39;Ian&#39;, points_scored=57),
- MatchRecord(date=&#39;2020-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Justin&#39;, points_scored=30),
- MatchRecord(date=&#39;2020-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Barbara&#39;, points_scored=67),
- MatchRecord(date=&#39;2020-01-03&#39;, venue=&#39;Town A&#39;, player=&#39;Heather&#39;, points_scored=80),
- MatchRecord(date=&#39;2020-01-03&#39;, venue=&#39;Town A&#39;, player=&#39;Michelle&#39;, points_scored=52),
- MatchRecord(date=&#39;2020-01-03&#39;, venue=&#39;Town B&#39;, player=&#39;Becky&#39;, points_scored=53),
- MatchRecord(date=&#39;2020-01-03&#39;, venue=&#39;Town B&#39;, player=&#39;Kayla&#39;, points_scored=84)]</pre>
+<pre>[MatchRecord(date=&#39;2020-01-01&#39;, venue=&#39;Town A&#39;, player=&#39;Renee&#39;, points_scored=54),
+ MatchRecord(date=&#39;2020-01-01&#39;, venue=&#39;Town A&#39;, player=&#39;Robert&#39;, points_scored=25),
+ MatchRecord(date=&#39;2020-01-01&#39;, venue=&#39;Town B&#39;, player=&#39;Steven&#39;, points_scored=43),
+ MatchRecord(date=&#39;2020-01-01&#39;, venue=&#39;Town B&#39;, player=&#39;Sherri&#39;, points_scored=60),
+ MatchRecord(date=&#39;2020-01-02&#39;, venue=&#39;Town A&#39;, player=&#39;Ann&#39;, points_scored=64),
+ MatchRecord(date=&#39;2020-01-02&#39;, venue=&#39;Town A&#39;, player=&#39;David&#39;, points_scored=72),
+ MatchRecord(date=&#39;2020-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;Jeremy&#39;, points_scored=20),
+ MatchRecord(date=&#39;2020-01-02&#39;, venue=&#39;Town B&#39;, player=&#39;John&#39;, points_scored=47),
+ MatchRecord(date=&#39;2020-01-03&#39;, venue=&#39;Town A&#39;, player=&#39;Michael&#39;, points_scored=51),
+ MatchRecord(date=&#39;2020-01-03&#39;, venue=&#39;Town A&#39;, player=&#39;Tina&#39;, points_scored=81),
+ MatchRecord(date=&#39;2020-01-03&#39;, venue=&#39;Town B&#39;, player=&#39;Kathryn&#39;, points_scored=2),
+ MatchRecord(date=&#39;2020-01-03&#39;, venue=&#39;Town B&#39;, player=&#39;David&#39;, points_scored=53)]</pre>
 </div>
 
 </div>
