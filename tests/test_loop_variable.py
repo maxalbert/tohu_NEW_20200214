@@ -1,7 +1,7 @@
 import pytest
 
 from .context import tohu
-from tohu.looping import LoopVariable
+from tohu.looping_NEW_2 import LoopVariable
 
 
 @pytest.mark.parametrize("values", [True, "some_string", 12345])
