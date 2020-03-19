@@ -7,7 +7,8 @@ from .logging import logger
 
 __all__ = ["LoopVariable", "LoopRunner", "PLACEHOLDER"]
 
-PLACEHOLDER = None  # alias for unassigned loop variable values, for better readability in @foreach decorators
+# Alias for unassigned loop variable values, for potentially better readability in @foreach decorators.
+PLACEHOLDER = Ellipsis
 
 NumIterationsSpecifier = Union[int, Sequence[int], Callable]
 
@@ -92,6 +93,9 @@ class LoopVariable(TohuBaseGenerator):
         self.assign_values(values)
 
     def assign_values(self, values):
+        if values is Ellipsis:
+            values = None
+
         if values is not None and (not isinstance(values, Sequence) or isinstance(values, str)):
             raise TypeError(f"Argument `values` must be a list, tuple, or similar sequence type. Got: {type(values)}")
 
