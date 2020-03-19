@@ -1,7 +1,7 @@
 from .base import SeedGenerator
 from .derived_generators import Apply
 from .logging import logger
-from .looping import LoopVariable, LoopRunner
+from .looping_NEW_2 import LoopVariable, LoopRunner
 from .utils import identity
 from .tohu_items_class import make_tohu_items_class
 
@@ -69,6 +69,13 @@ class TohuNamespace:
     def loop_variables(self):
         return [g for g in self.all_generators.values() if isinstance(g, LoopVariable)]
 
+    def get_loop_variable(self, name):
+        for g in self.all_generators.values():
+            if isinstance(g, LoopVariable) and g.name == name:
+                return g
+
+        raise ValueError(f"TohuNamespace does not contain any loop variables called '{name}'")
+
     @property
     def unassigned_loop_variables(self):
         return [x for x in self.loop_variables if not x.has_values_assigned]
@@ -76,6 +83,9 @@ class TohuNamespace:
     @property
     def has_unassigned_loop_variables(self):
         return self.unassigned_loop_variables != []
+
+    def assign_loop_variable_values(self, name, values):
+        self.get_loop_variable(name).assign_values(values)
 
     def advance_loop_variables(self):
         for g in self.loop_variables:

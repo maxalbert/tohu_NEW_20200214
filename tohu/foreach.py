@@ -30,7 +30,7 @@ class ForeachGeneratorInstance:
 
         for name, values in var_names_and_values.items():
             # FIXME: Demeter violation!
-            new_custom_gen_instance._tohu_namespace.loop_runner.assign_values(name, values)
+            new_custom_gen_instance.assign_loop_variable_values(name, values)
 
         return ForeachGeneratorInstance(new_custom_gen_instance)
 
