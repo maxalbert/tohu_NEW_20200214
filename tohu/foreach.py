@@ -19,7 +19,7 @@ def restore_globals(global_vars, names, clashes):
 
 
 class ForeachGeneratorInstance:
-    def __init__(self, custom_gen_instance):
+    def __init__(self, custom_gen_instance: CustomGenerator):
         self.custom_gen_instance = custom_gen_instance
 
     def __repr__(self):
