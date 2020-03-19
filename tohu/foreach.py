@@ -35,12 +35,9 @@ class ForeachGeneratorInstance:
         return ForeachGeneratorInstance(new_custom_gen_instance)
 
     def generate_as_stream(self, *, num_iterations, seed=None):
-        if seed is not None:
-            self.custom_gen_instance.reset(seed)
-
         # FIXME: Demeter violation!
         yield from self.custom_gen_instance._tohu_namespace.loop_runner.iter_loop_var_combinations_with_generator(
-            self.custom_gen_instance, num_iterations
+            self.custom_gen_instance, num_iterations, seed=seed
         )
 
     def generate_as_list(self, *, num_iterations, seed):

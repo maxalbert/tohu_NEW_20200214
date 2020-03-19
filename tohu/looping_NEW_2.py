@@ -255,12 +255,11 @@ class LoopRunner:
             self.advance_loop_variables(loop_level + 1)
 
     def iter_loop_var_combinations_with_generator(
-        self, g: TohuBaseGenerator, num_iterations: NumIterationsSpecifier, seed: Optional[int] = None
+        self, g: TohuBaseGenerator, num_iterations: NumIterationsSpecifier, seed: int
     ):
 
         seed_generator = SeedGenerator()
-        if seed is not None:
-            seed_generator.reset(seed)
+        seed_generator.reset(seed)
 
         def f_callback(num_iterations, **kwargs):
             g.reset(next(seed_generator))
