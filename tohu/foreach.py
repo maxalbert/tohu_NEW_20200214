@@ -2,7 +2,7 @@ import inspect
 
 from .base import TohuBaseGenerator
 from .custom_generator import CustomGenerator
-from .looping import LoopVariable
+from .looping_NEW_2 import LoopVariable
 
 __all__ = ["foreach"]
 
@@ -39,7 +39,7 @@ class ForeachGeneratorInstance:
             self.custom_gen_instance.reset(seed)
 
         # FIXME: Demeter violation!
-        yield from self.custom_gen_instance._tohu_namespace.loop_runner.run_loop_to_generate_items_with(
+        yield from self.custom_gen_instance._tohu_namespace.loop_runner.iter_loop_var_combinations_with_generator(
             self.custom_gen_instance, num_iterations
         )
 
