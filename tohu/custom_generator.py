@@ -31,8 +31,9 @@ def augment_init_method(cls):
     # calling it twice - once through `orig_init(self, *args, **kwargs)`
     # and a second time through `super(cls, self).__init__()`.
     if cls.__init__ is not CustomGenerator.__init__:
-        # Store the original __init__ method so that we can
-        # call it from the augmented one below.
+        # If the user defined a custom __init__ method on the class `cls`,
+        # store the original __init__ method so that we can call it from
+        # the augmented method `new_init` defined below.
         orig_init = cls.__init__
     else:
         # The user didn't explicitly define __init__ on the class `cls`,
