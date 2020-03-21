@@ -4,6 +4,14 @@ import typing
 
 # from .logging import logger
 
+__all__ = ["FieldSelector"]  # , "InvalidFieldError"]
+
+
+# class InvalidFieldError(Exception):
+#     """
+#     Custom exception to indicate that the user is trying to extract a non-existing field.
+#     """
+
 
 class FieldSelector:
     def __init__(
@@ -20,10 +28,10 @@ class FieldSelector:
             raise TypeError(f"Invalid 'fields' argument: {fields}")
 
         # if not set(self.fields.values()).issubset(self.tohu_items_cls.field_names):
-        #     raise ValueError("Field names must be a subset of the fields defined on `tohu_items_cls`.")
-        #     # logger.warning("Field names are not a subset of the fields defined on `tohu_items_cls`.")
-        #     # logger.warning("TODO: Ensure we can deal with nested fields!")
-        #
+        #     invalid_fields = [x for x in self.fields.values() if x not in self.tohu_items_cls.field_names]
+        #     valid_fields = self.tohu_items_cls.field_names
+        #     raise InvalidFieldError(f"Invalid fields: {invalid_fields}. Fields must be a subset of: {valid_fields}")
+
         self.field_selectors = {new_name: attrgetter(orig_name) for new_name, orig_name in self.fields.items()}
 
     def __call__(self, items: typing.Iterable) -> typing.Iterable:
