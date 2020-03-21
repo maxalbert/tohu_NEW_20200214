@@ -126,13 +126,6 @@ class CustomGenerator(TohuBaseGenerator, metaclass=CustomGeneratorMeta):
 
         return self
 
-    @property
-    def loop_variables(self):
-        return self._tohu_namespace.loop_variables
-
-    def advance_loop_variables(self):
-        self._tohu_namespace.advance_loop_variables()
-
     def generate(self, num, *, seed=None):
         return ItemList(self.generate_as_list(num, seed=seed), self._tohu_namespace.tohu_items_class)
 
