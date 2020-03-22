@@ -283,14 +283,3 @@ class LoopRunner:
 
         self.reset_all_loop_variables()
         yield from self.iter_loop_var_combinations_with_callback(f_callback, num_iterations)
-
-    def iter_loop_var_combinations_with_filename_pattern(self, filename_pattern: str):
-        fmt_lst = list(Formatter().parse(filename_pattern))
-        param_names = [field_name for (_, field_name, _, _) in fmt_lst if field_name is not None]
-        filenames = []
-        for loop_var_values in self.iter_loop_var_combinations():
-            param_values = {name: value for name, value in loop_var_values.items() if name in param_names}
-            cur_filename = filename_pattern.format(**param_values)
-            if cur_filename not in filenames:
-                filenames.append(cur_filename)
-        return filenames
