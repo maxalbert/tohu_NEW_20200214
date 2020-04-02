@@ -183,7 +183,7 @@ class LoopRunner:
             yield dict(zip(var_names, cur_vals))
 
     def iter_loop_var_combinations(self, var_names=None):
-        if var_names is None:
+        if var_names is None or list(var_names) == []:
             yield from self._iter_loop_var_value_combinations_impl(self.max_level)
         else:
             seen = set()
