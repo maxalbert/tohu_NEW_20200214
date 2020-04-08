@@ -18,7 +18,10 @@ class LoopVariableNEW(TohuBaseGenerator):
         self.cur_value = values[0]
 
     def __repr__(self):
-        return f"<LoopVariable: name={self.name!r}, values={self.values!r}, loop_level={self.loop_level} (tohu_id={self.tohu_id})>"
+        return (
+            f"<LoopVariable: name={self.name!r}, loop_level={self.loop_level}, "
+            f"values={self.values!r}, cur_value={self.cur_value!r} (tohu_id={self.tohu_id})>"
+        )
 
     def set_loop_level(self, level):
         self.loop_level = level
@@ -46,3 +49,23 @@ class LoopVariableNEW(TohuBaseGenerator):
 
     def spawn(self, gen_mapping=None):
         return self.__class__(self.name, self.values).set_loop_level(self.loop_level)
+
+
+class LoopRunnerNEW:
+    def __init__(self):
+        self.loop_variables = {}
+        self.max_loop_level = 0
+
+    def add_loop_variable(self, x, level):
+        if x.name in self.loop_variables:
+            raise ValueError(f"A loop variable with name {x.name!r} already exists.")
+
+        x.set_loop_level(level)
+        self.loop_variables[x.name] = x
+        self.max_loop_level = max(level, self.max_loop_level)
+
+    # def spawn(self):
+    #     new_loop_runner = LoopRunnerNEW()
+    #     for x in self.loop_variables.values():
+    #         new_loop_runner.add_loop_variable(x, x.loop_level)
+    #     return new_loop_runner
