@@ -69,11 +69,11 @@ class TohuNamespaceNEW:
     def set_tohu_items_class(self, name):
         self.tohu_items_cls = make_tohu_items_class(name, field_names=self.generators.keys())
 
-    # def reset(self, seed):
-    #     self.seed_generator.reset(seed)
-    #     # for _, g in self.generators.items():
-    #     for g in self.generators_to_reset:
-    #         g.reset(next(self.seed_generator))
-    #
-    # def __next__(self):
-    #     return self.tohu_items_cls(*(next(g) for g in self.generators.values()))
+    def reset(self, seed):
+        self.seed_generator.reset(seed)
+        # for _, g in self.generators.items():
+        for g in self.generators_to_reset:
+            g.reset(next(self.seed_generator))
+
+    def __next__(self):
+        return self.tohu_items_cls(*(next(g) for g in self.generators.values()))
