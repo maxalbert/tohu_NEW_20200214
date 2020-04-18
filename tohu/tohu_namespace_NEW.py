@@ -18,6 +18,9 @@ class NonExistentTohuItemsClassError(Exception):
 
 
 class NonExistentTohuItemsClass:
+    def __repr__(self):
+        return "<NonExistentTohuItemsClass>"
+
     def __call__(self, *args, **kwargs):
         raise NonExistentTohuItemsClassError(
             "Please call `set_tohu_items_class()` on the tohu namespace before generating items."
