@@ -92,6 +92,9 @@ class TohuBaseGenerator:
         new_gen.parent = self
         return new_gen
 
+    def is_clone_of(self, other):
+        return self.parent is other
+
     def reset(self, seed):
         for c in self.clones:
             c.reset(seed)
