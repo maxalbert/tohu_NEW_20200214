@@ -66,9 +66,9 @@ class TohuNamespaceNEW:
     #     g_internal = g.clone()
     #     self.spawn_mapping[g] = g_internal
     #
-    # def set_tohu_items_class(self, tohu_items_class_name):
-    #     self.tohu_items_cls = make_tohu_items_class(tohu_items_class_name, field_names=self.generators.keys())
-    #
+    def set_tohu_items_class(self, name):
+        self.tohu_items_cls = make_tohu_items_class(name, field_names=self.generators.keys())
+
     # def reset(self, seed):
     #     self.seed_generator.reset(seed)
     #     # for _, g in self.generators.items():
