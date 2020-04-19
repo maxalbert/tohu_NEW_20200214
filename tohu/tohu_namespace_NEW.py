@@ -43,9 +43,9 @@ class TohuNamespaceNEW:
                 self.add_field_generator(name, g)
 
     def add_loop_variables_from_dict(self, dct):
+        assert all([is_loop_variable(g) for g in dct.values()])
         for name, g in dct.items():
-            if is_loop_variable(g):
-                self.add_loop_variable_as_hidden_non_field_generator(name, g)
+            self.add_loop_variable_as_hidden_non_field_generator(name, g)
 
     def add_field_generator(self, name, g):
         if g not in self.spawn_mapping:
