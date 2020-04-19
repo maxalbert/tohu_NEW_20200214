@@ -32,6 +32,7 @@ class TohuNamespaceNEW:
         self.field_generators = {}
         self.all_generators = {}
         self.generators_to_reset = []
+        self.loop_variables = []
         self.spawn_mapping = {}
         self.seed_generator = SeedGenerator()
         self.tohu_items_cls = NonExistentTohuItemsClass()
@@ -65,8 +66,8 @@ class TohuNamespaceNEW:
         assert is_loop_variable(g)
         g_internal = g.clone()
         self.spawn_mapping[g] = g_internal
-        self.generators_to_reset.append(g_internal)  # TODO: is this as intended?!?!?
         self.all_generators[name] = g_internal
+        self.loop_variables.append(g_internal)
 
     # def extract_loop_runner(self):
     #     loop_runner = LoopRunnerNEW()
@@ -80,9 +81,12 @@ class TohuNamespaceNEW:
 
     def reset(self, seed):
         self.seed_generator.reset(seed)
-        # for _, g in self.generators.items():
+
         for g in self.generators_to_reset:
             g.reset(next(self.seed_generator))
+
+        for g in self.loop_variables:
+            g.reset_loop_variable()
 
     def __next__(self):
         return self.tohu_items_cls(*(next(g) for g in self.field_generators.values()))
