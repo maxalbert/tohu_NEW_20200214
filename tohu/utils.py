@@ -1,4 +1,6 @@
-__all__ = ["print_generated_sequence", "identity"]
+from ._version import get_versions
+
+__all__ = ["print_generated_sequence", "identity", "print_tohu_version"]
 
 
 def print_generated_sequence(gen, num, *, seed=None, sep=", ", fmt="{}"):
@@ -25,3 +27,11 @@ def identity(x):
     That is, `identity(x)` returns `x` for any input `x`.
     """
     return x
+
+
+def print_tohu_version():
+    """
+    Helper function to print the current tohu version (for convenience during prototyping and debugging).
+    """
+    tohu_version = get_versions()["version"]
+    print(f"Tohu version: {tohu_version}")
