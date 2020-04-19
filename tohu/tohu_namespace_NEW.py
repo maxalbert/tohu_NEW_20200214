@@ -29,32 +29,48 @@ class NonExistentTohuItemsClass:
 
 class TohuNamespaceNEW:
     def __init__(self):
-        self.generators = {}
+        # self.generators = {}
+        self.field_generators = {}
         self.generators_to_reset = []
         self.spawn_mapping = {}
         self.seed_generator = SeedGenerator()
         self.tohu_items_cls = NonExistentTohuItemsClass()
 
-    def add_tohu_generators_from_dict(self, dct):
+    def add_field_generators_from_dict(self, dct):
         for name, g in dct.items():
             if is_tohu_generator(g):
-                self.add_generator(name, g)
+                self.add_field_generator(name, g)
 
-    def add_generator(self, name, g):
+    def add_field_generator(self, name, g):
         if g not in self.spawn_mapping:
-            if not is_loop_variable(g):
-                g_internal = g.spawn(gen_mapping=self.spawn_mapping)
-            else:
-                g_internal = g.clone()
-
+            g_internal = g.spawn(gen_mapping=self.spawn_mapping)
             self.spawn_mapping[g] = g_internal
             self.generators_to_reset.append(g_internal)
         else:
-            # This generator has been added before, so we just
-            # need to register it under a new name.
+            # This generator has been added before, so we just need
+            # to clone it and register the clone under the new name.
             g_internal = self.spawn_mapping[g].clone()
 
-        self.generators[name] = g_internal
+        self.field_generators[name] = g_internal
+
+    # def add_generator(self, name, g):
+    #     if g not in self.spawn_mapping:
+    #         if not is_loop_variable(g):
+    #             logger.info("[DDD] Case 1")
+    #             g_internal = g.spawn(gen_mapping=self.spawn_mapping)
+    #         else:
+    #             logger.info("[DDD] Case 2")
+    #             g_internal = g.clone()
+    #
+    #         self.spawn_mapping[g] = g_internal
+    #         self.generators_to_reset.append(g_internal)
+    #     else:
+    #         logger.info("[DDD] Case 3")
+    #         # This generator has been added before, so we just need
+    #         # to clone it and register the clone under the new name.
+    #         g_internal = self.spawn_mapping[g].clone()
+    #
+    #     self.generators[name] = g_internal
 
     # def extract_loop_runner(self):
     #     loop_runner = LoopRunnerNEW()
@@ -67,7 +83,8 @@ class TohuNamespaceNEW:
     #     self.spawn_mapping[g] = g_internal
     #
     def set_tohu_items_class(self, name):
-        self.tohu_items_cls = make_tohu_items_class(name, field_names=self.generators.keys())
+        field_names = list(self.field_generators.keys())
+        self.tohu_items_cls = make_tohu_items_class(name, field_names=field_names)
 
     def reset(self, seed):
         self.seed_generator.reset(seed)
@@ -76,4 +93,4 @@ class TohuNamespaceNEW:
             g.reset(next(self.seed_generator))
 
     def __next__(self):
-        return self.tohu_items_cls(*(next(g) for g in self.generators.values()))
+        return self.tohu_items_cls(*(next(g) for g in self.field_generators.values()))
