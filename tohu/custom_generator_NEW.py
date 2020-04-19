@@ -80,14 +80,14 @@ class CustomGeneratorNEW(TohuBaseGenerator, metaclass=CustomGeneratorMetaNEW):
         self._tohu_namespace = TohuNamespaceNEW()
 
         # Add all loop variables present in the loop runner of the custom generator parent class
-        self._tohu_namespace.add_tohu_generators_from_dict(self._loop_runner.loop_variables)
+        self._tohu_namespace.add_loop_variables_from_dict(self._loop_runner.loop_variables)
         # Instantiate a fresh loop runner for this instance (containing the newly cloned loop variables that were added in the namespace)
         # self._loop_runner = self._tohu_namespace.extract_loop_runner()
 
-        self._tohu_namespace.add_tohu_generators_from_dict(self.__class__.__dict__)
-        self._tohu_namespace.add_tohu_generators_from_dict(self.__dict__)
+        self._tohu_namespace.add_field_generators_from_dict(self.__class__.__dict__)
+        self._tohu_namespace.add_field_generators_from_dict(self.__dict__)
         self._tohu_namespace.set_tohu_items_class(derive_tohu_items_class_name(self.__class__.__name__))
-        self.__dict__.update(self._tohu_namespace.generators)
+        self.__dict__.update(self._tohu_namespace.field_generators)
 
     @classmethod
     def _is_proper_custom_generator_subclass(cls):
