@@ -85,6 +85,7 @@ class TohuNamespaceNEW:
         for g in self.generators_to_reset:
             g.reset(next(self.seed_generator))
 
+    def reset_loop_variables(self):
         for g in self.loop_variables:
             g.reset_loop_variable()
 
