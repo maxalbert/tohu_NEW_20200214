@@ -69,11 +69,11 @@ class TohuNamespaceNEW:
         self.all_generators[name] = g_internal
         self.loop_variables.append(g_internal)
 
-    # def extract_loop_runner(self):
-    #     loop_runner = LoopRunnerNEW()
-    #     for name, x in self.generators.items():
-    #         loop_runner.add_loop_variable(x, x.loop_level)
-    #     return loop_runner
+    def extract_loop_runner(self):
+        loop_runner = LoopRunnerNEW()
+        for x in self.loop_variables:
+            loop_runner.add_loop_variable(x, x.loop_level)
+        return loop_runner
 
     def set_tohu_items_class(self, name):
         field_names = list(self.field_generators.keys())
