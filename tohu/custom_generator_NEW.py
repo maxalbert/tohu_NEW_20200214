@@ -79,10 +79,14 @@ class CustomGeneratorNEW(TohuBaseGenerator, metaclass=CustomGeneratorMetaNEW):
         # Create an empty tohu namespace
         self._tohu_namespace = TohuNamespaceNEW()
 
-        # Add all loop variables present in the loop runner of the custom generator parent class
+        # Add clones of any loop variables present on the custom generator class
+        # to the tohu namespace of the new custom generator instance.
         self._tohu_namespace.add_loop_variables_from_dict(self._loop_runner.loop_variables)
-        # Instantiate a fresh loop runner for this instance (containing the newly cloned loop variables that were added in the namespace)
-        # self._loop_runner = self._tohu_namespace.extract_loop_runner()
+
+        # Now replace the existing loop runner (which contained the loop variables
+        # defined on the custom generator *class*) with a new version that contains the
+        # clones we just added to the tohu namespace of the custom generator *instance*.
+        self._loop_runner = self._tohu_namespace.extract_loop_runner()
 
         self._tohu_namespace.add_field_generators_from_dict(self.__class__.__dict__)
         self._tohu_namespace.add_field_generators_from_dict(self.__dict__)
