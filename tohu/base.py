@@ -5,6 +5,15 @@ from itertools import islice
 from random import Random
 from tqdm import tqdm
 
+__all__ = ["is_tohu_generator", "SeedGenerator", "TohuBaseGenerator"]
+
+
+def is_tohu_generator(g):
+    """
+    Helper function which returns True if `g` is a tohu generator and False otherwise.
+    """
+    return isinstance(g, TohuBaseGenerator)
+
 
 class SeedGenerator:
     """
