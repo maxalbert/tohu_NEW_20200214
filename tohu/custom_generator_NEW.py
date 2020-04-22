@@ -63,6 +63,9 @@ class CustomGeneratorMetaNEW(ABCMeta):
         new_cls = super(CustomGeneratorMetaNEW, metacls).__new__(metacls, cg_name, bases, clsdict)
         new_cls._loop_runner = LoopRunnerNEW()
 
+        new_cls._tohu_loop_level = 0
+        new_cls._tohu_cg_class_loop_variables = []
+
         # Augment original init method with bookkeeping needed for custom generators
         # (but only if the
         if new_cls._is_proper_custom_generator_subclass():
