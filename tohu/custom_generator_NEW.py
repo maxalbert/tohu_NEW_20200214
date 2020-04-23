@@ -91,9 +91,13 @@ class CustomGeneratorNEW(TohuBaseGenerator, metaclass=CustomGeneratorMetaNEW):
         for x in self._tohu_cg_class_loop_variables:
             self._tohu_namespace.add_non_field_generator(x.name, x, is_externally_managed=True)
 
-        # Combine the newly spawned loop variables
+        # Combine the newly spawned loop variables (which live
+        # inside the tohu namespace) in a loop runner so that
+        # we can orchestrate advancing/rewinding them from here.
         self._loop_runner = self._tohu_namespace.extract_loop_runner()
 
+        # Add remaining tohu generators present on the custom generator
+        # class/instance to the tohu namespace.
         self._tohu_namespace.add_field_generators_from_dict(self.__class__.__dict__)
         self._tohu_namespace.add_field_generators_from_dict(self.__dict__)
         self._tohu_namespace.set_tohu_items_class(derive_tohu_items_class_name(self.__class__.__name__))
