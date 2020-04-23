@@ -56,7 +56,12 @@ class LoopRunnerNEW:
         self.loop_variables = {}
         self.max_loop_level = 0
 
-    def add_loop_variable(self, x, level):
+    def add_loop_variable(self, x, level=None):
+        level = level or x.loop_level
+
+        if level is None:
+            raise ValueError("Loop variable must have `loop_level` set, or `level` argument must be given.")
+
         if x.name in self.loop_variables:
             raise ValueError(f"A loop variable with name {x.name!r} already exists.")
 
