@@ -8,7 +8,17 @@ def is_loop_variable(g):
 
 
 class LoopVariableExhaustedNEW(Exception):
-    pass
+    """
+    Custom exception to indicate that a loop variable
+    has iterated through all its values.
+    """
+
+
+class LoopExhaustedNEW(Exception):
+    """
+    Custom exception to indicate that a loop has iterated
+    through combinations of values of its loop variables.
+    """
 
 
 class LoopVariableNEW(TohuBaseGenerator):
@@ -60,7 +70,7 @@ class LoopRunnerNEW:
         self.loop_variables = {}
         self.max_loop_level = 0
 
-    def add_loop_variable(self, x, level=None):
+    def add_loop_variable(self, x: LoopVariableNEW, level: int = None):
         level = level or x.loop_level
 
         if level is None:
@@ -78,6 +88,28 @@ class LoopRunnerNEW:
         Helper function which displays the current loop variable values.
         """
         print({name: x.cur_value for name, x in self.loop_variables.items()})
+
+    def get_loop_vars_at_level(self, loop_level: int):
+        return {name: x for (name, x) in self.loop_variables.items() if x.loop_level == loop_level}
+
+    def rewind_all_loop_variables(self):
+        for _, x in self.loop_variables.items():
+            x.rewind_loop_variable()
+
+    def rewind_loop_vars_at_level(self, loop_level: int):
+        for _, x in self.get_loop_vars_at_level(loop_level).items():
+            x.rewind_loop_variable()
+
+    def advance_loop_variables(self, loop_level: int = 1):
+        if loop_level > self.max_loop_level:
+            raise LoopExhaustedNEW("Loop has been exhausted.")
+
+        try:
+            for _, x in self.get_loop_vars_at_level(loop_level).items():
+                x.advance()
+        except LoopVariableExhaustedNEW:
+            self.rewind_loop_vars_at_level(loop_level)
+            self.advance_loop_variables(loop_level + 1)
 
     # def spawn(self):
     #     new_loop_runner = LoopRunnerNEW()
