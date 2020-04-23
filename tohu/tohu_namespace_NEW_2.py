@@ -41,11 +41,20 @@ class TohuNamespaceNEW2:
                 self.add_field_generator(name, g)
 
     def add_field_generator(self, name, g):
-        g_internal = g.spawn(gen_mapping=self.gen_mapping)
+        if g not in self.gen_mapping:
+            g_internal = g.spawn(gen_mapping=self.gen_mapping)
+            self.gen_mapping[g] = g_internal
+            self.generators_to_reset.append(g_internal)
+        else:
+            # This generator has been added before, so we just need
+            # to clone it and register the clone under the new name.
+            #
+            # TODO: make sure this works in all cases! An alternative would
+            #       be to add a derived generator: `Apply(identity, g)`
+            g_internal = self.gen_mapping[g].clone()
+
         self.field_generators[name] = g_internal
         self.all_generators[name] = g_internal
-        self.gen_mapping[g] = g_internal
-        self.generators_to_reset.append(g_internal)
 
     def add_non_field_generator(self, name, g, is_externally_managed):
         if not is_externally_managed:
