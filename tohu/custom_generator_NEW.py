@@ -4,7 +4,7 @@ from functools import wraps
 from .base import TohuBaseGenerator
 from .logging import logger
 from .looping_NEW import LoopRunnerNEW
-from .tohu_namespace_NEW import TohuNamespaceNEW
+from .tohu_namespace_NEW_2 import TohuNamespaceNEW2
 
 __all__ = ["CustomGeneratorNEW"]
 
@@ -61,8 +61,9 @@ class CustomGeneratorMetaNEW(ABCMeta):
     def __new__(metacls, cg_name, bases, clsdict):
         # Create new custom generator class
         new_cls = super(CustomGeneratorMetaNEW, metacls).__new__(metacls, cg_name, bases, clsdict)
-        new_cls._loop_runner = LoopRunnerNEW()
 
+        # The following are needed in the `@foreach` decorator
+        # to keep track of loop variables.
         new_cls._tohu_loop_level = 0
         new_cls._tohu_cg_class_loop_variables = []
 
@@ -80,15 +81,17 @@ class CustomGeneratorNEW(TohuBaseGenerator, metaclass=CustomGeneratorMetaNEW):
         logger.info(f"[DDD] Inside CustomGeneratorNEW.__init__()")
 
         # Create an empty tohu namespace
-        self._tohu_namespace = TohuNamespaceNEW()
+        self._tohu_namespace = TohuNamespaceNEW2()
 
-        # Add clones of any loop variables present on the custom generator class
-        # to the tohu namespace of the new custom generator instance.
-        self._tohu_namespace.add_loop_variables_from_dict(self._loop_runner.loop_variables)
+        # First, add all loop variables to the tohu namespace
+        # (so that they are available as dependencies for
+        # regular field generators). Note that internally in
+        # the tohu namespace this creates clones of the loop
+        # variables.
+        for x in self._tohu_cg_class_loop_variables:
+            self._tohu_namespace.add_non_field_generator(x.name, x, is_externally_managed=True)
 
-        # Now replace the existing loop runner (which contained the loop variables
-        # defined on the custom generator *class*) with a new version that contains the
-        # clones we just added to the tohu namespace of the custom generator *instance*.
+        # Combine the newly spawned loop variables
         self._loop_runner = self._tohu_namespace.extract_loop_runner()
 
         self._tohu_namespace.add_field_generators_from_dict(self.__class__.__dict__)
