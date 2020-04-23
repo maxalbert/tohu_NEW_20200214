@@ -1,5 +1,6 @@
-from tohu.base import is_tohu_generator, SeedGenerator
-from tohu.tohu_items_class import make_tohu_items_class
+from .base import is_tohu_generator, SeedGenerator
+from .looping_NEW import LoopRunnerNEW, is_loop_variable
+from .tohu_items_class import make_tohu_items_class
 
 __all__ = ["TohuNamespaceNEW2"]
 
@@ -58,6 +59,13 @@ class TohuNamespaceNEW2:
         g_internal = g.clone()
         self.all_generators[name] = g_internal
         self.gen_mapping[g] = g_internal
+
+    def extract_loop_runner(self):
+        loop_runner = LoopRunnerNEW()
+        for _, x in self.all_generators.items():
+            if is_loop_variable(x):
+                loop_runner.add_loop_variable(x, x.loop_level)
+        return loop_runner
 
     def set_tohu_items_class(self, name):
         field_names = list(self.field_generators.keys())
