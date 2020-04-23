@@ -1,6 +1,10 @@
 from .base import TohuBaseGenerator
 
-__all__ = ["LoopVariableNEW"]
+__all__ = ["LoopVariableNEW", "is_loop_variable"]
+
+
+def is_loop_variable(g):
+    return isinstance(g, LoopVariableNEW)
 
 
 class LoopVariableExhaustedNEW(Exception):
