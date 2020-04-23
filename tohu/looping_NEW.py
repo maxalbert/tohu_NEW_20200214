@@ -73,6 +73,12 @@ class LoopRunnerNEW:
         self.loop_variables[x.name] = x
         self.max_loop_level = max(level, self.max_loop_level)
 
+    def print_current_loop_var_values(self):
+        """
+        Helper function which displays the current loop variable values.
+        """
+        print({name: x.cur_value for name, x in self.loop_variables.items()})
+
     # def spawn(self):
     #     new_loop_runner = LoopRunnerNEW()
     #     for x in self.loop_variables.values():
