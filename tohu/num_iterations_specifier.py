@@ -11,13 +11,13 @@ class NumIterationsSequenceExhausted(Exception):
     """
 
 
-class NumIterationsSpecifierBase(metaclass=ABCMeta):
+class NumIterationsSpecifier(metaclass=ABCMeta):
     """
     Base class for the different classes representing num_iterations specifiers.
     """
 
 
-class NumIterationsSpecifierFromCallable(NumIterationsSpecifierBase):
+class NumIterationsSpecifierFromCallable(NumIterationsSpecifier):
     def __init__(self, func_num_iterations: Callable):
         self.func_num_iterations = func_num_iterations
 
@@ -25,7 +25,7 @@ class NumIterationsSpecifierFromCallable(NumIterationsSpecifierBase):
         return self.func_num_iterations(**kwargs)
 
 
-class NumIterationsSpecifierFromInt(NumIterationsSpecifierBase):
+class NumIterationsSpecifierFromInt(NumIterationsSpecifier):
     def __init__(self, num_iterations: int):
         self.num_iterations = num_iterations
 
@@ -33,7 +33,7 @@ class NumIterationsSpecifierFromInt(NumIterationsSpecifierBase):
         return self.num_iterations
 
 
-class NumIterationsSpecifierFromSequence(NumIterationsSpecifierBase):
+class NumIterationsSpecifierFromSequence(NumIterationsSpecifier):
     def __init__(self, seq_num_iterations: Sequence[int]):
         self.seq_num_iterations = seq_num_iterations
         self.idx = -1
