@@ -111,6 +111,32 @@ class LoopRunnerNEW:
             self.rewind_loop_vars_at_level(loop_level)
             self.advance_loop_variables(loop_level + 1)
 
+    def iter_loop_var_combinations(self, var_names=None):
+        if var_names is None or list(var_names) == []:
+            yield from self._iter_loop_var_value_combinations_impl(self.max_loop_level)
+        else:
+            seen = set()
+            for x in (tuple((name, x[name]) for name in var_names) for x in self.iter_loop_var_combinations()):
+                if x not in seen:
+                    seen.add(x)
+                    yield dict(x)
+
+    def _iter_loop_var_value_combinations_impl(self, cur_level, **loop_var_values_at_higher_levels):
+        if cur_level == 0:
+            yield loop_var_values_at_higher_levels
+        else:
+            for cur_loop_var_values in self._iter_loop_var_combinations_at_level(cur_level):
+                yield from self._iter_loop_var_value_combinations_impl(
+                    cur_level - 1, **cur_loop_var_values, **loop_var_values_at_higher_levels
+                )
+
+    def _iter_loop_var_combinations_at_level(self, loop_level: int):
+        loop_vars_at_level = self.get_loop_vars_at_level(loop_level)
+        var_names = loop_vars_at_level.keys()
+
+        for cur_vals in zip(*[x.values for _, x in loop_vars_at_level.items()]):
+            yield dict(zip(var_names, cur_vals))
+
     # def spawn(self):
     #     new_loop_runner = LoopRunnerNEW()
     #     for x in self.loop_variables.values():
