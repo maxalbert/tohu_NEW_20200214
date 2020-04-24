@@ -1,4 +1,10 @@
+from itertools import groupby
 from .base import TohuBaseGenerator
+from .num_iterations_specifier import (
+    make_num_iterations_specifier,
+    NumIterationsSpecifier,
+    NumIterationsSequenceExhausted,
+)
 
 __all__ = ["LoopVariableNEW", "is_loop_variable"]
 
@@ -92,6 +98,9 @@ class LoopRunnerNEW:
     def get_loop_vars_at_level(self, loop_level: int):
         return {name: x for (name, x) in self.loop_variables.items() if x.loop_level == loop_level}
 
+    def get_loop_vars_at_level_and_above(self, loop_level: int):
+        return {name: x for (name, x) in self.loop_variables.items() if x.loop_level >= loop_level}
+
     def rewind_all_loop_variables(self):
         for _, x in self.loop_variables.items():
             x.rewind_loop_variable()
@@ -136,6 +145,37 @@ class LoopRunnerNEW:
 
         for cur_vals in zip(*[x.values for _, x in loop_vars_at_level.items()]):
             yield dict(zip(var_names, cur_vals))
+
+    def iter_loop_var_combinations_with_num_iterations(
+        self, num_iterations: NumIterationsSpecifier, loop_level: int = 1
+    ):
+        assert 1 <= loop_level and loop_level <= self.max_loop_level
+        if loop_level == 1:
+            yield from self._iter_loop_var_combinations_with_num_iterations_at_level_1(num_iterations)
+        else:
+            loop_var_names_at_level_and_above = list(self.get_loop_vars_at_level_and_above(loop_level))
+
+            def key_func(loop_var_values_and_num_iterations):
+                loop_var_values = loop_var_values_and_num_iterations[0]
+                return {
+                    name: value
+                    for (name, value) in loop_var_values.items()
+                    if name in loop_var_names_at_level_and_above
+                }
+
+            data = self.iter_loop_var_combinations_with_num_iterations(num_iterations, loop_level=1)
+            grouped_data = groupby(data, key=key_func)
+            for key, grp in grouped_data:
+                num_iterations = [x[1] for x in grp]
+                yield key, sum(num_iterations)
+
+    def _iter_loop_var_combinations_with_num_iterations_at_level_1(self, num_iterations: NumIterationsSpecifier):
+        num_iterations = make_num_iterations_specifier(num_iterations)
+        for loop_var_values in self.iter_loop_var_combinations():
+            try:
+                yield loop_var_values, num_iterations(**loop_var_values)
+            except NumIterationsSequenceExhausted:
+                return
 
     # def spawn(self):
     #     new_loop_runner = LoopRunnerNEW()
