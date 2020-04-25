@@ -13,7 +13,7 @@ Documentation:
 
 Technical reference:
 
-- [API Reference](tohu/tohu/)
+- [API Reference](tohu/)
 - [Architectural Decision Records](ADRs/README.md)
 - [Changelog](CHANGELOG.md)
 
