@@ -1,4 +1,5 @@
 from itertools import groupby
+from typing import Callable
 from .base import TohuBaseGenerator
 from .num_iterations_specifier import (
     make_num_iterations_specifier,
@@ -91,7 +92,8 @@ class LoopRunnerNEW:
 
     def print_current_loop_var_values(self):
         """
-        Helper function which displays the current loop variable values.
+        Helper function which displays the current values of the loop variables in this loop runner
+        (useful for debugging).
         """
         print({name: x.cur_value for name, x in self.loop_variables.items()})
 
@@ -102,10 +104,16 @@ class LoopRunnerNEW:
         return {name: x for (name, x) in self.loop_variables.items() if x.loop_level >= loop_level}
 
     def rewind_all_loop_variables(self):
+        """
+        Rewind all loop variables in this loop runner to their initial values.
+        """
         for _, x in self.loop_variables.items():
             x.rewind_loop_variable()
 
-    def rewind_loop_vars_at_level(self, loop_level: int):
+    def _rewind_loop_vars_at_level(self, loop_level: int):
+        """
+        Rewind loop variables at the given loop level to their initial values.
+        """
         for _, x in self.get_loop_vars_at_level(loop_level).items():
             x.rewind_loop_variable()
 
@@ -117,10 +125,18 @@ class LoopRunnerNEW:
             for _, x in self.get_loop_vars_at_level(loop_level).items():
                 x.advance()
         except LoopVariableExhaustedNEW:
-            self.rewind_loop_vars_at_level(loop_level)
+            self._rewind_loop_vars_at_level(loop_level)
             self.advance_loop_variables(loop_level + 1)
 
     def iter_loop_var_combinations(self, var_names=None):
+        """
+        Return all combinations of loop variable values present in this loop runner.
+
+        Returns
+        -------
+        Iterable
+            Iterable containing all possible combinations of loop variable values.
+        """
         if var_names is None or list(var_names) == []:
             yield from self._iter_loop_var_value_combinations_impl(self.max_loop_level)
         else:
@@ -176,6 +192,31 @@ class LoopRunnerNEW:
                 yield loop_var_values, num_iterations(**loop_var_values)
             except NumIterationsSequenceExhausted:
                 return
+
+    def iter_loop_var_combinations_with_callback(self, f_callback: Callable, num_iterations: NumIterationsSpecifier):
+        """
+        Iterate over all combinations of loop variable values and invoke a callback function for each.
+
+        Parameters
+        ----------
+        f_callback : Callable
+            Callback function which is invoked for each combination of loop variable values.
+            This must accept the current number of iterations as the first argument (which
+            is passed as a positional argument) and the current loop variable values as the
+            remaining arguments (which are passed as keyword arguments). Must return an
+            iterable.
+
+        num_iterations : NumIterationsSpecifier
+            Specifier for the number of iterations associated with each combination of loop
+            variable values.
+
+        Returns
+        -------
+        Iterable
+            The concatenation of the iterables obtained from all invocations of `f_callback`.
+        """
+        for loop_var_values, num_iterations in self.iter_loop_var_combinations_with_num_iterations(num_iterations):
+            yield from f_callback(num_iterations, **loop_var_values)
 
     # def spawn(self):
     #     new_loop_runner = LoopRunnerNEW()
