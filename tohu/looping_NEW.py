@@ -1,6 +1,6 @@
 from itertools import groupby
 from typing import Callable
-from .base import TohuBaseGenerator
+from .base import TohuBaseGenerator, SeedGenerator
 from .num_iterations_specifier import (
     make_num_iterations_specifier,
     NumIterationsSpecifier,
@@ -217,6 +217,25 @@ class LoopRunnerNEW:
         """
         for loop_var_values, num_iterations in self.iter_loop_var_combinations_with_num_iterations(num_iterations):
             yield from f_callback(num_iterations, **loop_var_values)
+
+    def iter_loop_var_combinations_with_generator(
+        self, g: TohuBaseGenerator, num_iterations: NumIterationsSpecifier, seed: int
+    ):
+
+        seed_generator = SeedGenerator()
+        seed_generator.reset(seed)
+
+        def f_callback(num_iterations, **kwargs):
+            g.reset(next(seed_generator))
+            # TODO: reset `g` during each iteration?!
+            yield from g.generate_as_list(num=num_iterations)
+            try:
+                self.advance_loop_variables()
+            except LoopExhaustedNEW:
+                return
+
+        self.rewind_all_loop_variables()
+        yield from self.iter_loop_var_combinations_with_callback(f_callback, num_iterations)
 
     # def spawn(self):
     #     new_loop_runner = LoopRunnerNEW()
