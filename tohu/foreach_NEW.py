@@ -1,4 +1,5 @@
 import inspect
+from .custom_generator_NEW import CustomGeneratorNEW
 from .looping_NEW import LoopVariableNEW
 
 
@@ -11,6 +12,32 @@ def restore_globals(global_vars, names, clashes):
         else:
             # remove items which didn't exist before
             global_vars.pop(name)
+
+
+class ForeachGeneratorInstance:
+    def __init__(self, custom_gen_instance: CustomGeneratorNEW):
+        self.custom_gen_instance = custom_gen_instance
+
+    def __repr__(self):
+        return f"<Looped custom generator instance: {self.custom_gen_instance!r}, wrapped using @foreach>"
+
+    def generate_as_stream(self, *, num_iterations, seed=None):
+        # FIXME: Demeter violation!
+        yield from self.custom_gen_instance._loop_runner.iter_loop_var_combinations_with_generator(
+            self.custom_gen_instance, num_iterations, seed=seed
+        )
+
+
+class ForeachGeneratorClass:
+    def __init__(self, custom_gen_cls):
+        self.custom_gen_cls = custom_gen_cls
+
+    def __repr__(self):
+        return f"<Looped custom generator class: {self.custom_gen_cls.__name__!r}, wrapped using @foreach>"
+
+    def __call__(self, *args, **kwargs):
+        custom_gen_instance = self.custom_gen_cls(*args, **kwargs)
+        return ForeachGeneratorInstance(custom_gen_instance)
 
 
 def foreach_NEW(**var_defs):
@@ -32,6 +59,6 @@ def foreach_NEW(**var_defs):
             x.set_loop_level(this_loop_level)
             cls._tohu_cg_class_loop_variables.append(x)
 
-        return cls
+        return ForeachGeneratorClass(cls)
 
     return wrapper
