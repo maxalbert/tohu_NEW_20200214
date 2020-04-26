@@ -3,7 +3,7 @@ from abc import ABCMeta
 from functools import wraps
 from .base import TohuBaseGenerator
 from .logging import logger
-from .looping_NEW import LoopRunnerNEW
+from .looping_NEW import LoopVariableNEW
 from .tohu_namespace_NEW_2 import TohuNamespaceNEW2
 
 __all__ = ["CustomGeneratorNEW"]
@@ -112,6 +112,14 @@ class CustomGeneratorNEW(TohuBaseGenerator, metaclass=CustomGeneratorMetaNEW):
             # the CustomGeneratorNEW class itself is being created, so
             # that the `CustomGeneratorNEW` symbol doesn't exist yet.
             return False
+
+    @classmethod
+    def register_loop_variable(cls, x):
+        assert isinstance(x, LoopVariableNEW)
+        cls._tohu_cg_class_loop_variables.append(x)
+
+    def extract_loop_runner(self):
+        return self._tohu_namespace.extract_loop_runner()
 
     def __next__(self):
         return next(self._tohu_namespace)
