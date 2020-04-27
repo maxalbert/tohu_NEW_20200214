@@ -29,8 +29,13 @@ class ForeachGeneratorInstance:
 
 
 class ForeachGeneratorClass:
-    def __init__(self, custom_gen_cls):
+    def __init__(self, custom_gen_cls, loop_vars, this_loop_level):
         self.custom_gen_cls = custom_gen_cls
+        self.custom_gen_cls._tohu_loop_level = this_loop_level
+
+        for x in loop_vars.values():
+            x.set_loop_level(this_loop_level)
+            self.custom_gen_cls.register_loop_variable(x)
 
     def __repr__(self):
         return f"<Looped custom generator class: {self.custom_gen_cls.__name__!r}, wrapped using @foreach>"
@@ -51,14 +56,6 @@ def foreach_NEW(**var_defs):
 
     def wrapper(cls):
         restore_globals(global_vars, new_names, clashes)
-
-        this_loop_level = cls._tohu_loop_level + 1
-
-        cls._tohu_loop_level = this_loop_level
-        for x in loop_vars.values():
-            x.set_loop_level(this_loop_level)
-            cls.register_loop_variable(x)
-
-        return ForeachGeneratorClass(cls)
+        return ForeachGeneratorClass(cls, loop_vars, this_loop_level=1)
 
     return wrapper
