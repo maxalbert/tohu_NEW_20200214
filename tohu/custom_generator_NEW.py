@@ -64,7 +64,6 @@ class CustomGeneratorMetaNEW(ABCMeta):
 
         # The following are needed in the `@foreach` decorator
         # to keep track of loop variables.
-        new_cls._tohu_loop_level = 0
         new_cls._tohu_cg_class_loop_variables = []
 
         # Augment original init method with bookkeeping needed for custom generators

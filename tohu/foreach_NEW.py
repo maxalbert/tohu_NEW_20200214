@@ -31,7 +31,7 @@ class ForeachGeneratorInstance:
 class ForeachGeneratorClass:
     def __init__(self, custom_gen_cls, loop_vars, this_loop_level):
         self.custom_gen_cls = custom_gen_cls
-        self.custom_gen_cls._tohu_loop_level = this_loop_level
+        self.loop_level = this_loop_level
 
         for x in loop_vars.values():
             x.set_loop_level(this_loop_level)
