@@ -57,7 +57,7 @@ def foreach_NEW(**var_defs):
         cls._tohu_loop_level = this_loop_level
         for x in loop_vars.values():
             x.set_loop_level(this_loop_level)
-            cls._tohu_cg_class_loop_variables.append(x)
+            cls.register_loop_variable(x)
 
         return ForeachGeneratorClass(cls)
 
