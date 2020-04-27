@@ -93,6 +93,16 @@ class CustomGeneratorNEW(TohuBaseGenerator, metaclass=CustomGeneratorMetaNEW):
         # Combine the newly spawned loop variables (which live
         # inside the tohu namespace) in a loop runner so that
         # we can orchestrate advancing/rewinding them from here.
+        #
+        # Note: currently this needs to happen *before* we add
+        #       additional field generators below because the
+        #       current implementation of `extract_loop_runner()`
+        #       gets confused if there is a field generator which
+        #       is an alias for a previously registered loop variable.
+        #       TODO: Ideally we'd change the implementation of
+        #       `extract_loop_runner()` so that we can remove it here
+        #       and call it from `ForeachGeneratorInstance.__init__()`
+        #       instead.
         self._loop_runner = self._tohu_namespace.extract_loop_runner()
 
         # Add remaining tohu generators present on the custom generator
