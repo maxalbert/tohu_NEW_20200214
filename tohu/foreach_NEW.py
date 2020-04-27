@@ -33,12 +33,12 @@ class ForeachGeneratorClass:
         if inspect.isclass(cls) and issubclass(cls, CustomGeneratorNEW):
             self.custom_gen_cls = cls
             self.loop_level = 1
-            self.loop_vars = new_loop_vars
+            self.loop_variables = new_loop_vars
         elif isinstance(cls, ForeachGeneratorClass):
             self.custom_gen_cls = cls.custom_gen_cls
             self.loop_level = cls.loop_level + 1
-            self.loop_vars = cls.loop_vars
-            self.loop_vars.update(new_loop_vars)
+            self.loop_variables = cls.loop_variables
+            self.loop_variables.update(new_loop_vars)
         else:  # pragma: no cover
             raise TypeError(f"Invalid type for argument cls: {type(cls)}")
 
