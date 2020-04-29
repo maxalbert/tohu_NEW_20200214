@@ -4,9 +4,10 @@ from faker import Faker
 from random import Random
 
 from .base import TohuBaseGenerator
+from .timestamp import Timestamp
 from .utils import identity
 
-__all__ = ["Constant", "Boolean", "Integer", "Float", "HashDigest", "FakerGenerator", "SelectOne"]
+__all__ = ["Constant", "Boolean", "Integer", "Float", "HashDigest", "FakerGenerator", "SelectOne", "Timestamp"]
 
 
 class Constant(TohuBaseGenerator):
@@ -289,7 +290,7 @@ class SelectOne(TohuBaseGenerator):
         self.randgen.setstate(other.randgen.getstate())
 
 
-# PRIMITIVE_GENERATORS = [Constant, Boolean, Integer, Float, HashDigest, FakerGenerator, SelectOne]
+# PRIMITIVE_GENERATORS = [Constant, Boolean, Integer, Float, HashDigest, FakerGenerator, SelectOne, Timestamp]
 EXEMPLAR_PRIMITIVE_GENERATORS = [
     Constant("quux"),
     Boolean(p=0.3),
@@ -298,4 +299,5 @@ EXEMPLAR_PRIMITIVE_GENERATORS = [
     HashDigest(length=6),
     FakerGenerator(method="name"),
     SelectOne(["aa", "bb", "cc", "dd"]),
+    Timestamp(start="2020-01-01 09:00:00", stop="2020-01-01 18:19:20"),
 ]
