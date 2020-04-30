@@ -5,6 +5,7 @@ Your friendly synthetic data generator
 from .primitive_generators import *
 from .derived_generators import Apply
 from .custom_generator import CustomGenerator
+from .custom_generator_NEW import CustomGeneratorNEW
 from .foreach import foreach
 from .logging import logger as tohu_logger
 
