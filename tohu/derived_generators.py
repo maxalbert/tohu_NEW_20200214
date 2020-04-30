@@ -22,6 +22,7 @@ class Apply(TohuBaseGenerator):
 
     def spawn(self, gen_mapping=None):
         if gen_mapping is None:
+            # This code path is reached during cloning, because we don't require a `gen_mapping` argument in `clone()`.
             new_arg_gens = self.arg_gens
             new_kwarg_gens = self.kwarg_gens
         else:
