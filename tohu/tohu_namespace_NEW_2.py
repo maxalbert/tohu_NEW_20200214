@@ -6,10 +6,18 @@ __all__ = ["TohuNamespaceNEW2"]
 
 
 class NonExistentTohuItemsClassError(Exception):
-    pass
+    """
+    Custom exception to indicate that `set_tohu_items_class()` has not been called.
+    """
 
 
 class NonExistentTohuItemsClass:
+    # This is a placeholder for a proper TohuItemsClass, which will be
+    # created when `TohuNamespace.make_tohu_items_class()` is called.
+    # This only exists to produce a meaningful error message in case
+    # make_tohu_items_class() isn't called before trying to generate
+    # tohu items using the TohuNamespace instance.
+
     def __repr__(self):
         return "<NonExistentTohuItemsClass>"
 
