@@ -77,7 +77,6 @@ class CustomGeneratorMetaNEW(ABCMeta):
 class CustomGeneratorNEW(TohuBaseGenerator, metaclass=CustomGeneratorMetaNEW):
     def __init__(self):
         super().__init__()
-        logger.info(f"[DDD] Inside CustomGeneratorNEW.__init__()")
 
         # Create an empty tohu namespace
         self._tohu_namespace = TohuNamespaceNEW2()
