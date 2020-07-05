@@ -1,6 +1,6 @@
 from ._version import get_versions
 
-__all__ = ["print_generated_sequence", "identity", "print_tohu_version"]
+__all__ = ["print_generated_sequence", "identity", "as_list", "print_tohu_version"]
 
 
 def print_generated_sequence(gen, num, *, seed=None, sep=", ", fmt="{}"):
@@ -27,6 +27,17 @@ def identity(x):
     That is, `identity(x)` returns `x` for any input `x`.
     """
     return x
+
+
+def as_list(seq):
+    """
+    Helper function which converts the input sequence to a list
+    (returns the input value unchanged if it is already a list).
+    """
+    if isinstance(seq, list):
+        return seq
+    else:
+        return list(seq)
 
 
 def print_tohu_version():
