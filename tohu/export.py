@@ -10,8 +10,8 @@ __all__ = ["export_to_df"]
 #
 
 
-def export_to_df(input_tuples, field_names):
-    df = pd.DataFrame(input_tuples, columns=field_names)
+def export_to_df(input_tuples, column_names):
+    df = pd.DataFrame(input_tuples, columns=column_names)
     return df
 
 
