@@ -70,24 +70,26 @@ class LazyItemListNEW:
         )
 
     def select_fields(self, fields):
+        assert isinstance(fields, (list, tuple))
         field_indices = [self.field_names.index(x) for x in fields]
         new_field_names = [self.field_names[idx] for idx in field_indices]
         fs = FieldSelector(field_indices, new_field_names=new_field_names)
         return self.apply_transformation(fs)
 
-    def to_df(self, fields=None, column_names=None):
-        assert isinstance(fields, (list, tuple)) or fields is None
-
-        if fields is not None:
-            item_list_to_export = self.select_fields(fields)
+    def _prepare_items_for_export(self, fields_to_select):
+        assert isinstance(fields_to_select, (list, tuple)) or fields_to_select is None
+        if fields_to_select is None:
+            return self
         else:
-            item_list_to_export = self
-            fields = self.field_names
+            return self.select_fields(fields_to_select)
 
+    def to_df(self, fields=None, column_names=None):
+        fields = fields or self.field_names
         column_names = column_names or fields
-        print(f"[DDD] column_names={column_names}")
+        # print(f"[DDD] column_names={column_names}")
         assert len(column_names) == len(fields)
 
+        item_list_to_export = self._prepare_items_for_export(fields)
         return export_to_df(item_list_to_export.iter_item_tuples(), column_names=column_names)
 
     def to_csv(self, filename=None, sep=",", header=True, header_prefix=""):
