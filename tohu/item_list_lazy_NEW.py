@@ -76,29 +76,27 @@ class LazyItemListNEW:
         fs = FieldSelector(field_indices, new_field_names=new_field_names)
         return self.apply_transformation(fs)
 
-    def _prepare_items_for_export(self, fields_to_select):
-        assert isinstance(fields_to_select, (list, tuple)) or fields_to_select is None
-        if fields_to_select is None:
-            return self
-        else:
-            return self.select_fields(fields_to_select)
+    def _prepare_items_for_export(self, fields, column_names):
+        assert isinstance(fields, (list, tuple)) or fields is None
+        assert isinstance(column_names, (list, tuple)) or column_names is None
 
-    def to_df(self, fields=None, column_names=None):
-        fields = fields or self.field_names
-        column_names = column_names or fields
-        # print(f"[DDD] column_names={column_names}")
+        if fields is None:
+            item_list_to_export = self
+            fields = self.field_names
+        else:
+            item_list_to_export = self.select_fields(fields)
+
+        column_names = column_names or fields or self.field_names
         assert len(column_names) == len(fields)
 
-        item_list_to_export = self._prepare_items_for_export(fields)
+        return item_list_to_export, fields, column_names
+
+    def to_df(self, fields=None, column_names=None):
+        item_list_to_export, fields, column_names = self._prepare_items_for_export(fields, column_names)
         return export_to_df(item_list_to_export.iter_item_tuples(), column_names=column_names)
 
     def to_csv(self, filename=None, fields=None, column_names=None, sep=",", header=True, header_prefix=""):
-        fields = fields or self.field_names
-        column_names = column_names or fields
-        # print(f"[DDD] column_names={column_names}")
-        assert len(column_names) == len(fields)
-
-        item_list_to_export = self._prepare_items_for_export(fields)
+        item_list_to_export, fields, column_names = self._prepare_items_for_export(fields, column_names)
 
         if filename is None:
             return export_to_csv_string(
