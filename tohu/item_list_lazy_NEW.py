@@ -1,6 +1,6 @@
 from abc import ABCMeta, abstractmethod
 from operator import itemgetter
-from .export import export_to_df, export_to_csv_file, export_to_csv_string
+from .export import export_to_df, export_to_csv_string_or_file
 from .tohu_items_class import make_tohu_items_class
 
 
@@ -97,21 +97,11 @@ class LazyItemListNEW:
 
     def to_csv(self, filename=None, fields=None, column_names=None, sep=",", header=True, header_prefix=""):
         item_list_to_export, fields, column_names = self._prepare_items_for_export(fields, column_names)
-
-        if filename is None:
-            return export_to_csv_string(
-                item_list_to_export.iter_item_tuples(),
-                column_names=column_names,
-                sep=sep,
-                header=header,
-                header_prefix=header_prefix,
-            )
-        else:
-            export_to_csv_file(
-                filename,
-                item_list_to_export.iter_item_tuples(),
-                column_names=column_names,
-                sep=sep,
-                header=header,
-                header_prefix=header_prefix,
-            )
+        export_to_csv_string_or_file(
+            filename,
+            item_list_to_export.iter_item_tuples(),
+            column_names=column_names,
+            sep=sep,
+            header=header,
+            header_prefix=header_prefix,
+        )

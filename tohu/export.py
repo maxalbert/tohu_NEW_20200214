@@ -46,6 +46,24 @@ def export_to_csv_file(filename, input_tuples, *, column_names, sep=",", header=
         export_to_csv_stream(f, input_tuples, column_names, sep, header, header_prefix)
 
 
+def export_to_csv_string_or_file(
+    optional_filename, input_tuples, *, column_names, sep=",", header=True, header_prefix=""
+):
+    if optional_filename is None:
+        return export_to_csv_string(
+            input_tuples, column_names=column_names, sep=sep, header=header, header_prefix=header_prefix
+        )
+    else:
+        export_to_csv_file(
+            optional_filename,
+            input_tuples,
+            column_names=column_names,
+            sep=sep,
+            header=header,
+            header_prefix=header_prefix,
+        )
+
+
 #
 # Export to PostgreSQL table
 #
