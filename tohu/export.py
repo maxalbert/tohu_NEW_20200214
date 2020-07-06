@@ -20,11 +20,11 @@ def export_to_df(input_tuples, column_names):
 #
 
 
-def export_to_csv_stream(stream, input_tuples, field_names, sep=",", header=True, header_prefix=""):
+def export_to_csv_stream(stream, input_tuples, column_names, sep=",", header=True, header_prefix=""):
     if not header:
         header = ""
     elif header == True:
-        header = header_prefix + sep.join(field_names) + "\n"
+        header = header_prefix + sep.join(column_names) + "\n"
     elif isinstance(header, str):
         header = header + "\n"
     else:
@@ -35,15 +35,15 @@ def export_to_csv_stream(stream, input_tuples, field_names, sep=",", header=True
         print(sep.join(str(x) for x in row_tuple), file=stream)
 
 
-def export_to_csv_string(input_tuples, field_names, sep=",", header=True, header_prefix=""):
+def export_to_csv_string(input_tuples, *, column_names, sep=",", header=True, header_prefix=""):
     with StringIO() as s:
-        export_to_csv_stream(s, input_tuples, field_names, sep, header, header_prefix)
+        export_to_csv_stream(s, input_tuples, column_names, sep, header, header_prefix)
         return s.getvalue()
 
 
-def export_to_csv_file(filename, input_tuples, field_names, sep=",", header=True, header_prefix=""):
+def export_to_csv_file(filename, input_tuples, *, column_names, sep=",", header=True, header_prefix=""):
     with open(filename, "w") as f:
-        export_to_csv_stream(f, input_tuples, field_names, sep, header, header_prefix)
+        export_to_csv_stream(f, input_tuples, column_names, sep, header, header_prefix)
 
 
 #

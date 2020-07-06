@@ -92,12 +92,28 @@ class LazyItemListNEW:
         item_list_to_export = self._prepare_items_for_export(fields)
         return export_to_df(item_list_to_export.iter_item_tuples(), column_names=column_names)
 
-    def to_csv(self, filename=None, sep=",", header=True, header_prefix=""):
+    def to_csv(self, filename=None, fields=None, column_names=None, sep=",", header=True, header_prefix=""):
+        fields = fields or self.field_names
+        column_names = column_names or fields
+        # print(f"[DDD] column_names={column_names}")
+        assert len(column_names) == len(fields)
+
+        item_list_to_export = self._prepare_items_for_export(fields)
+
         if filename is None:
             return export_to_csv_string(
-                self.iter_item_tuples(), self.field_names, sep=sep, header=header, header_prefix=header_prefix
+                item_list_to_export.iter_item_tuples(),
+                column_names=column_names,
+                sep=sep,
+                header=header,
+                header_prefix=header_prefix,
             )
         else:
             export_to_csv_file(
-                filename, self.iter_item_tuples(), self.field_names, sep=sep, header=header, header_prefix=header_prefix
+                filename,
+                item_list_to_export.iter_item_tuples(),
+                column_names=column_names,
+                sep=sep,
+                header=header,
+                header_prefix=header_prefix,
             )
