@@ -12,6 +12,21 @@ class Apply(TohuBaseGenerator):
         self.arg_gens = [g.clone() for g in args]
         self.kwarg_gens = {name: g.clone() for name, g in kwargs.items()}
 
+    def __format__(self, format_specifier):
+        if format_specifier == "debug":
+            clsname = self.__class__.__name__
+            name = "" if self.tohu_name is None else f"{self.tohu_name}: "
+            arg_gens_descr = ", ".join(["{:debug}".format(g) for g in self.arg_gens])
+            kwarg_gens_descr = ", ".join(["{}: {:debug}".format(name, g) for (name, g) in self.kwarg_gens.items()])
+            return (
+                f"<{name}{clsname} (id={self.tohu_id})\n"
+                f"   arg_gens=[{arg_gens_descr}]\n"
+                f"   kwarg_gens={{{kwarg_gens_descr}}}]\n"
+                ">"
+            )
+        else:
+            return repr(self)
+
     def __next__(self):
         args = [next(g) for g in self.arg_gens]
         kwargs = {name: next(g) for name, g in self.kwarg_gens.items()}

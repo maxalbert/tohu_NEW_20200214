@@ -60,6 +60,12 @@ class TohuBaseGenerator:
         name = "" if self.tohu_name is None else f"{self.tohu_name}: "
         return f"<{name}{clsname} (id={self.tohu_id})>"
 
+    def __format__(self, format_specifier):
+        clsname = self.__class__.__name__
+        name = "" if self.tohu_name is None else f"{self.tohu_name}: "
+        clone_info = "" if self.parent is None or format_specifier != "debug" else f" (clone of {self.parent})"
+        return f"<{name}{clsname} (id={self.tohu_id}){clone_info}>"
+
     def __iter__(self):
         return self
 
