@@ -32,7 +32,7 @@ class FieldSelector(BaseItemTransformation):
 
 
 class LazyItemListNEW:
-    def __init__(self, f_get_item_tuple_stream_iterator, num_items, field_names, tohu_items_class_name):
+    def __init__(self, f_get_item_tuple_stream_iterator, *, num_items, field_names, tohu_items_class_name):
         self.f_get_item_tuple_stream_iterator = f_get_item_tuple_stream_iterator
         self.num_items = num_items
         self.field_names = field_names
