@@ -6,6 +6,7 @@ from .primitive_generators import *
 from .derived_generators import Apply
 from .custom_generator import CustomGenerator
 from .custom_generator_NEW import CustomGeneratorNEW
+from .custom_generator_NEW_3 import CustomGeneratorNEW3
 from .foreach import foreach
 from .logging import logger as tohu_logger
 
