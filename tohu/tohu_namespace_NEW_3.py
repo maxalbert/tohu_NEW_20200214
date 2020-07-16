@@ -17,6 +17,10 @@ class TohuNamespaceNEW3:
         s += f">"
         return s
 
+    @property
+    def field_names(self):
+        return tuple(self.field_generators.keys())
+
     def add_field_generators_from_dict(self, dct):
         for name, g in dct.items():
             if is_tohu_generator(g):
