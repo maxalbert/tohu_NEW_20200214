@@ -1,9 +1,20 @@
+import re
 from abc import ABCMeta
 from functools import wraps
 from .base import TohuBaseGenerator
+from .item_list_lazy_NEW import LazyItemListNEW
 from .tohu_namespace_NEW_3 import TohuNamespaceNEW3
 
 __all__ = ["CustomGeneratorNEW3"]
+
+
+def derive_tohu_items_class_name(custom_gen_class_name):
+    m = re.match("^(.*)Generator$", custom_gen_class_name)
+    if m is None:
+        raise ValueError(
+            f"Name of custom generator class must end with '[...]Generator', got: {custom_gen_class_name!r}"
+        )
+    return m.group(1)
 
 
 def augment_init_method(cls):
@@ -75,6 +86,7 @@ class CustomGeneratorNEW3(TohuBaseGenerator, metaclass=CustomGeneratorMetaNEW3):
         self._tohu_namespace.add_field_generators_from_dict(self.__class__.__dict__)
         self._tohu_namespace.add_field_generators_from_dict(self.__dict__)
         # self._tohu_namespace.set_tohu_items_class(derive_tohu_items_class_name(self.__class__.__name__))
+        self.tohu_items_class_name = derive_tohu_items_class_name(self.__class__.__name__)
         self.__dict__.update(self._tohu_namespace.field_generators)
 
     @classmethod
@@ -93,3 +105,11 @@ class CustomGeneratorNEW3(TohuBaseGenerator, metaclass=CustomGeneratorMetaNEW3):
     def reset(self, seed):
         super().reset(seed)
         self._tohu_namespace.reset(seed)
+
+    def generate(self, num, *, seed=None):
+        return LazyItemListNEW(
+            f_get_item_tuple_stream_iterator=lambda: self.generate_as_stream(num, seed=seed),
+            num_items=num,
+            field_names=self._tohu_namespace.field_names,
+            tohu_items_class_name=self.tohu_items_class_name,
+        )
