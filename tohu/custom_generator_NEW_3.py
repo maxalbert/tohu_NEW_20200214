@@ -74,18 +74,18 @@ class CustomGeneratorMetaNEW3(ABCMeta):
 
 
 class CustomGeneratorNEW3(TohuBaseGenerator, metaclass=CustomGeneratorMetaNEW3):
+    _dependency_mapping_for_tohu_namespace = {}
+
     def __init__(self):
         super().__init__()
 
-        # Create an empty tohu namespace
-        # TODO: once we support loop variable, register these as external dependencies in the tohu_namespace
-        self._tohu_namespace = TohuNamespaceNEW3(dependency_mapping={})
+        # Create an empty tohu namespace, and register any pre-existing dependency mapping (for loop variables)
+        self._tohu_namespace = TohuNamespaceNEW3(dependency_mapping=self._dependency_mapping_for_tohu_namespace)
 
         # Add remaining tohu generators present on the custom generator
         # class/instance to the tohu namespace.
         self._tohu_namespace.add_field_generators_from_dict(self.__class__.__dict__)
         self._tohu_namespace.add_field_generators_from_dict(self.__dict__)
-        # self._tohu_namespace.set_tohu_items_class(derive_tohu_items_class_name(self.__class__.__name__))
         self.tohu_items_class_name = derive_tohu_items_class_name(self.__class__.__name__)
         self.__dict__.update(self._tohu_namespace.field_generators)
 
@@ -98,6 +98,10 @@ class CustomGeneratorNEW3(TohuBaseGenerator, metaclass=CustomGeneratorMetaNEW3):
             # the CustomGeneratorNEW class itself is being created, so
             # that the `CustomGeneratorNEW` symbol doesn't exist yet.
             return False
+
+    @classmethod
+    def set_dependency_mapping_for_next_instance_creation(cls, dep_mapping):
+        cls._dependency_mapping_for_tohu_namespace = dep_mapping
 
     def __next__(self):
         return next(self._tohu_namespace)
