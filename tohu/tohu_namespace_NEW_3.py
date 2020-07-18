@@ -27,9 +27,14 @@ class TohuNamespaceNEW3:
                 self.add_field_generator(g, name=name)
 
     def add_field_generator(self, g, *, name):
-        g_spawned = g.spawn(self.dependency_mapping)
-        self.dependency_mapping[g] = g_spawned
-        self.field_generators[name] = g_spawned
+        if g not in self.dependency_mapping:
+            g_spawned = g.spawn(self.dependency_mapping)
+            self.dependency_mapping[g] = g_spawned
+            self.field_generators[name] = g_spawned
+        else:
+            # This generator has been added before, so we just need
+            # to clone it and register the clone under the new name.
+            self.field_generators[name] = self.dependency_mapping[g].clone()
 
     def reset(self, seed):
         self.seed_generator.reset(seed)
