@@ -1,6 +1,7 @@
 from itertools import groupby
 from typing import Callable
 from .base import TohuBaseGenerator, SeedGenerator
+from .logging import logger
 from .num_iterations_specifier import (
     make_num_iterations_specifier,
     NumIterationsSpecifier,
@@ -26,6 +27,52 @@ class LoopExhaustedNEW(Exception):
     Custom exception to indicate that a loop has iterated
     through combinations of values of its loop variables.
     """
+
+
+class StatefulZip:
+    """
+    This class represents an implementation of `zip` which:
+
+    1) allows multiple iterations over the result (as would `list(zip(...))`)
+    2) ensures that every time we iterate over the result, we also iterate
+       over the individual iterables that were passed as arguments
+
+    Note that this is not very efficient, but we only use it for sequences of
+    loop variable values where performance is not a concern because they
+    typically only contain a few values. However, property (2) is essential
+    in case we need to update the internal state of the loop variables during
+    iteration (e.g. when `iter_values_and_optionally_advance()` is called).
+    """
+
+    def __init__(self, *iterables):
+        self.iterables = iterables
+
+    def __iter__(self):
+        yield from zip(*self.iterables)
+
+
+class LoopVariableNEWIterator:
+    """
+    This class allows iterating over the values of a loop variable
+    while optionally updating the internal state during iteration.
+    """
+
+    def __init__(self, loop_var, *, advance=False):
+        self.loop_var = loop_var
+        self.advance = advance
+
+    def __iter__(self):
+        if self.advance:
+            self.loop_var.rewind_loop_variable()
+
+        for val in self.loop_var.values:
+            logger.debug(f"{self.loop_var}, current value: {self.loop_var.cur_value}")
+            yield (self.loop_var.name, val)
+            if self.advance:
+                try:
+                    self.loop_var.advance()
+                except LoopVariableExhaustedNEW:
+                    return
 
 
 class LoopVariableNEW(TohuBaseGenerator):
@@ -67,6 +114,15 @@ class LoopVariableNEW(TohuBaseGenerator):
 
         for c in self.clones:
             c.rewind_loop_variable()
+
+    def iter_values_and_optionally_advance(self, *, advance=False):
+        # Note that if `advance` is False, we could simply return (or yield from)
+        # self.values here since there are no side-effects. However, if `advance`
+        # is True then we want to make sure the internal state of this loop variable
+        # is updated every time the caller iterates over the returned values. Since
+        # the caller may choose to iterate multiple times, we need to return a special
+        # iterator which deals with updating the internal state during each iteration.
+        return LoopVariableNEWIterator(self, advance=advance)
 
     def spawn(self, gen_mapping=None):
         return self.__class__(self.name, self.values).set_loop_level(self.loop_level)
