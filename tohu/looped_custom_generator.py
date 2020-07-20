@@ -1,6 +1,7 @@
 import inspect
 
 from .custom_generator_NEW_3 import CustomGeneratorNEW3
+from .item_list_lazy_NEW import LazyItemListNEW
 from .logging import logger
 from .looping_NEW_3 import LoopRunnerNEW3
 
@@ -22,7 +23,18 @@ class LoopedCustomGeneratorInstance:
             self.custom_gen_instance, num_items_per_loop_iteration, seed
         )
 
-        # raise NotImplementedError("TODO: implement me!")
+    def generate(self, *, num_items_per_loop_iteration, seed=None):
+        total_num_items = self.loop_runner.get_total_number_of_items(
+            num_items_per_loop_iteration=num_items_per_loop_iteration
+        )
+        return LazyItemListNEW(
+            f_get_item_tuple_stream_iterator=lambda: self.generate_as_stream(
+                num_items_per_loop_iteration=num_items_per_loop_iteration, seed=seed
+            ),
+            num_items=total_num_items,
+            field_names=self.custom_gen_instance._tohu_namespace.field_names,
+            tohu_items_class_name=self.custom_gen_instance.tohu_items_class_name,
+        )
 
 
 class LoopedCustomGeneratorClass:
