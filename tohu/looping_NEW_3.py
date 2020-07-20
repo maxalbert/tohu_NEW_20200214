@@ -247,3 +247,12 @@ class LoopRunnerNEW3:
 
         for val_combs in product_of_iterables(*value_combinations_per_level):
             yield dict(concatenate_tuples(val_combs))
+
+    def get_total_number_of_items(self, *, num_items_per_loop_iteration):
+        num_items_for_each_iteration = [
+            num
+            for _, num in self.iter_loop_var_combinations_with_num_items_per_loop_iteration(
+                num_items_per_loop_iteration=num_items_per_loop_iteration
+            )
+        ]
+        return sum(num_items_for_each_iteration)
