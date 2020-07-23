@@ -135,6 +135,47 @@ class LoopVariableNEW3(TohuBaseGenerator):
 
 
 class LoopRunnerNEW3:
+    """
+    The responsibility of this class is to manage a collection loop variables
+    and to orchestrate some action based on the possible combinations of
+    their values.
+
+    There are two kinds of "iteration" related to a loop runner. First,
+    there is the iteration that consists of cycling through all combinations
+    of loop variable values. We refer to each such combination (and the
+    action(s) that happen for it) as a "loop cycle" (or simply "cycle").
+    Second, there are the "subordinate" or "inner" loop iterations that are
+    coordinated by the loop runner for a fixed combination of loop variable
+    values (these typically happen via some callback function and are outside
+    the direct control of the loop runner but are orchestrated by it). To
+    avoid confusion in the terminology and because the term "iteration" is
+    ambiguous, we refer to these inner iterations as "ticks" (for lack of a
+    better term).
+
+    In summary, a loop runner represents a nested loop of the following
+    structure:
+
+       for x_1 in values_1:                     ---.
+           for x_2 in values_2:                    |      each combination of
+                for x_3 in values_3:               |--->  values of x_1, ..., x_n
+                   ...                             |      represents a loop cycle
+                   for x_n in values_n:         ---.
+                       # This is where the "inner" loop starts. Any
+                       # iterations that are performed by the function
+                       # f_callback are referred to as "ticks".
+                       f_callback(num_iterations, **loop_var_values)
+
+    Note that the above loop structure is slightly simplified because we allow
+    iterating over multiple loop variables simultaneously at the same level. So
+    any of the lines
+
+       for x_i in values_i:
+
+    can be replaced with the following more general one:
+
+       for (x_i, y_i, ...) in zip(values_x_i, values_y_i, ...)
+    """
+
     def __init__(self):
         self.loop_variables_by_level = {}
 
