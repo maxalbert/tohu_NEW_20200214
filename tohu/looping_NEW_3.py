@@ -199,9 +199,9 @@ class LoopRunnerNEW3:
     def loop_variables(self):
         return sum(self.loop_variables_by_level.values(), [])
 
-    @property
-    def max_loop_level(self):
-        return max(self.loop_variables_by_level.keys())
+    # @property
+    # def max_loop_level(self):
+    #     return max(self.loop_variables_by_level.keys())
 
     def rewind_all_loop_variables(self):
         """
@@ -210,7 +210,7 @@ class LoopRunnerNEW3:
         for x in self.loop_variables:
             x.rewind_loop_variable()
 
-    def produce_items_from_tohu_generator(self, g, num_items_per_loop_iteration, seed):
+    def produce_items_from_tohu_generator(self, g, num_items_per_loop_cycle, seed):
         seed_generator = SeedGenerator()
         seed_generator.reset(seed)
 
@@ -219,14 +219,11 @@ class LoopRunnerNEW3:
             yield from g.generate_as_list(num=num_items)
 
         yield from self.iter_loop_var_combinations_with_callback(
-            f_callback, num_items_per_loop_iteration, advance_loop_vars=True
+            f_callback, num_items_per_loop_cycle, advance_loop_vars=True
         )
 
     def iter_loop_var_combinations_with_callback(
-        self,
-        f_callback: Callable,
-        num_items_per_loop_iteration: NumIterationsSpecifier,
-        advance_loop_vars: bool = False,
+        self, f_callback: Callable, num_ticks_per_loop_cycle: NumIterationsSpecifier, advance_loop_vars: bool = False
     ):
         """
         Iterate over all combinations of loop variable values and invoke a callback function for each.
@@ -240,27 +237,27 @@ class LoopRunnerNEW3:
             remaining arguments (which are passed as keyword arguments). Must return an
             iterable.
 
-        num_iterations : NumIterationsSpecifier
-            Specifier for the number of iterations associated with each combination of loop
-            variable values.
+        num_ticks_per_loop_cycle : NumIterationsSpecifier
+            Specifier for the number of "ticks" of the innermost loop for with each combination
+            of loop variable values.
 
         Returns
         -------
         Iterable
             The concatenation of the iterables obtained from all invocations of `f_callback`.
         """
-        for loop_var_values, num_items in self.iter_loop_var_combinations_with_num_items_per_loop_iteration(
-            num_items_per_loop_iteration, advance_loop_vars=advance_loop_vars
+        for loop_var_values, num_items in self.iter_loop_var_combinations_with_num_ticks_per_loop_cycle(
+            num_ticks_per_loop_cycle, advance_loop_vars=advance_loop_vars
         ):
             yield from f_callback(num_items, **loop_var_values)
 
-    def iter_loop_var_combinations_with_num_items_per_loop_iteration(
-        self, num_items_per_loop_iteration: NumIterationsSpecifier, advance_loop_vars: bool = False
+    def iter_loop_var_combinations_with_num_ticks_per_loop_cycle(
+        self, num_ticks_per_loop_cycle: NumIterationsSpecifier, advance_loop_vars: bool = False
     ):
-        num_items_per_loop_iteration = make_num_iterations_specifier(num_items_per_loop_iteration)
+        num_ticks_per_loop_cycle = make_num_iterations_specifier(num_ticks_per_loop_cycle)
         for loop_var_vals in self.iter_loop_var_combinations(advance_loop_vars=advance_loop_vars):
             logger.debug(f"[EEE] {self.loop_variables[0]}, {self.loop_variables[0].cur_value}")
-            yield loop_var_vals, num_items_per_loop_iteration(**loop_var_vals)
+            yield loop_var_vals, num_ticks_per_loop_cycle(**loop_var_vals)
 
     # def iter_loop_var_combinations(self, var_names=None):
     def iter_loop_var_combinations(self, advance_loop_vars=False):
@@ -289,11 +286,11 @@ class LoopRunnerNEW3:
         for val_combs in product_of_iterables(*value_combinations_per_level):
             yield dict(concatenate_tuples(val_combs))
 
-    def get_total_number_of_items(self, *, num_items_per_loop_iteration):
-        num_items_for_each_iteration = [
+    def get_total_number_of_ticks(self, *, num_ticks_per_loop_cycle):
+        num_ticks_for_individual_loop_cycles = [
             num
-            for _, num in self.iter_loop_var_combinations_with_num_items_per_loop_iteration(
-                num_items_per_loop_iteration=num_items_per_loop_iteration
+            for _, num in self.iter_loop_var_combinations_with_num_ticks_per_loop_cycle(
+                num_ticks_per_loop_cycle=num_ticks_per_loop_cycle
             )
         ]
-        return sum(num_items_for_each_iteration)
+        return sum(num_ticks_for_individual_loop_cycles)
