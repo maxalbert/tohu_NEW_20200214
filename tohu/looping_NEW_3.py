@@ -1,4 +1,5 @@
-from typing import Callable
+from collections import defaultdict
+from typing import Callable, List
 from .base import SeedGenerator, TohuBaseGenerator
 from .logging import logger
 from .num_iterations_specifier import make_num_iterations_specifier, NumIterationsSpecifier
@@ -252,12 +253,28 @@ class LoopRunnerNEW3:
             yield from f_callback(num_items, **loop_var_values)
 
     def iter_loop_var_combinations_with_num_ticks_per_loop_cycle(
-        self, num_ticks_per_loop_cycle: NumIterationsSpecifier, advance_loop_vars: bool = False
+        self,
+        num_ticks_per_loop_cycle: NumIterationsSpecifier,
+        advance_loop_vars: bool = False,
+        var_names: List[str] = None,
     ):
         num_ticks_per_loop_cycle = make_num_iterations_specifier(num_ticks_per_loop_cycle)
+        var_names = var_names or [x.name for x in self.loop_variables]
+
+        # Note: here we accumulate the results in-memory before returning the result.
+        # This isn't as memory-efficient as if we used a pure stream processing approach,
+        # but the latter would complicate the code a bit and is likely overkill because we
+        # expect loop variables to have comparatively few values. If this assumption changes
+        # we can reconsider the approach.
+        result = defaultdict(list)
         for loop_var_vals in self.iter_loop_var_combinations(advance_loop_vars=advance_loop_vars):
             logger.debug(f"[EEE] {self.loop_variables[0]}, {self.loop_variables[0].cur_value}")
-            yield loop_var_vals, num_ticks_per_loop_cycle(**loop_var_vals)
+            loop_var_vals_subset = tuple(
+                {name: value for name, value in loop_var_vals.items() if name in var_names}.items()
+            )
+            result[loop_var_vals_subset].append(num_ticks_per_loop_cycle(**loop_var_vals))
+        result = [(dict(key), sum(nums)) for key, nums in result.items()]
+        return result
 
     # def iter_loop_var_combinations(self, var_names=None):
     def iter_loop_var_combinations(self, advance_loop_vars=False):
