@@ -97,7 +97,7 @@ class LazyItemListNEW:
 
     def to_csv(self, filename=None, fields=None, column_names=None, sep=",", header=True, header_prefix=""):
         item_list_to_export, fields, column_names = self._prepare_items_for_export(fields, column_names)
-        export_to_csv_string_or_file(
+        return export_to_csv_string_or_file(
             filename,
             item_list_to_export.iter_item_tuples(),
             column_names=column_names,
