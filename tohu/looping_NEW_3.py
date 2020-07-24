@@ -175,6 +175,11 @@ class LoopRunnerNEW3:
     can be replaced with the following more general one:
 
        for (x_i, y_i, ...) in zip(values_x_i, values_y_i, ...)
+
+    Note that the implementation of the this class assumes that there are
+    only comparatively few loop variable values and combinations to cycle
+    through and that the bulk of the work
+    happens inside f_callback in the innermost part of the loop. If this assumption does not hold execution may not be very effi
     """
 
     def __init__(self):
@@ -261,20 +266,27 @@ class LoopRunnerNEW3:
         num_ticks_per_loop_cycle = make_num_iterations_specifier(num_ticks_per_loop_cycle)
         var_names = var_names or [x.name for x in self.loop_variables]
 
-        # Note: here we accumulate the results in-memory before returning the result.
-        # This isn't as memory-efficient as if we used a pure stream processing approach,
-        # but the latter would complicate the code a bit and is likely overkill because we
-        # expect loop variables to have comparatively few values. If this assumption changes
-        # we can reconsider the approach.
-        result = defaultdict(list)
+        # Iterate through all loop variable combinations and keep accumulating
+        # the number of ticks while the values for the variables given in
+        # `var_names` don't change.
+        cur_vals = None
+        ticks_running_total = 0
         for loop_var_vals in self.iter_loop_var_combinations(advance_loop_vars=advance_loop_vars):
             logger.debug(f"[EEE] {self.loop_variables[0]}, {self.loop_variables[0].cur_value}")
             loop_var_vals_subset = tuple(
                 {name: value for name, value in loop_var_vals.items() if name in var_names}.items()
             )
-            result[loop_var_vals_subset].append(num_ticks_per_loop_cycle(**loop_var_vals))
-        result = [(dict(key), sum(nums)) for key, nums in result.items()]
-        return result
+            cur_num_ticks = num_ticks_per_loop_cycle(**loop_var_vals)
+
+            if loop_var_vals_subset != cur_vals:
+                if cur_vals is not None:
+                    yield dict(cur_vals), ticks_running_total
+                cur_vals = loop_var_vals_subset
+                ticks_running_total = cur_num_ticks
+            else:
+                ticks_running_total += cur_num_ticks
+
+        yield dict(cur_vals), ticks_running_total
 
     # def iter_loop_var_combinations(self, var_names=None):
     def iter_loop_var_combinations(self, advance_loop_vars=False):
