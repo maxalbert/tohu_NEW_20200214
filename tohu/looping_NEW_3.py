@@ -1,47 +1,8 @@
-from collections import defaultdict
+import itertools
 from typing import Callable, List
 from .base import SeedGenerator, TohuBaseGenerator
 from .logging import logger
 from .num_iterations_specifier import make_num_iterations_specifier, NumIterationsSpecifier
-
-
-class StatefulZip:
-    """
-    This class represents an implementation of `zip` which:
-
-    1) allows multiple iterations over the result (as would `list(zip(...))`)
-    2) ensures that every time we iterate over the result, we also iterate
-       over the individual iterables that were passed as arguments
-
-    Note that this is not very efficient, but we only use it for sequences of
-    loop variable values where performance is not a concern because they
-    typically only contain a few values. However, property (2) is essential
-    in case we need to update the internal state of the loop variables during
-    iteration (e.g. when `iter_values_and_optionally_advance()` is called).
-    """
-
-    def __init__(self, *iterables):
-        self.iterables = iterables
-
-    def __iter__(self):
-        yield from zip(*self.iterables)
-
-
-def product_of_iterables(*iterables):
-    """
-    This provides essentially the same functionality as itertools.product,
-    except that it iterates over the input iterables every time in the
-    "nested for loop". This is essential to correctly update the internal
-    state of loop variables.
-    """
-    if iterables == ():
-        yield ()
-    else:
-        cur_seq = iterables[0]
-        remaining_seqs = iterables[1:]
-        for z in cur_seq:
-            for tup in product_of_iterables(*remaining_seqs):
-                yield (z,) + tup
 
 
 def concatenate_tuples(list_of_tuples):
@@ -98,6 +59,10 @@ class LoopVariableNEW3(TohuBaseGenerator):
             f"values={self.values!r}, cur_value={self.cur_value!r} (tohu_id={self.tohu_id})>"
         )
 
+    @property
+    def name_paired_with_values(self):
+        return [(self.name, x) for x in self.values]
+
     def set_loop_level(self, level):
         self.loop_level = level
         return self
@@ -122,14 +87,24 @@ class LoopVariableNEW3(TohuBaseGenerator):
         for c in self.clones:
             c.rewind_loop_variable()
 
-    def iter_values_and_optionally_advance(self, *, advance=False):
-        # Note that if `advance` is False, we could simply return (or yield from)
-        # self.values here since there are no side-effects. However, if `advance`
-        # is True then we want to make sure the internal state of this loop variable
-        # is updated every time the caller iterates over the returned values. Since
-        # the caller may choose to iterate multiple times, we need to return a special
-        # iterator which deals with updating the internal state during each iteration.
-        return LoopVariableNEW3Iterator(self, advance=advance)
+    # def iter_values_and_optionally_advance(self, *, advance=False):
+    #     # Note that if `advance` is False, we could simply return (or yield from)
+    #     # self.values here since there are no side-effects. However, if `advance`
+    #     # is True then we want to make sure the internal state of this loop variable
+    #     # is updated every time the caller iterates over the returned values. Since
+    #     # the caller may choose to iterate multiple times, we need to return a special
+    #     # iterator which deals with updating the internal state during each iteration.
+    #     return LoopVariableNEW3Iterator(self, advance=advance)
+
+    def update_current_value(self, value):
+        if value not in self.values:
+            raise ValueError(f"Invalid value for {self}: {value}")
+
+        self.idx = self.values.index(value)
+        self.cur_value = value
+
+        for c in self.clones:
+            c.update_current_value(value)
 
     def spawn(self, gen_mapping=None):
         return self.__class__(self.name, self.values).set_loop_level(self.loop_level)
@@ -253,15 +228,15 @@ class LoopRunnerNEW3:
             The concatenation of the iterables obtained from all invocations of `f_callback`.
         """
         for loop_var_values, num_items in self.iter_loop_var_combinations_with_num_ticks_per_loop_cycle(
-            num_ticks_per_loop_cycle, advance_loop_vars=advance_loop_vars
+            num_ticks_per_loop_cycle
         ):
+            if advance_loop_vars:
+                self.update_loop_variable_values(loop_var_values)
+
             yield from f_callback(num_items, **loop_var_values)
 
     def iter_loop_var_combinations_with_num_ticks_per_loop_cycle(
-        self,
-        num_ticks_per_loop_cycle: NumIterationsSpecifier,
-        advance_loop_vars: bool = False,
-        var_names: List[str] = None,
+        self, num_ticks_per_loop_cycle: NumIterationsSpecifier, var_names: List[str] = None
     ):
         num_ticks_per_loop_cycle = make_num_iterations_specifier(num_ticks_per_loop_cycle)
         var_names = var_names or [x.name for x in self.loop_variables]
@@ -271,7 +246,7 @@ class LoopRunnerNEW3:
         # `var_names` don't change.
         cur_vals = None
         ticks_running_total = 0
-        for loop_var_vals in self.iter_loop_var_combinations(advance_loop_vars=advance_loop_vars):
+        for loop_var_vals in self.iter_loop_var_combinations():
             logger.debug(f"[EEE] {self.loop_variables[0]}, {self.loop_variables[0].cur_value}")
             loop_var_vals_subset = tuple(
                 {name: value for name, value in loop_var_vals.items() if name in var_names}.items()
@@ -289,7 +264,7 @@ class LoopRunnerNEW3:
         yield dict(cur_vals), ticks_running_total
 
     # def iter_loop_var_combinations(self, var_names=None):
-    def iter_loop_var_combinations(self, advance_loop_vars=False):
+    def iter_loop_var_combinations(self):
         """
         Return all combinations of values of the loop variables present in this
         loop runner (or of the loop variables in `var_names` if specified).
@@ -299,20 +274,12 @@ class LoopRunnerNEW3:
         Iterable
             Iterable containing all possible combinations of loop variable values.
         """
-        if advance_loop_vars:
-            self.rewind_all_loop_variables()
-
         value_combinations_per_level = (
-            StatefulZip(
-                *(
-                    loop_var.iter_values_and_optionally_advance(advance=advance_loop_vars)
-                    for loop_var in self.loop_variables_by_level[level]
-                )
-            )
+            zip(*(loop_var.name_paired_with_values for loop_var in self.loop_variables_by_level[level]))
             for level in reversed(sorted(self.loop_variables_by_level.keys()))
         )
 
-        for val_combs in product_of_iterables(*value_combinations_per_level):
+        for val_combs in itertools.product(*value_combinations_per_level):
             yield dict(concatenate_tuples(val_combs))
 
     def get_total_number_of_ticks(self, *, num_ticks_per_loop_cycle):
