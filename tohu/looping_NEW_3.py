@@ -159,10 +159,13 @@ class LoopRunnerNEW3:
 
     def __init__(self):
         self.loop_variables_by_level = {}
+        self.loop_variables_by_name = {}
 
     def add_loop_variables_at_level(self, loop_vars, *, level):
         assert isinstance(loop_vars, dict)
         self.loop_variables_by_level[level] = [x.set_loop_level(level) for x in loop_vars.values()]
+        # TODO: check none of the new names exist yet!
+        self.loop_variables_by_name.update(loop_vars)
 
     def spawn(self):
         new_loop_runner = LoopRunnerNEW3()
@@ -173,7 +176,8 @@ class LoopRunnerNEW3:
                 x_spawned = x.spawn()
                 spawned_loop_vars.append(x_spawned)
                 dep_mapping[x] = x_spawned
-            new_loop_runner.loop_variables_by_level[level] = spawned_loop_vars
+            # new_loop_runner.loop_variables_by_level[level] = spawned_loop_vars
+            new_loop_runner.add_loop_variables_at_level({x.name: x for x in spawned_loop_vars}, level=level)
         return new_loop_runner, dep_mapping
 
     @property
