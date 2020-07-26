@@ -1,7 +1,6 @@
 import itertools
 from typing import Callable, List
 from .base import SeedGenerator, TohuBaseGenerator
-from .logging import logger
 from .num_iterations_specifier import make_num_iterations_specifier, NumIterationsSpecifier
 
 
@@ -106,7 +105,7 @@ class LoopRunnerNEW3:
                        # This is where the "inner" loop starts. Any
                        # iterations that are performed by the function
                        # f_callback are referred to as "ticks".
-                       f_callback(num_iterations, **loop_var_values)
+                       f_callback(loop_var_values, num_iterations, current_seed)
 
     Note that the above loop structure is slightly simplified because we allow
     iterating over multiple loop variables simultaneously at the same level. So
@@ -119,9 +118,10 @@ class LoopRunnerNEW3:
        for (x_i, y_i, ...) in zip(values_x_i, values_y_i, ...)
 
     Note that the implementation of the this class assumes that there are
-    only comparatively few loop variable values and combinations to cycle
-    through and that the bulk of the work
-    happens inside f_callback in the innermost part of the loop. If this assumption does not hold execution may not be very effi
+    only comparatively few loop variable value combinations to cycle through
+    and that the bulk of the work happens inside f_callback in the innermost
+    part of the loop. If this assumption does not hold execution may not be
+    very efficient.
     """
 
     def __init__(self):
