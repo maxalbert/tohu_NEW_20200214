@@ -163,7 +163,7 @@ class LoopRunnerNEW3:
             x.rewind_loop_variable()
 
     def produce_items_from_tohu_generator(self, g, num_items_per_loop_cycle, seed):
-        def f_callback(num_items, cur_seed, **kwargs):
+        def f_callback(cur_loop_var_values, num_items, cur_seed):
             g.reset(cur_seed)
             yield from g.generate_as_list(num=num_items)
 
@@ -191,9 +191,9 @@ class LoopRunnerNEW3:
         f_callback : Callable
             Callback function which is invoked for each combination of loop variable values.
             This must accept three arguments:
-              - the current number of iterations (passed as a positional argument)
-              - the current seed (passed as a positional argument)
-              - the current loop variable values as the remaining arguments (passed as keyword arguments)
+              - the current loop variable values (passed as a dictionary of name-value pairs)
+              - the current number of iterations
+              - the current seed
             It must return an iterable.
 
         num_ticks_per_loop_cycle : NumIterationsSpecifier
@@ -215,7 +215,7 @@ class LoopRunnerNEW3:
             if advance_loop_vars:
                 self.update_loop_variable_values(loop_var_values)
 
-            yield from f_callback(num_items, cur_seed, **loop_var_values)
+            yield from f_callback(loop_var_values, num_items, cur_seed)
 
     def iter_loop_var_combinations_with_num_ticks_and_seed_for_each_loop_cycle(
         self, num_ticks_per_loop_cycle: NumIterationsSpecifier, initial_seed: int, var_names: List[str] = None
