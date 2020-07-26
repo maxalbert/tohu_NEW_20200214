@@ -235,33 +235,20 @@ class LoopRunnerNEW3:
 
             yield from f_callback(num_items, **loop_var_values)
 
-    def iter_loop_var_combinations_with_num_ticks_per_loop_cycle(
-        self, num_ticks_per_loop_cycle: NumIterationsSpecifier, var_names: List[str] = None
+    def iter_loop_var_combinations_with_num_ticks_and_cycle_seeds(
+        self, num_ticks_per_loop_cycle: NumIterationsSpecifier, initial_seed: int, var_names: List[str] = None
     ):
         num_ticks_per_loop_cycle = make_num_iterations_specifier(num_ticks_per_loop_cycle)
         var_names = var_names or [x.name for x in self.loop_variables]
 
-        # Iterate through all loop variable combinations and keep accumulating
-        # the number of ticks while the values for the variables given in
-        # `var_names` don't change.
-        cur_vals = None
-        ticks_running_total = 0
-        for loop_var_vals in self.iter_loop_var_combinations():
-            logger.debug(f"[EEE] {self.loop_variables[0]}, {self.loop_variables[0].cur_value}")
-            loop_var_vals_subset = tuple(
-                {name: value for name, value in loop_var_vals.items() if name in var_names}.items()
-            )
-            cur_num_ticks = num_ticks_per_loop_cycle(**loop_var_vals)
+        seed_generator = SeedGenerator()
+        seed_generator.reset(initial_seed)
 
-            if loop_var_vals_subset != cur_vals:
-                if cur_vals is not None:
-                    yield dict(cur_vals), ticks_running_total
-                cur_vals = loop_var_vals_subset
-                ticks_running_total = cur_num_ticks
-            else:
-                ticks_running_total += cur_num_ticks
-
-        yield dict(cur_vals), ticks_running_total
+        for cur_vals in self.iter_loop_var_combinations():
+            # TODO: have a think about whether we should construct a more specific seed for
+            #       each loop cycle that incorporates the current loop variable values.
+            cur_seed = next(seed_generator)
+            yield cur_vals, num_ticks_per_loop_cycle(**cur_vals), cur_seed
 
     # def iter_loop_var_combinations(self, var_names=None):
     def iter_loop_var_combinations(self):
@@ -279,8 +266,8 @@ class LoopRunnerNEW3:
             for level in reversed(sorted(self.loop_variables_by_level.keys()))
         )
 
-        for val_combs in itertools.product(*value_combinations_per_level):
-            yield dict(concatenate_tuples(val_combs))
+        for val_comb in itertools.product(*value_combinations_per_level):
+            yield dict(concatenate_tuples(val_comb))
 
     def get_total_number_of_ticks(self, *, num_ticks_per_loop_cycle):
         num_ticks_for_individual_loop_cycles = [
