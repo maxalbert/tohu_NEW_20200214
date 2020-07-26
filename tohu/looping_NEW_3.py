@@ -19,30 +19,6 @@ class LoopVariableExhaustedNEW3(Exception):
     """
 
 
-class LoopVariableNEW3Iterator:
-    """
-    This class allows iterating over the values of a loop variable
-    while optionally updating the internal state during iteration.
-    """
-
-    def __init__(self, loop_var, *, advance=False):
-        self.loop_var = loop_var
-        self.advance = advance
-
-    def __iter__(self):
-        if self.advance:
-            self.loop_var.rewind_loop_variable()
-
-        for val in self.loop_var.values:
-            logger.debug(f"{self.loop_var}, current value: {self.loop_var.cur_value}")
-            yield (self.loop_var.name, val)
-            if self.advance:
-                try:
-                    self.loop_var.advance()
-                except LoopVariableExhaustedNEW3:
-                    return
-
-
 class LoopVariableNEW3(TohuBaseGenerator):
     def __init__(self, name, values):
         super().__init__()
