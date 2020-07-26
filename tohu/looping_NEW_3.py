@@ -63,15 +63,6 @@ class LoopVariableNEW3(TohuBaseGenerator):
         for c in self.clones:
             c.rewind_loop_variable()
 
-    # def iter_values_and_optionally_advance(self, *, advance=False):
-    #     # Note that if `advance` is False, we could simply return (or yield from)
-    #     # self.values here since there are no side-effects. However, if `advance`
-    #     # is True then we want to make sure the internal state of this loop variable
-    #     # is updated every time the caller iterates over the returned values. Since
-    #     # the caller may choose to iterate multiple times, we need to return a special
-    #     # iterator which deals with updating the internal state during each iteration.
-    #     return LoopVariableNEW3Iterator(self, advance=advance)
-
     def update_current_value(self, value):
         if value not in self.values:
             raise ValueError(f"Invalid value for {self}: {value}")
@@ -172,9 +163,6 @@ class LoopRunnerNEW3:
             x.rewind_loop_variable()
 
     def produce_items_from_tohu_generator(self, g, num_items_per_loop_cycle, seed):
-        # seed_generator = SeedGenerator()
-        # seed_generator.reset(seed)
-
         def f_callback(num_items, cur_seed, **kwargs):
             g.reset(cur_seed)
             yield from g.generate_as_list(num=num_items)
