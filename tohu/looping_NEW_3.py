@@ -196,19 +196,28 @@ class LoopRunnerNEW3:
             x.rewind_loop_variable()
 
     def produce_items_from_tohu_generator(self, g, num_items_per_loop_cycle, seed):
-        seed_generator = SeedGenerator()
-        seed_generator.reset(seed)
+        # seed_generator = SeedGenerator()
+        # seed_generator.reset(seed)
 
-        def f_callback(num_items, **kwargs):
-            g.reset(next(seed_generator))
+        def f_callback(num_items, cur_seed, **kwargs):
+            g.reset(cur_seed)
             yield from g.generate_as_list(num=num_items)
 
         yield from self.iter_loop_var_combinations_with_callback(
-            f_callback, num_items_per_loop_cycle, advance_loop_vars=True
+            f_callback, num_items_per_loop_cycle, seed=seed, advance_loop_vars=True
         )
 
+    def update_loop_variable_values(self, loop_var_values):
+        assert isinstance(loop_var_values, dict)
+        for name, value in loop_var_values.items():
+            self.loop_variables_by_name[name].update_current_value(value)
+
     def iter_loop_var_combinations_with_callback(
-        self, f_callback: Callable, num_ticks_per_loop_cycle: NumIterationsSpecifier, advance_loop_vars: bool = False
+        self,
+        f_callback: Callable,
+        num_ticks_per_loop_cycle: NumIterationsSpecifier,
+        seed: int = None,
+        advance_loop_vars: bool = False,
     ):
         """
         Iterate over all combinations of loop variable values and invoke a callback function for each.
@@ -217,10 +226,11 @@ class LoopRunnerNEW3:
         ----------
         f_callback : Callable
             Callback function which is invoked for each combination of loop variable values.
-            This must accept the current number of iterations as the first argument (which
-            is passed as a positional argument) and the current loop variable values as the
-            remaining arguments (which are passed as keyword arguments). Must return an
-            iterable.
+            This must accept three arguments:
+              - the current number of iterations (passed as a positional argument)
+              - the current seed (passed as a positional argument)
+              - the current loop variable values as the remaining arguments (passed as keyword arguments)
+            It must return an iterable.
 
         num_ticks_per_loop_cycle : NumIterationsSpecifier
             Specifier for the number of "ticks" of the innermost loop for with each combination
@@ -231,15 +241,19 @@ class LoopRunnerNEW3:
         Iterable
             The concatenation of the iterables obtained from all invocations of `f_callback`.
         """
-        for loop_var_values, num_items in self.iter_loop_var_combinations_with_num_ticks_per_loop_cycle(
-            num_ticks_per_loop_cycle
+        for (
+            loop_var_values,
+            num_items,
+            cur_seed,
+        ) in self.iter_loop_var_combinations_with_num_ticks_and_seed_for_each_loop_cycle(
+            num_ticks_per_loop_cycle, initial_seed=seed
         ):
             if advance_loop_vars:
                 self.update_loop_variable_values(loop_var_values)
 
-            yield from f_callback(num_items, **loop_var_values)
+            yield from f_callback(num_items, cur_seed, **loop_var_values)
 
-    def iter_loop_var_combinations_with_num_ticks_and_cycle_seeds(
+    def iter_loop_var_combinations_with_num_ticks_and_seed_for_each_loop_cycle(
         self, num_ticks_per_loop_cycle: NumIterationsSpecifier, initial_seed: int, var_names: List[str] = None
     ):
         num_ticks_per_loop_cycle = make_num_iterations_specifier(num_ticks_per_loop_cycle)
