@@ -1,5 +1,5 @@
 import itertools
-from typing import Callable, List
+from typing import Callable, List, Optional
 from .base import SeedGenerator, TohuBaseGenerator
 from .num_iterations_specifier import make_num_iterations_specifier, NumIterationsSpecifier
 
@@ -9,6 +9,15 @@ def concatenate_tuples(list_of_tuples):
     Helper function to combine multiple tuples into a single one.
     """
     return sum(list_of_tuples, ())
+
+
+def unique_values(iterable):
+    seen = set()
+    for vals_dict in iterable:
+        vals_tuple = tuple(vals_dict.items())
+        if vals_tuple not in seen:
+            seen.add(vals_tuple)
+            yield vals_dict
 
 
 class LoopVariableExhaustedNEW3(Exception):
@@ -232,8 +241,7 @@ class LoopRunnerNEW3:
             cur_seed = next(seed_generator)
             yield cur_vals, num_ticks_per_loop_cycle(**cur_vals), cur_seed
 
-    # def iter_loop_var_combinations(self, var_names=None):
-    def iter_loop_var_combinations(self):
+    def iter_loop_var_combinations(self, var_names: Optional[List[str]] = None):
         """
         Return all combinations of values of the loop variables present in this
         loop runner (or of the loop variables in `var_names` if specified).
@@ -243,13 +251,24 @@ class LoopRunnerNEW3:
         Iterable
             Iterable containing all possible combinations of loop variable values.
         """
+
         value_combinations_per_level = (
             zip(*(loop_var.name_paired_with_values for loop_var in self.loop_variables_by_level[level]))
             for level in reversed(sorted(self.loop_variables_by_level.keys()))
         )
 
-        for val_comb in itertools.product(*value_combinations_per_level):
-            yield dict(concatenate_tuples(val_comb))
+        def get_val_comb_for_subset(vals):
+            vals = dict(concatenate_tuples(vals))
+            if var_names is None:
+                vals_subset = vals  # no need to subset
+            else:
+                vals_subset = {name: vals[name] for name in var_names}
+            return vals_subset
+
+        yield from (unique_values(get_val_comb_for_subset(x) for x in itertools.product(*value_combinations_per_level)))
+        #
+        # for val_comb in itertools.product(*value_combinations_per_level):
+        #     yield dict(concatenate_tuples(val_comb))
 
     def get_total_number_of_ticks(self, *, num_ticks_per_loop_cycle):
         num_ticks_for_individual_loop_cycles = [
