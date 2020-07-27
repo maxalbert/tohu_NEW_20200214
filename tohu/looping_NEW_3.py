@@ -254,8 +254,8 @@ class LoopRunnerNEW3:
     def get_total_number_of_ticks(self, *, num_ticks_per_loop_cycle):
         num_ticks_for_individual_loop_cycles = [
             num
-            for _, num in self.iter_loop_var_combinations_with_num_ticks_per_loop_cycle(
-                num_ticks_per_loop_cycle=num_ticks_per_loop_cycle
+            for _, num, _ in self.iter_loop_var_combinations_with_num_ticks_and_seed_for_each_loop_cycle(
+                num_ticks_per_loop_cycle=num_ticks_per_loop_cycle, initial_seed=None
             )
         ]
         return sum(num_ticks_for_individual_loop_cycles)
