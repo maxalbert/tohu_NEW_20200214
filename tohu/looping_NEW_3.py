@@ -257,18 +257,19 @@ class LoopRunnerNEW3:
             for level in reversed(sorted(self.loop_variables_by_level.keys()))
         )
 
-        def get_val_comb_for_subset(vals):
-            vals = dict(concatenate_tuples(vals))
-            if var_names is None:
-                vals_subset = vals  # no need to subset
-            else:
-                vals_subset = {name: vals[name] for name in var_names}
-            return vals_subset
+        if var_names is None:
+            for val_comb in itertools.product(*value_combinations_per_level):
+                yield dict(concatenate_tuples(val_comb))
+        else:
 
-        yield from (unique_values(get_val_comb_for_subset(x) for x in itertools.product(*value_combinations_per_level)))
-        #
-        # for val_comb in itertools.product(*value_combinations_per_level):
-        #     yield dict(concatenate_tuples(val_comb))
+            def get_val_comb_for_subset(vals):
+                vals = dict(concatenate_tuples(vals))
+                vals_subset = {name: vals[name] for name in var_names}
+                return vals_subset
+
+            yield from (
+                unique_values(get_val_comb_for_subset(x) for x in itertools.product(*value_combinations_per_level))
+            )
 
     def get_total_number_of_ticks(self, *, num_ticks_per_loop_cycle):
         num_ticks_for_individual_loop_cycles = [
