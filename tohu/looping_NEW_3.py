@@ -1,6 +1,7 @@
 import itertools
 from typing import Callable, List, Optional
 from .base import SeedGenerator, TohuBaseGenerator
+from .logging import logger
 from .num_iterations_specifier import make_num_iterations_specifier, NumIterationsSpecifier
 
 
@@ -18,6 +19,20 @@ def unique_values(iterable):
         if vals_tuple not in seen:
             seen.add(vals_tuple)
             yield vals_dict
+
+
+def make_filtered_callback(g, loop_var_vals_to_filter):
+    def f_callback_filtered(cur_loop_var_values, num_items, cur_seed):
+        vals_subset = {name: val for (name, val) in cur_loop_var_values.items() if name in loop_var_vals_to_filter}
+        if tuple(vals_subset.items()) == tuple(loop_var_vals_to_filter.items()):
+            logger.debug(f"Running callback. Returning {num_items} items")
+            g.reset(cur_seed)
+            yield from g.generate_as_stream(num=num_items)
+        else:
+            logger.debug(f"Skipping values for: {vals_subset}")
+            return []
+
+    return f_callback_filtered
 
 
 class LoopVariableExhaustedNEW3(Exception):
@@ -179,6 +194,15 @@ class LoopRunnerNEW3:
         yield from self.iter_loop_var_combinations_with_callback(
             f_callback, num_items_per_loop_cycle, seed=seed, advance_loop_vars=True
         )
+
+    def produce_items_from_tohu_generator_for_loop_var_subset(
+        self, g, num_items_per_iteration, loop_var_subset, seed=None
+    ):
+        for cur_vals in self.iter_loop_var_combinations(var_names=loop_var_subset):
+            f_callback_filtered = make_filtered_callback(g, cur_vals)
+            yield cur_vals, self.iter_loop_var_combinations_with_callback(
+                f_callback_filtered, num_items_per_iteration, seed=seed, advance_loop_vars=True
+            )
 
     def update_loop_variable_values(self, loop_var_values):
         assert isinstance(loop_var_values, dict)
