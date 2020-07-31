@@ -81,25 +81,25 @@ class LazyItemListNEW:
         assert isinstance(column_names, (list, tuple)) or column_names is None
 
         if fields is None:
-            item_list_to_export = self
+            item_tuples_to_export = self.iter_item_tuples()
             fields = self.field_names
         else:
-            item_list_to_export = self.select_fields(fields)
+            item_tuples_to_export = self.select_fields(fields).iter_item_tuples()
 
         column_names = column_names or fields or self.field_names
         assert len(column_names) == len(fields)
 
-        return item_list_to_export, fields, column_names
+        return item_tuples_to_export, fields, column_names
 
     def to_df(self, fields=None, column_names=None):
-        item_list_to_export, fields, column_names = self._prepare_items_for_export(fields, column_names)
-        return export_to_df(item_list_to_export.iter_item_tuples(), column_names=column_names)
+        item_tuples_to_export, fields, column_names = self._prepare_items_for_export(fields, column_names)
+        return export_to_df(item_tuples_to_export, column_names=column_names)
 
     def to_csv(self, filename=None, fields=None, column_names=None, sep=",", header=True, header_prefix=""):
-        item_list_to_export, fields, column_names = self._prepare_items_for_export(fields, column_names)
+        item_tuples_to_export, fields, column_names = self._prepare_items_for_export(fields, column_names)
         return export_to_csv_string_or_file(
             filename,
-            item_list_to_export.iter_item_tuples(),
+            item_tuples_to_export,
             column_names=column_names,
             sep=sep,
             header=header,
