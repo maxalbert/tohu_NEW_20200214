@@ -1,7 +1,9 @@
+import os
 import pandas as pd
 
 from io import StringIO
 from .field_selector import FieldSelectorNEW
+from .logging import logger
 
 __all__ = ["export_to_df"]
 
@@ -72,6 +74,12 @@ def export_to_csv_string(input_tuples, *, column_names, sep=",", header=True, he
 
 
 def export_to_csv_file(filename, input_tuples, *, column_names, sep=",", header=True, header_prefix=""):
+    parent_dir = os.path.dirname(filename)
+    if not os.path.exists(parent_dir):
+        logger.debug(f"Creating parent directory for output file: {parent_dir}")
+        os.makedirs(parent_dir)
+
+    logger.debug(f"Exporting to file: {filename!r}")
     with open(filename, "w") as f:
         export_to_csv_stream(f, input_tuples, column_names, sep, header, header_prefix)
 
