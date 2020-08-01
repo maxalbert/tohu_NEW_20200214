@@ -79,7 +79,7 @@ def export_to_csv_file(filename, input_tuples, *, column_names, sep=",", header=
         logger.debug(f"Creating parent directory for output file: {parent_dir}")
         os.makedirs(parent_dir)
 
-    logger.debug(f"Exporting to file: {filename!r}")
+    logger.debug(f"Exporting CSV output to file: {filename!r}")
     with open(filename, "w") as f:
         export_to_csv_stream(f, input_tuples, column_names, sep, header, header_prefix)
 
