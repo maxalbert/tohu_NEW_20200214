@@ -1,8 +1,8 @@
 import inspect
 
 from .custom_generator_NEW_3 import CustomGeneratorNEW3
-from .item_list_lazy_NEW import LazyItemListNEW
 from .logging import logger
+from .looped_item_list import LoopedItemList
 from .looping_NEW_3 import LoopRunnerNEW3
 
 
@@ -23,17 +23,27 @@ class LoopedCustomGeneratorInstance:
             self.custom_gen_instance, num_items_per_loop_iteration, seed
         )
 
-    def generate(self, *, num_items_per_loop_iteration, seed=None):
-        total_num_items = self.loop_runner.get_total_number_of_ticks(
-            num_ticks_per_loop_cycle=num_items_per_loop_iteration
-        )
-        return LazyItemListNEW(
-            f_get_item_tuple_iterator=lambda: self.generate_as_stream(
-                num_items_per_loop_iteration=num_items_per_loop_iteration, seed=seed
-            ),
-            num_items=total_num_items,
+    def generate(self, num_items_per_loop_cycle, seed=None):
+        def f_get_item_tuple_iterators(loop_vars_to_group_by):
+            if loop_vars_to_group_by is None:
+                return [
+                    (None, self.generate_as_stream(num_items_per_loop_iteration=num_items_per_loop_cycle, seed=seed))
+                ]
+            else:
+                return list(
+                    self.loop_runner.produce_items_from_tohu_generator_for_loop_var_subset(
+                        self.custom_gen_instance, num_items_per_loop_cycle, loop_vars_to_group_by, seed=seed
+                    )
+                )
+
+        return LoopedItemList(
+            f_get_item_tuple_iterators,
             field_names=self.custom_gen_instance._tohu_namespace.field_names,
-            tohu_items_class_name=self.custom_gen_instance.tohu_items_class_name,
+            #         self.loop_runner,
+            #         self.custom_gen_instance,
+            #         num_items_per_loop_cycle=num_items_per_loop_cycle,
+            #         field_names=field_names,
+            #         tohu_items_class_name=tohu_items_class_name
         )
 
 
