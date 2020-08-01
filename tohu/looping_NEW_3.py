@@ -251,10 +251,9 @@ class LoopRunnerNEW3:
             yield from f_callback(loop_var_values, num_items, cur_seed)
 
     def iter_loop_var_combinations_with_num_ticks_and_seed_for_each_loop_cycle(
-        self, num_ticks_per_loop_cycle: NumIterationsSpecifier, initial_seed: Optional[int], var_names: List[str] = None
+        self, num_ticks_per_loop_cycle: NumIterationsSpecifier, initial_seed: Optional[int]
     ):
         num_ticks_per_loop_cycle = make_num_iterations_specifier(num_ticks_per_loop_cycle)
-        var_names = var_names or [x.name for x in self.loop_variables]
 
         seed_generator = SeedGenerator()
         seed_generator.reset(initial_seed)
