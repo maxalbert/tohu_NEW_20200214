@@ -32,8 +32,8 @@ class FieldSelector(BaseItemTransformation):
 
 
 class LazyItemListNEW:
-    def __init__(self, f_get_item_tuple_stream_iterator, *, num_items, field_names, tohu_items_class_name):
-        self.f_get_item_tuple_stream_iterator = f_get_item_tuple_stream_iterator
+    def __init__(self, f_get_item_tuple_iterator, *, num_items, field_names, tohu_items_class_name):
+        self.f_get_item_tuple_iterator = f_get_item_tuple_iterator
         self.num_items = num_items
         self.field_names = field_names
         self.tohu_items_class_name = tohu_items_class_name
@@ -51,11 +51,11 @@ class LazyItemListNEW:
         if self.is_cached:
             yield from self.cached_items_sequence
         else:
-            yield from self.f_get_item_tuple_stream_iterator()
+            yield from self.f_get_item_tuple_iterator()
 
     def compute(self):
         self.is_cached = True
-        self.cached_items_sequence = list(self.f_get_item_tuple_stream_iterator())
+        self.cached_items_sequence = list(self.f_get_item_tuple_iterator())
         return self
 
     def apply_transformation(self, transformation):

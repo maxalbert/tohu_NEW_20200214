@@ -28,7 +28,7 @@ class LoopedCustomGeneratorInstance:
             num_ticks_per_loop_cycle=num_items_per_loop_iteration
         )
         return LazyItemListNEW(
-            f_get_item_tuple_stream_iterator=lambda: self.generate_as_stream(
+            f_get_item_tuple_iterator=lambda: self.generate_as_stream(
                 num_items_per_loop_iteration=num_items_per_loop_iteration, seed=seed
             ),
             num_items=total_num_items,

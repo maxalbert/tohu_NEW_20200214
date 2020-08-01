@@ -112,7 +112,7 @@ class CustomGeneratorNEW3(TohuBaseGenerator, metaclass=CustomGeneratorMetaNEW3):
 
     def generate(self, num, *, seed=None):
         return LazyItemListNEW(
-            f_get_item_tuple_stream_iterator=lambda: self.generate_as_stream(num, seed=seed),
+            f_get_item_tuple_iterator=lambda: self.generate_as_stream(num, seed=seed),
             num_items=num,
             field_names=self._tohu_namespace.field_names,
             tohu_items_class_name=self.tohu_items_class_name,
