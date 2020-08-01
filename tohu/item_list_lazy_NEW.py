@@ -1,34 +1,6 @@
-from abc import ABCMeta, abstractmethod
-from operator import itemgetter
 from .export import export_to_df, export_to_csv_string_or_file
+from .field_selector import FieldSelectorNEW
 from .tohu_items_class import make_tohu_items_class
-
-
-class BaseItemTransformation(metaclass=ABCMeta):
-    def __init__(self, func, new_field_names):
-        self.func = func
-        # self.orig_field_names = orig_field_names
-        self.new_field_names = new_field_names
-
-    def __call__(self, x):
-        return self.func(x)
-
-    @abstractmethod
-    def can_be_applied(self, item_list):
-        # assert isinstance(item_list, BaseItemList)
-        raise NotImplementedError()
-
-
-class FieldSelectorNEW(BaseItemTransformation):
-    def __init__(self, field_indices, new_field_names):
-        assert len(field_indices) == len(new_field_names)
-
-        self.field_indices = field_indices
-        func = itemgetter(*field_indices)
-        super().__init__(func, new_field_names)
-
-    def can_be_applied(self, item_list):
-        return min(self.field_indices) >= 0 and max(self.field_indices) < len(item_list.field_names)
 
 
 class LazyItemListNEW:
