@@ -19,7 +19,7 @@ class BaseItemTransformation(metaclass=ABCMeta):
         raise NotImplementedError()
 
 
-class FieldSelector(BaseItemTransformation):
+class FieldSelectorNEW(BaseItemTransformation):
     def __init__(self, field_indices, new_field_names):
         assert len(field_indices) == len(new_field_names)
 
@@ -73,7 +73,7 @@ class LazyItemListNEW:
         assert isinstance(fields, (list, tuple))
         field_indices = [self.field_names.index(x) for x in fields]
         new_field_names = [self.field_names[idx] for idx in field_indices]
-        fs = FieldSelector(field_indices, new_field_names=new_field_names)
+        fs = FieldSelectorNEW(field_indices, new_field_names=new_field_names)
         return self.apply_transformation(fs)
 
     def _prepare_items_for_export(self, fields, column_names):
