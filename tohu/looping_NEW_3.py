@@ -25,11 +25,9 @@ def make_filtered_callback(g, loop_var_vals_to_filter):
     def f_callback_filtered(cur_loop_var_values, num_items, cur_seed):
         vals_subset = {name: val for (name, val) in cur_loop_var_values.items() if name in loop_var_vals_to_filter}
         if tuple(vals_subset.items()) == tuple(loop_var_vals_to_filter.items()):
-            logger.debug(f"Running callback. Returning {num_items} items")
             g.reset(cur_seed)
             yield from g.generate_as_stream(num=num_items)
         else:
-            logger.debug(f"Skipping values for: {vals_subset}")
             return []
 
     return f_callback_filtered
