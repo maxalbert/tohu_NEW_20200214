@@ -77,28 +77,3 @@ class LazyItemListNEW:
             header=header,
             header_prefix=header_prefix,
         )
-
-
-def select_fields(item_tuples, input_field_names, fields_to_select):
-    assert isinstance(fields_to_select, (list, tuple))
-    field_indices = [input_field_names.index(x) for x in fields_to_select]
-    new_field_names = [input_field_names[idx] for idx in field_indices]
-    fs = FieldSelector(field_indices, new_field_names=new_field_names)
-
-    return (fs(x) for x in item_tuples)
-
-
-def prepare_item_tuples_for_export(item_tuples, input_field_names, fields_to_select, column_names):
-    assert isinstance(fields_to_select, (list, tuple)) or fields_to_select is None
-    assert isinstance(column_names, (list, tuple)) or column_names is None
-
-    if fields_to_select is None:
-        item_tuples_to_export = item_tuples
-        fields_to_select = input_field_names
-    else:
-        item_tuples_to_export = select_fields(item_tuples, input_field_names, fields_to_select)
-
-    column_names = column_names or fields_to_select or input_field_names
-    assert len(column_names) == len(fields_to_select)
-
-    return item_tuples_to_export, fields_to_select, column_names
