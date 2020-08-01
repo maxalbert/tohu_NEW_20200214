@@ -1,6 +1,5 @@
 from abc import ABCMeta
 from itertools import groupby
-from string import Formatter
 from typing import Callable, Dict, Optional, Sequence, Union
 
 from .base import TohuBaseGenerator, SeedGenerator
