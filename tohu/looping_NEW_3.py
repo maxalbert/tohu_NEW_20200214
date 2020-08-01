@@ -285,9 +285,20 @@ class LoopRunnerNEW3:
                 yield dict(concatenate_tuples(val_comb))
         else:
 
+            # Here we ensure that `var_names` is ordered in the same way as the
+            # loop variables in this loop runner, to ensure that `vals_subset`
+            # is extracted correctly below.
+            #
+            # TODO: have a think whether the order of names in `var_names`
+            #       should influence th order of the returned result or not.
+            loop_var_names_ordered_by_level = sum(
+                [[x.name for x in vars] for vars in reversed(self.loop_variables_by_level.values())], []
+            )
+            var_names_ordered = [name for name in loop_var_names_ordered_by_level if name in var_names]
+
             def get_val_comb_for_subset(vals):
                 vals = dict(concatenate_tuples(vals))
-                vals_subset = {name: vals[name] for name in var_names}
+                vals_subset = {name: vals[name] for name in var_names_ordered}
                 return vals_subset
 
             yield from (
