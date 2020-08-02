@@ -54,9 +54,9 @@ class NumIterationsSpecifierFromSequence(NumIterationsSpecifier):
 def make_num_iterations_specifier(num_iterations):
     if isinstance(num_iterations, Callable):
         return NumIterationsSpecifierFromCallable(num_iterations)
-    elif isinstance(num_iterations, int):
+    elif isinstance(num_iterations, int) and not isinstance(num_iterations, bool):
         return NumIterationsSpecifierFromInt(num_iterations)
-    elif isinstance(num_iterations, Sequence):
+    elif isinstance(num_iterations, Sequence) and not isinstance(num_iterations, str):
         return NumIterationsSpecifierFromSequence(num_iterations)
     else:
         raise TypeError("Invalid type for argument `num_iterations`. Must be one of: integer, sequence, callable")
