@@ -1,3 +1,4 @@
+from typing import List, Optional
 from .export import export_to_df, export_to_csv_string_or_file
 from .field_selector import FieldSelectorNEW
 from .tohu_items_class import make_tohu_items_class
@@ -63,9 +64,20 @@ class LazyItemListNEW:
 
         return item_tuples_to_export, fields, column_names
 
-    def to_df(self, fields=None, column_names=None):
+    def to_df(self, fields: Optional[List[str]] = None, column_names: Optional[List[str]] = None):
         item_tuples_to_export, fields, column_names = self._prepare_items_for_export(fields, column_names)
         return export_to_df(item_tuples_to_export, column_names=column_names)
+
+    def head(self, n: int = 5):
+        """
+        Return the first `n` rows after exporting items to a pandas dataframe.
+
+        Parameters
+        ----------
+        n : int, default 5
+            Number of rows to return.
+        """
+        return self.to_df().head(n)
 
     def to_csv(self, filename=None, fields=None, column_names=None, sep=",", header=True, header_prefix=""):
         item_tuples_to_export, fields, column_names = self._prepare_items_for_export(fields, column_names)
