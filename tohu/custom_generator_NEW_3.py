@@ -109,6 +109,7 @@ class CustomGeneratorNEW3(TohuBaseGenerator, metaclass=CustomGeneratorMetaNEW3):
     def reset(self, seed):
         super().reset(seed)
         self._tohu_namespace.reset(seed)
+        return self
 
     def generate(self, num, *, seed=None):
         return LazyItemListNEW(
