@@ -3,7 +3,7 @@ import inspect
 from .custom_generator_NEW_3 import CustomGeneratorNEW3
 from .logging import logger
 from .looped_item_list import LoopedItemList
-from .looping_NEW_3 import LoopRunnerNEW3
+from .loop_runner_NEW_3 import LoopRunnerNEW3
 
 
 class LoopedCustomGeneratorInstance:
