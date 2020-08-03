@@ -135,12 +135,12 @@ class LoopRunnerNEW3:
         )
 
     def produce_items_from_tohu_generator_for_loop_var_subset(
-        self, g, num_items_per_iteration, loop_var_subset, seed=None
+        self, g, num_items_per_loop_cycle, loop_var_subset, seed=None
     ):
         for cur_vals in self.iter_loop_var_combinations(var_names=loop_var_subset):
             f_callback_filtered = make_filtered_callback(g, cur_vals)
             yield cur_vals, self.iter_loop_var_combinations_with_callback(
-                f_callback_filtered, num_items_per_iteration, seed=seed, advance_loop_vars=True
+                f_callback_filtered, num_items_per_loop_cycle, seed=seed, advance_loop_vars=True
             )
 
     def update_loop_variable_values(self, loop_var_values):
