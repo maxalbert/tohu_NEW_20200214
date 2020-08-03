@@ -90,6 +90,13 @@ class LoopRunnerNEW3:
         # TODO: check none of the new names exist yet!
         self.loop_variables_by_name.update(loop_vars)
 
+    def print_current_loop_var_values(self):
+        """
+        Helper function which displays the current values of the loop variables in this loop runner
+        (useful for debugging).
+        """
+        print({x.name: x.cur_value for x in self.loop_variables})
+
     def spawn(self):
         new_loop_runner = LoopRunnerNEW3()
         dep_mapping = {}
