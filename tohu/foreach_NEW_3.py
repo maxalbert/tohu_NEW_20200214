@@ -1,7 +1,7 @@
 import inspect
 from .logging import logger
 from .looped_custom_generator import LoopedCustomGeneratorClass
-from .looping_NEW_3 import LoopVariableNEW3
+from tohu.loop_variable_NEW_3 import LoopVariableNEW3
 
 
 def declare_loop_variables_in_stack_frame(var_defs, stack_frame):
