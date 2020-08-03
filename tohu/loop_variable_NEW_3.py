@@ -35,6 +35,8 @@ class LoopVariableNEW3(TohuBaseGenerator):
     def __next__(self):
         return self.cur_value
 
+    # TODO: check whether we still need the `advance()` method or if it can
+    #       be deleted because it is superseded by `update_current_value()`.
     def advance(self):
         self.idx += 1
         try:
