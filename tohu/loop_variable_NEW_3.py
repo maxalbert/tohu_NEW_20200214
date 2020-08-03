@@ -54,7 +54,7 @@ class LoopVariableNEW3(TohuBaseGenerator):
 
     def update_current_value(self, value):
         if value not in self.values:
-            raise ValueError(f"Invalid value for {self}: {value}")
+            raise ValueError(f"Invalid value for loop variable {self.name!r}: {value}")
 
         self.idx = self.values.index(value)
         self.cur_value = value
