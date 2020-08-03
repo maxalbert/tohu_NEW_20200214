@@ -1,6 +1,6 @@
 import itertools
 from typing import Callable, List, Optional
-from .base import SeedGenerator
+from tohu.seed_generator import SeedGenerator
 from .num_iterations_specifier import make_num_iterations_specifier, NumIterationsSpecifier
 
 

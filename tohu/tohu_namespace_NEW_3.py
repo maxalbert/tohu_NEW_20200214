@@ -1,5 +1,5 @@
-from .base import SeedGenerator, is_tohu_generator
-
+from .base import is_tohu_generator
+from tohu.seed_generator import SeedGenerator
 
 __all__ = ["TohuNamespaceNEW3"]
 
