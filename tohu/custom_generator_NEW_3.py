@@ -86,6 +86,9 @@ class CustomGeneratorNEW3(TohuBaseGenerator, metaclass=CustomGeneratorMetaNEW3):
         # class/instance to the tohu namespace.
         self._tohu_namespace.add_field_generators_from_dict(self.__class__.__dict__)
         self._tohu_namespace.add_field_generators_from_dict(self.__dict__)
+        self._tohu_namespace.set_tohu_items_class(
+            derive_tohu_items_class_name(self.__class__.__name__)
+        )  # TODO: only added temporarily
         self.tohu_items_class_name = derive_tohu_items_class_name(self.__class__.__name__)
         self.__dict__.update(self._tohu_namespace.field_generators)
 

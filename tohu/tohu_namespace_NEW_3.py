@@ -1,5 +1,6 @@
-from .base import is_tohu_generator
+from tohu.base import is_tohu_generator
 from tohu.seed_generator import SeedGenerator
+from tohu.tohu_items_class import make_tohu_items_class
 
 __all__ = ["TohuNamespaceNEW3"]
 
@@ -36,6 +37,11 @@ class TohuNamespaceNEW3:
             # to clone it and register the clone under the new name.
             self.field_generators[name] = self.dependency_mapping[g].clone()
 
+    # TODO: only added temporarily
+    def set_tohu_items_class(self, name):
+        field_names = list(self.field_generators.keys())
+        self.tohu_items_cls = make_tohu_items_class(name, field_names=field_names)
+
     def reset(self, seed):
         self.seed_generator.reset(seed)
 
@@ -43,4 +49,5 @@ class TohuNamespaceNEW3:
             g.reset(next(self.seed_generator))
 
     def __next__(self):
-        return tuple(next(g) for g in self.field_generators.values())
+        # return tuple(next(g) for g in self.field_generators.values())
+        return self.tohu_items_cls(*(next(g) for g in self.field_generators.values()))
