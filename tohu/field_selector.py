@@ -9,10 +9,10 @@ from .tohu_items_class import make_tohu_items_class
 __all__ = ["FieldSelector"]  # , "InvalidFieldError"]
 
 
-# class InvalidFieldError(Exception):
-#     """
-#     Custom exception to indicate that the user is trying to extract a non-existing field.
-#     """
+class InvalidFieldError(Exception):
+    """
+    Custom exception to indicate that the user is trying to extract a non-existing field.
+    """
 
 
 class FieldSelector:
@@ -73,19 +73,44 @@ class FieldSelectorNEW(BaseItemTransformation):
         return min(self.field_indices) >= 0 and max(self.field_indices) < len(item_list.field_names)
 
 
+def get_first_component(fully_qualified_name):
+    return fully_qualified_name.split(".")[0]
+
+
 class FieldSelectorNEW3b(BaseItemTransformation):
     def __init__(self, input_tohu_item_class, fields_to_extract, new_field_names):
-        assert fields_to_extract is None or new_field_names is None or len(fields_to_extract) == len(new_field_names)
+        assert (
+            (fields_to_extract is None) or (new_field_names is None) or (len(fields_to_extract) == len(new_field_names))
+        )
 
         if fields_to_extract is None:
             fields_to_extract = input_tohu_item_class.field_names
         elif isinstance(fields_to_extract, Sequence) and not isinstance(fields_to_extract, str):
             pass
         else:  # pragma: no cover
-            raise TypeError(f"Invalid value for argument 'fields_to_extract'': {fields_to_extract}")
+            raise TypeError(f"Invalid value for argument 'fields_to_extract': {fields_to_extract}")
 
         if new_field_names is None:
             new_field_names = fields_to_extract
+        elif isinstance(new_field_names, Sequence) and not isinstance(new_field_names, str):
+            pass
+        else:  # pragma: no cover
+            raise TypeError(f"Invalid value for argument 'new_field_names': {new_field_names}")
+
+        # Note: for nested fields we can currently only check the first
+        # component because we have no information on the data types so if a
+        # sub-field name is invalid this will only trigger an error at
+        # runtime. Would be nice to keep track of data types too and catch
+        # this sooner.
+        invalid_fields = [
+            get_first_component(name)
+            for name in fields_to_extract
+            if get_first_component(name) not in input_tohu_item_class.field_names
+        ]
+        if invalid_fields != []:
+            raise InvalidFieldError(
+                f"Invalid fields: {invalid_fields}. Fields must be a subset of: {input_tohu_item_class.field_names}"
+            )
 
         output_tohu_item_class = make_tohu_items_class(input_tohu_item_class.__name__, new_field_names)
 
