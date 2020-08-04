@@ -27,8 +27,8 @@ class LazyItemListNEW:
             yield from (self.tohu_items_class(*x.as_tuple()) for x in self.f_get_item_tuple_iterator())
 
     def compute(self):
-        self.is_cached = True
         self.cached_items_sequence = list(self.iter_item_tuples())
+        self.is_cached = True
         return self
 
     def apply_transformation(self, func_transform_stream):
