@@ -4,6 +4,7 @@ from operator import attrgetter, itemgetter
 import typing
 
 # from .logging import logger
+from .tohu_items_class import make_tohu_items_class
 
 __all__ = ["FieldSelector"]  # , "InvalidFieldError"]
 
@@ -46,13 +47,18 @@ class BaseItemTransformation(metaclass=ABCMeta):
         # self.orig_field_names = orig_field_names
         self.new_field_names = new_field_names
 
-    def __call__(self, x):
-        return self.func(x)
+    def __call__(self, item_stream):
+        yield from (self.transform_single_item(x) for x in item_stream)
 
     @abstractmethod
-    def can_be_applied(self, item_list):
-        # assert isinstance(item_list, BaseItemList)
+    def transform_single_item(self, item):
         raise NotImplementedError()
+
+    #
+    # @abstractmethod
+    # def can_be_applied(self, item_list):
+    #     # assert isinstance(item_list, BaseItemList)
+    #     raise NotImplementedError()
 
 
 class FieldSelectorNEW(BaseItemTransformation):
@@ -65,3 +71,14 @@ class FieldSelectorNEW(BaseItemTransformation):
 
     def can_be_applied(self, item_list):
         return min(self.field_indices) >= 0 and max(self.field_indices) < len(item_list.field_names)
+
+
+class FieldSelectorNEW3b(BaseItemTransformation):
+    def __init__(self, tohu_item_class_name, new_field_names):
+        new_tohu_item_class = make_tohu_items_class(tohu_item_class_name, new_field_names)
+        select_given_fields = attrgetter(*[name for name in new_field_names])
+        func = lambda item: new_tohu_item_class(*select_given_fields(item))
+        super().__init__(func, new_field_names)
+
+    def transform_single_item(self, x):
+        return self.func(x)
