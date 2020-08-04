@@ -65,7 +65,8 @@ def export_to_csv_stream(stream, input_tuples, column_names, sep=",", header=Tru
 
     stream.write(header)
     for row_tuple in input_tuples:
-        print(sep.join(str(x) for x in row_tuple), file=stream)
+        # print(sep.join(str(x) for x in row_tuple), file=stream)
+        print(row_tuple.to_csv(), file=stream)
 
 
 def export_to_csv_string(input_tuples, *, column_names, sep=",", header=True, header_prefix=""):
