@@ -2,7 +2,7 @@ import os
 import pandas as pd
 
 from io import StringIO
-from .field_selector import FieldSelectorNEW
+from .field_selector import FieldSelectorNEW3b
 from .logging import logger
 
 __all__ = ["export_to_df"]
@@ -13,6 +13,7 @@ __all__ = ["export_to_df"]
 
 
 def select_fields(item_tuples, input_field_names, fields_to_select):
+    raise NotImplementedError("TODO: refactor me to use FieldSelectorNEW3b instead of FieldSelectorNEW")
     assert isinstance(fields_to_select, (list, tuple))
     field_indices = [input_field_names.index(x) for x in fields_to_select]
     new_field_names = [input_field_names[idx] for idx in field_indices]
