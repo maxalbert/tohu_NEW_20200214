@@ -1,12 +1,12 @@
+import re
 from abc import ABCMeta, abstractmethod
-from collections.abc import Mapping, Sequence
-from operator import attrgetter, itemgetter
-import typing
+from collections.abc import Sequence
+from operator import attrgetter
 
-# from .logging import logger
+from .logging import logger
 from .tohu_items_class import make_tohu_items_class
 
-__all__ = ["FieldSelector"]  # , "InvalidFieldError"]
+__all__ = ["FieldSelectorNEW3b", "InvalidFieldError"]
 
 
 class InvalidFieldError(Exception):
@@ -97,6 +97,10 @@ class FieldSelectorNEW3b(BaseItemTransformation):
         else:  # pragma: no cover
             raise TypeError(f"Invalid value for argument 'new_field_names': {new_field_names}")
 
+        if any(["." in name for name in new_field_names]):
+            logger.debug(f"Replacing dots in new field name with underscores: {new_field_names}")
+            new_field_names = [re.sub("\.", "_", name) for name in new_field_names]
+
         # Note: for nested fields we can currently only check the first
         # component because we have no information on the data types so if a
         # sub-field name is invalid this will only trigger an error at
@@ -116,7 +120,7 @@ class FieldSelectorNEW3b(BaseItemTransformation):
 
         select_given_fields = attrgetter(*[name for name in fields_to_extract])
         func = lambda item: output_tohu_item_class(*select_given_fields(item))
-        super().__init__(func, fields_to_extract)
+        super().__init__(func, new_field_names)
 
     def transform_single_item(self, x):
         return self.func(x)

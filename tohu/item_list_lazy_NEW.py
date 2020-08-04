@@ -18,7 +18,7 @@ class LazyItemListNEW:
         return f"<{self.__class__.__name__} containing {self.num_items} items>"
 
     def __iter__(self):
-        yield from (self.tohu_items_class(*x) for x in self.iter_item_tuples())
+        yield from (self.tohu_items_class(*x.as_tuple()) for x in self.iter_item_tuples())
 
     def iter_item_tuples(self):
         if self.is_cached:
@@ -44,8 +44,7 @@ class LazyItemListNEW:
 
     def select_fields(self, fields):
         assert isinstance(fields, (list, tuple))
-        new_field_names = fields
-        fs = FieldSelectorNEW3b(self.tohu_items_class_name, new_field_names)
+        fs = FieldSelectorNEW3b(self.tohu_items_class, fields, new_field_names=fields)
         return self.apply_transformation(fs)
 
     def _prepare_items_for_export(self, fields, column_names):

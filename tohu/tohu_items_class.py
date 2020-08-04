@@ -44,7 +44,7 @@ def make_tohu_items_class(clsname: str, field_names: List[str]):
     item_cls.__eq__ = func_eq_new
     item_cls.field_names = field_names
     item_cls.as_dict = lambda self: attr.asdict(self)
-    item_cls.as_tuple = lambda self: attr.astuple(self)
+    item_cls.as_tuple = lambda self: attr.astuple(self, recurse=False)
     item_cls.to_csv = lambda self, sep=",": sep.join(
         [str(x) for x in attr.astuple(self)]
     )  # TODO: do we need to support smarter ways of converting
