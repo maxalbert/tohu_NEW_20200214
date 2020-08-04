@@ -1,6 +1,6 @@
 from typing import List, Optional
 from .export import export_to_df, export_to_csv_string_or_file
-from .field_selector import FieldSelectorNEW
+from .field_selector import FieldSelectorNEW3b
 from .tohu_items_class import make_tohu_items_class
 
 
@@ -24,29 +24,28 @@ class LazyItemListNEW:
         if self.is_cached:
             yield from self.cached_items_sequence
         else:
-            yield from self.f_get_item_tuple_iterator()
+            yield from (self.tohu_items_class(*x.as_tuple()) for x in self.f_get_item_tuple_iterator())
 
     def compute(self):
         self.is_cached = True
         self.cached_items_sequence = list(self.iter_item_tuples())
         return self
 
-    def apply_transformation(self, transformation):
+    def apply_transformation(self, func_transform_stream):
         def make_new_item_tuples_iterator():
-            return (transformation(x) for x in self.iter_item_tuples())
+            yield from func_transform_stream(self.iter_item_tuples())
 
         return LazyItemListNEW(
             make_new_item_tuples_iterator,
             num_items=self.num_items,
-            field_names=transformation.new_field_names,
+            field_names=func_transform_stream.new_field_names,
             tohu_items_class_name=self.tohu_items_class_name,
         )
 
     def select_fields(self, fields):
         assert isinstance(fields, (list, tuple))
-        field_indices = [self.field_names.index(x) for x in fields]
-        new_field_names = [self.field_names[idx] for idx in field_indices]
-        fs = FieldSelectorNEW(field_indices, new_field_names=new_field_names)
+        new_field_names = fields
+        fs = FieldSelectorNEW3b(self.tohu_items_class_name, new_field_names)
         return self.apply_transformation(fs)
 
     def _prepare_items_for_export(self, fields, column_names):
@@ -67,7 +66,7 @@ class LazyItemListNEW:
 
     def to_df(self, fields: Optional[List[str]] = None, column_names: Optional[List[str]] = None):
         item_tuples_to_export, fields, column_names = self._prepare_items_for_export(fields, column_names)
-        return export_to_df(item_tuples_to_export, column_names=column_names)
+        return export_to_df([x.as_tuple() for x in item_tuples_to_export], column_names=column_names)
 
     def head(self, n: int = 5):
         """
