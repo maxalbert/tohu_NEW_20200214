@@ -28,7 +28,7 @@ class LazyItemListNEW:
 
     def compute(self):
         self.is_cached = True
-        self.cached_items_sequence = list(self.f_get_item_tuple_iterator())
+        self.cached_items_sequence = list(self.iter_item_tuples())
         return self
 
     def apply_transformation(self, transformation):
@@ -54,11 +54,12 @@ class LazyItemListNEW:
         assert isinstance(column_names, (list, tuple)) or column_names is None
 
         if fields is None:
-            item_tuples_to_export = self.iter_item_tuples()
+            item_list_to_export = self
             fields = self.field_names
         else:
-            item_tuples_to_export = self.select_fields(fields).iter_item_tuples()
+            item_list_to_export = self.select_fields(fields)
 
+        item_tuples_to_export = item_list_to_export.iter_item_tuples()
         column_names = column_names or fields or self.field_names
         assert len(column_names) == len(fields)
 
