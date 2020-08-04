@@ -52,7 +52,7 @@ class BaseItemTransformation(metaclass=ABCMeta):
 
     @abstractmethod
     def transform_single_item(self, item):
-        raise NotImplementedError()
+        raise NotImplementedError()  # pragma: no cover
 
     #
     # @abstractmethod
@@ -74,11 +74,24 @@ class FieldSelectorNEW(BaseItemTransformation):
 
 
 class FieldSelectorNEW3b(BaseItemTransformation):
-    def __init__(self, tohu_item_class_name, new_field_names):
-        new_tohu_item_class = make_tohu_items_class(tohu_item_class_name, new_field_names)
-        select_given_fields = attrgetter(*[name for name in new_field_names])
-        func = lambda item: new_tohu_item_class(*select_given_fields(item))
-        super().__init__(func, new_field_names)
+    def __init__(self, input_tohu_item_class, fields_to_extract, new_field_names):
+        assert fields_to_extract is None or new_field_names is None or len(fields_to_extract) == len(new_field_names)
+
+        if fields_to_extract is None:
+            fields_to_extract = input_tohu_item_class.field_names
+        elif isinstance(fields_to_extract, Sequence) and not isinstance(fields_to_extract, str):
+            pass
+        else:  # pragma: no cover
+            raise TypeError(f"Invalid value for argument 'fields_to_extract'': {fields_to_extract}")
+
+        if new_field_names is None:
+            new_field_names = fields_to_extract
+
+        output_tohu_item_class = make_tohu_items_class(input_tohu_item_class.__name__, new_field_names)
+
+        select_given_fields = attrgetter(*[name for name in fields_to_extract])
+        func = lambda item: output_tohu_item_class(*select_given_fields(item))
+        super().__init__(func, fields_to_extract)
 
     def transform_single_item(self, x):
         return self.func(x)
