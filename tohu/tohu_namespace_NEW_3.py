@@ -48,9 +48,12 @@ class TohuNamespaceNEW3:
     def add_field_generators_from_dict(self, dct):
         for name, g in dct.items():
             if is_tohu_generator(g):
-                self.add_field_generator(g, name=name)
+                self.add_field_generator(name, g)
 
-    def add_field_generator(self, g, *, name):
+    def add_field_generator(self, name, g):
+        assert isinstance(name, str)
+        assert is_tohu_generator(g)
+
         if g not in self.dependency_mapping:
             g_spawned = g.spawn(self.dependency_mapping)
             self.dependency_mapping[g] = g_spawned
