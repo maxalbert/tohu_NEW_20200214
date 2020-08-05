@@ -5,11 +5,34 @@ from tohu.tohu_items_class import make_tohu_items_class
 __all__ = ["TohuNamespaceNEW3"]
 
 
+class NonExistentTohuItemsClassError(Exception):
+    """
+    Custom exception to indicate that `set_tohu_items_class()` has not been called.
+    """
+
+
+class NonExistentTohuItemsClass:
+    # This is a placeholder for a proper TohuItemsClass, which will be
+    # created when `TohuNamespace.make_tohu_items_class()` is called.
+    # This only exists to produce a meaningful error message in case
+    # make_tohu_items_class() isn't called before trying to generate
+    # tohu items using the TohuNamespace instance.
+
+    def __repr__(self):
+        return "<NonExistentTohuItemsClass>"
+
+    def __call__(self, *args, **kwargs):
+        raise NonExistentTohuItemsClassError(
+            "Please call `set_tohu_items_class()` on the tohu namespace before generating items."
+        )
+
+
 class TohuNamespaceNEW3:
     def __init__(self, dependency_mapping=None):
         self.dependency_mapping = dependency_mapping or {}
         self.field_generators = {}
         self.seed_generator = SeedGenerator()
+        self.tohu_items_cls = NonExistentTohuItemsClass()
 
     def __format__(self, format_specifier):
         s = f"<{self.__class__.__name__}\n"
