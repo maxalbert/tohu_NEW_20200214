@@ -44,7 +44,12 @@ class LazyItemListNEW:
 
     def select_fields(self, fields):
         assert isinstance(fields, (list, tuple))
-        fs = FieldSelectorNEW3b(self.tohu_items_class, fields, new_field_names=fields)
+        fs = FieldSelectorNEW3b(
+            input_field_names=self.tohu_items_class.field_names,
+            fields_to_extract=fields,
+            new_field_names=fields,
+            output_tohu_item_class_name=self.tohu_items_class_name,
+        )
         return self.apply_transformation(fs)
 
     def _prepare_items_for_export(self, fields, column_names):

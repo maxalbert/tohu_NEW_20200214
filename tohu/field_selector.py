@@ -78,13 +78,13 @@ def get_first_component(fully_qualified_name):
 
 
 class FieldSelectorNEW3b(BaseItemTransformation):
-    def __init__(self, input_tohu_item_class, fields_to_extract, new_field_names):
+    def __init__(self, *, input_field_names, fields_to_extract, new_field_names, output_tohu_item_class_name):
         assert (
             (fields_to_extract is None) or (new_field_names is None) or (len(fields_to_extract) == len(new_field_names))
         )
 
         if fields_to_extract is None:
-            fields_to_extract = input_tohu_item_class.field_names
+            fields_to_extract = input_field_names
         elif isinstance(fields_to_extract, Sequence) and not isinstance(fields_to_extract, str):
             pass
         else:  # pragma: no cover
@@ -109,14 +109,14 @@ class FieldSelectorNEW3b(BaseItemTransformation):
         invalid_fields = [
             get_first_component(name)
             for name in fields_to_extract
-            if get_first_component(name) not in input_tohu_item_class.field_names
+            if get_first_component(name) not in input_field_names
         ]
         if invalid_fields != []:
             raise InvalidFieldError(
-                f"Invalid fields: {invalid_fields}. Fields must be a subset of: {input_tohu_item_class.field_names}"
+                f"Invalid fields: {invalid_fields}. Fields must be a subset of: {input_field_names}"
             )
 
-        output_tohu_item_class = make_tohu_items_class(input_tohu_item_class.__name__, new_field_names)
+        output_tohu_item_class = make_tohu_items_class(output_tohu_item_class_name, new_field_names)
 
         select_given_fields = attrgetter(*[name for name in fields_to_extract])
         func = lambda item: output_tohu_item_class(*select_given_fields(item))
