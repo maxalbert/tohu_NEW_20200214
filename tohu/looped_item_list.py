@@ -17,9 +17,26 @@ class LoopedItemList:
         # raise NotImplementedError("TODO: how to get item_tuples?")
         self.f_get_item_tuple_iterators = f_get_item_tuple_iterators
         self.field_names = field_names
+        self.is_cached = False
+        self.cached_items_sequence = None
 
     def __repr__(self):
         return f"<{self.__class__.__name__}>"
+
+    def __iter__(self):
+        yield from self.iter_item_tuples()
+
+    def iter_item_tuples(self):
+        if self.is_cached:
+            yield from self.cached_items_sequence
+        else:
+            _, items = next(self.f_get_item_tuple_iterators())
+            yield from items
+
+    def compute(self):
+        self.cached_items_sequence = list(self.iter_item_tuples())
+        self.is_cached = True
+        return self
 
     def to_df(self, fields=None, column_names=None, group_by=None):
         if isinstance(group_by, str):
@@ -44,6 +61,17 @@ class LoopedItemList:
             return df
         else:
             return dataframes
+
+    def head(self, n: int = 5):
+        """
+        Return the first `n` rows after exporting items to a pandas dataframe.
+
+        Parameters
+        ----------
+        n : int, default 5
+            Number of rows to return.
+        """
+        return self.to_df().head(n)
 
     def to_csv(self, filename=None, fields=None, column_names=None, sep=",", header=True, header_prefix=""):
         filename_pattern = filename  # alias which better reflects its meaning
