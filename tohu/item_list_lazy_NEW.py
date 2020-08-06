@@ -65,7 +65,7 @@ class LazyItemListNEW:
 
     def to_df(self, fields: Optional[List[str]] = None, column_names: Optional[List[str]] = None):
         item_tuples_to_export, fields, column_names = self._prepare_items_for_export(fields, column_names)
-        return export_to_df([x.as_tuple() for x in item_tuples_to_export], column_names=column_names)
+        return export_to_df(item_tuples_to_export, column_names=column_names)
 
     def head(self, n: int = 5):
         """

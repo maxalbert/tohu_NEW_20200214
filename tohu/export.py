@@ -43,8 +43,8 @@ def prepare_item_tuples_for_export(item_tuples, input_field_names, fields_to_sel
 #
 
 
-def export_to_df(input_tuples, column_names):
-    df = pd.DataFrame(input_tuples, columns=column_names)
+def export_to_df(input_items, column_names):
+    df = pd.DataFrame((x.as_tuple() for x in input_items), columns=column_names)
     return df
 
 
