@@ -18,13 +18,13 @@ class LazyItemListNEW:
         return f"<{self.__class__.__name__} containing {self.num_items} items>"
 
     def __iter__(self):
-        yield from (self.tohu_items_class(*x.as_tuple()) for x in self.iter_item_tuples())
+        yield from self.iter_item_tuples()
 
     def iter_item_tuples(self):
         if self.is_cached:
             yield from self.cached_items_sequence
         else:
-            yield from (self.tohu_items_class(*x.as_tuple()) for x in self.f_get_item_tuple_iterator())
+            yield from self.f_get_item_tuple_iterator()
 
     def compute(self):
         self.cached_items_sequence = list(self.iter_item_tuples())
