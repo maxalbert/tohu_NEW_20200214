@@ -39,6 +39,7 @@ class LoopedCustomGeneratorInstance:
         return LoopedItemList(
             f_get_item_tuple_iterators,
             field_names=self.custom_gen_instance._tohu_namespace.field_names,
+            tohu_items_class_name=self.custom_gen_instance.tohu_items_class_name,  # FIXME: Demeter violation
             #         self.loop_runner,
             #         self.custom_gen_instance,
             #         num_items_per_loop_cycle=num_items_per_loop_cycle,

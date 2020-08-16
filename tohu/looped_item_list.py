@@ -13,10 +13,11 @@ def find_placeholder_variables(filename_pattern: Optional[str]):
 
 
 class LoopedItemList:
-    def __init__(self, f_get_item_tuple_iterators, *, field_names):
+    def __init__(self, f_get_item_tuple_iterators, *, field_names, tohu_items_class_name):
         # raise NotImplementedError("TODO: how to get item_tuples?")
         self.f_get_item_tuple_iterators = f_get_item_tuple_iterators
         self.field_names = field_names
+        self.tohu_items_class_name = tohu_items_class_name
         self.is_cached = False
         self.cached_items_sequence = None
 
@@ -51,6 +52,7 @@ class LoopedItemList:
                 input_field_names=input_field_names,
                 fields_to_select=fields,
                 column_names=column_names,
+                output_tohu_item_class_name=self.tohu_items_class_name,
             )
             df = export_to_df(item_tuples_to_export, column_names=column_names)
             dataframes.append((loop_var_values, df))
@@ -86,6 +88,7 @@ class LoopedItemList:
                 input_field_names=input_field_names,
                 fields_to_select=fields,
                 column_names=column_names,
+                output_tohu_item_class_name=self.tohu_items_class_name,
             )
             csv_or_none = export_to_csv_string_or_file(
                 cur_filename,
