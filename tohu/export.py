@@ -12,17 +12,30 @@ __all__ = ["export_to_df"]
 #
 
 
-def select_fields(item_tuples, input_field_names, fields_to_select):
-    raise NotImplementedError("TODO: refactor me to use FieldSelectorNEW3b instead of FieldSelectorNEW")
+# def select_fields(item_tuples, input_field_names, fields_to_select):
+#     raise NotImplementedError("TODO: refactor me to use FieldSelectorNEW3b instead of FieldSelectorNEW")
+#     assert isinstance(fields_to_select, (list, tuple))
+#     field_indices = [input_field_names.index(x) for x in fields_to_select]
+#     new_field_names = [input_field_names[idx] for idx in field_indices]
+#     fs = FieldSelectorNEW(field_indices, new_field_names=new_field_names)
+#
+#     return (fs(x) for x in item_tuples)
+
+
+def select_fields(item_tuples, *, input_field_names, fields_to_select, output_tohu_item_class_name):
     assert isinstance(fields_to_select, (list, tuple))
-    field_indices = [input_field_names.index(x) for x in fields_to_select]
-    new_field_names = [input_field_names[idx] for idx in field_indices]
-    fs = FieldSelectorNEW(field_indices, new_field_names=new_field_names)
+    fs = FieldSelectorNEW3b(
+        input_field_names=input_field_names,
+        fields_to_extract=fields_to_select,
+        new_field_names=fields_to_select,
+        output_tohu_item_class_name=output_tohu_item_class_name,
+    )
+    return fs(item_tuples)
 
-    return (fs(x) for x in item_tuples)
 
-
-def prepare_item_tuples_for_export(item_tuples, input_field_names, fields_to_select, column_names):
+def prepare_item_tuples_for_export(
+    item_tuples, input_field_names, fields_to_select, column_names, output_tohu_item_class_name
+):
     assert isinstance(fields_to_select, (list, tuple)) or fields_to_select is None
     assert isinstance(column_names, (list, tuple)) or column_names is None
 
@@ -30,7 +43,12 @@ def prepare_item_tuples_for_export(item_tuples, input_field_names, fields_to_sel
         item_tuples_to_export = item_tuples
         fields_to_select = input_field_names
     else:
-        item_tuples_to_export = select_fields(item_tuples, input_field_names, fields_to_select)
+        item_tuples_to_export = select_fields(
+            item_tuples,
+            input_field_names=input_field_names,
+            fields_to_select=fields_to_select,
+            output_tohu_item_class_name=output_tohu_item_class_name,
+        )
 
     column_names = column_names or fields_to_select or input_field_names
     assert len(column_names) == len(fields_to_select)

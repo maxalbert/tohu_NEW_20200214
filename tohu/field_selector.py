@@ -119,7 +119,10 @@ class FieldSelectorNEW3b(BaseItemTransformation):
         output_tohu_item_class = make_tohu_items_class(output_tohu_item_class_name, new_field_names)
 
         select_given_fields = attrgetter(*[name for name in fields_to_extract])
-        func = lambda item: output_tohu_item_class(*select_given_fields(item))
+
+        def func(item):
+            return output_tohu_item_class(*select_given_fields(item))
+
         super().__init__(func, new_field_names)
 
     def transform_single_item(self, x):
