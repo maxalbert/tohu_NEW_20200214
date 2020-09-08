@@ -135,9 +135,9 @@ class LoopRunnerNEW3:
         )
 
     def produce_items_from_tohu_generator_for_loop_var_subset(
-        self, g, num_items_per_loop_cycle, loop_var_subset, seed=None
+        self, g, num_items_per_loop_cycle, loop_vars_to_group_by, seed=None
     ):
-        for cur_vals in self.iter_loop_var_combinations(var_names=loop_var_subset):
+        for cur_vals in self.iter_loop_var_combinations(var_names=loop_vars_to_group_by):
             f_callback_filtered = make_filtered_callback(g, cur_vals)
             yield cur_vals, self.iter_loop_var_combinations_with_callback(
                 f_callback_filtered, num_items_per_loop_cycle, seed=seed, advance_loop_vars=True
@@ -223,6 +223,12 @@ class LoopRunnerNEW3:
             for val_comb in itertools.product(*value_combinations_per_level):
                 yield dict(concatenate_tuples(val_comb))
         else:
+
+            # Sanity check that var_names contains valid loop var names.
+            for name in var_names:
+                if name not in self.loop_variables_by_name:
+                    valid_names = list(self.loop_variables_by_name.keys())
+                    raise ValueError(f"Invalid loop variable name: {name!r}. Must be one of: {valid_names}")
 
             # Here we ensure that `var_names` is ordered in the same way as the
             # loop variables in this loop runner, to ensure that `vals_subset`
