@@ -60,7 +60,7 @@ class LoopedCustomGeneratorClass:
             self.custom_gen_cls = custom_gen_cls_or_looped_custom_gen_cls.custom_gen_cls
             self.loop_runner = custom_gen_cls_or_looped_custom_gen_cls.loop_runner
             self.cur_level = custom_gen_cls_or_looped_custom_gen_cls.cur_level
-        else:
+        else:  # pragma: no cover
             raise TypeError(
                 f"Cannot instantiate {self.__class__.__name__} with object of type {type(custom_gen_cls_or_looped_custom_gen_cls)}"
             )
